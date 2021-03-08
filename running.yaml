@@ -299,7 +299,7 @@
     - jointAngle: Hips
       space: VirtualLab
       output: pelvicAngle
-    - multiply: [pelvicAngle, [-1, 1, -1]]
+    - multiply: [pelvicAngle, [-1, -1, -1]]
 
 - parameter: Right Pelvic Angles
   set: right
@@ -307,7 +307,7 @@
     - jointAngle: Hips
       space: VirtualLab
       output: pelvicAngle
-    - multiply: [pelvicAngle, [-1, -1, 1]]
+    - multiply: [pelvicAngle, [-1, 1, 1]]
 
 # --- Hips ---
 

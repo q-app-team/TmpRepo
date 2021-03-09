@@ -578,7 +578,7 @@
 
 - parameter: Shoulder_Pelvis Angle
   steps:
-    - jointAngle: [Hips, RightShoulder]
+    - jointAngle: [Hips, Spine2]
 
 # --- Arms ---
 

@@ -803,7 +803,7 @@
     - eventDuration: [LFS, LFS]
       output: left_stride_time
       export: left_stride_time
-    - subtract: [foot.x@LFS, foot.x@LFS]
+    - diff: foot.x@LFS
       output: stride_length_mm
     - convert: stride_length_mm
       from: mm

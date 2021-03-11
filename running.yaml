@@ -786,7 +786,7 @@
     - eventDuration: [RFS, RFS]
       output: right_stride_time
       export: right_stride_time
-    - subtract: [foot.x@RFS, foot.x@RFS]
+    - diff: foot.x@RFS
       output: stride_length_mm
     - convert: stride_length_mm
       from: mm

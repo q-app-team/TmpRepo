@@ -886,10 +886,10 @@
 #flight time
 - parameter: Flight_Time_Mean_MEAN
   steps:
-  - eventDuration: [LTO, LFS]
+  - eventDuration: [LTO, RFS]
     output: Flight_time_LTO_RFS
     export: Flight_time_LTO_RFS
-  - eventDuration: [RTO, RFS]
+  - eventDuration: [RTO, LFS]
     output: Flight_time_RTO_LFS
     export: Flight_time_RTO_LFS
   - mean: Flight_time_LTO_RFS => left_flight_time_mean

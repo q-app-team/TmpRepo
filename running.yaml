@@ -915,10 +915,11 @@
 - parameter: Left_HEEL_PELVIS_MEAN
   set: left
   steps:
-    - marker: LHeelBack => heel
-    - subtract: [heel, Hips]
-      output: heel_pelvis_mm
-    - convert: heel_pelvis_mm
+    - segment: LeftFoot => l_foot
+    - segment: Hips => pelvis
+    - subtract: [l_foot, pelvis]
+      output: foot_pelvis_mm
+    - convert: foot_pelvis_mm
       from: mm
       to: m
       output: heel_pelvis
@@ -929,10 +930,11 @@
 - parameter: Right_HEEL_PELVIS_MEAN
   set: right
   steps:
-    - marker: RHeelBack => heel
-    - subtract: [heel, Hips]
-      output: heel_pelvis_mm
-    - convert: heel_pelvis_mm
+    - segment: RightFoot => l_foot
+    - segment: Hips => pelvis
+    - subtract: [l_foot, pelvis]
+      output: foot_pelvis_mm
+    - convert: foot_pelvis_mm
       from: mm
       to: m
       output: heel_pelvis

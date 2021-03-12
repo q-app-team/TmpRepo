@@ -339,6 +339,13 @@
 
 # --- Upper body ---
 
+- parameter: Trunk Angles
+  set: left
+  steps:
+    - jointAngle: [Hips, LeftUpLeg]
+      output: hipAngle
+    - multiply: [hipAngle, [1, -1, 1]]
+
 - parameter: Trunk Angles_wrt_LAB
   steps:
     - jointAngle: Spine2 => trunkAngle
@@ -503,4 +510,148 @@
 - parameter: Right Pelvic Angles_range
   steps:
     - subtract: [Right Pelvic Angles_max, Right Pelvic Angles_min]
+
+# Pelvis range of lateral movement (rocking)
+- parameter: Pelvis_Angle_rocking_R_TDC_R_BDC_range
+  steps:
+    - subtract: [Right Pelvic Angles.y@R_TDC, Right Pelvic Angles.y@R_BDC]
+
+- parameter: Pelvis_Angle_rocking_R_PP_R_RP_range
+  steps:
+    - subtract: [Right Pelvic Angles.y@R_PP, Right Pelvic Angles.y@R_RP]
+
+- parameter: Pelvis_Angle_rocking_L_PP_L_RP_range
+  steps:
+    - subtract: [Right Pelvic Angles.y@L_PP, Right Pelvic Angles.y@L_RP]
+
+# Hip angles at events
+- parameter: Left Hip Angles@L_TDC
+  steps:
+    - import: Left Hip Angles@L_TDC
+
+- parameter: Left Hip Angles@L_BDC
+  steps:
+    - import: Left Hip Angles@L_BDC
+
+- parameter: Left Hip Angles@L_PP
+  steps:
+    - import: Left Hip Angles@L_PP
+
+- parameter: Left Hip Angles@L_RP
+  steps:
+    - import: Left Hip Angles@L_RP
+
+- parameter: Right Hip Angles@R_TDC
+  steps:
+    - import: Right Hip Angles@R_TDC
+
+- parameter: Right Hip Angles@R_BDC
+  steps:
+    - import: Right Hip Angles@R_BDC
+
+- parameter: Right Hip Angles@R_PP
+  steps:
+    - import: Right Hip Angles@R_PP
+
+- parameter: Right Hip Angles@R_RP
+  steps:
+    - import: Right Hip Angles@R_RP
+
+- parameter: Left Hip Angles_max
+  steps:
+    - eventMask: [Left Hip Angles, L_TDC, L_TDC]
+      output: angle
+    - max: angle
+
+- parameter: Left Hip Angles_min
+  steps:
+    - eventMask: [Left Hip Angles, L_TDC, L_TDC]
+      output: angle
+    - min: angle
+
+- parameter: Left Hip Angles_range
+  steps:
+    - subtract: [Left Hip Angles_max, Left Hip Angles_min]
+
+- parameter: Right Hip Angles_max
+  steps:
+    - eventMask: [Right Hip Angles, R_TDC, R_TDC]
+      output: angle
+    - max: angle
+
+- parameter: Right Hip Angles_min
+  steps:
+    - eventMask: [Right Hip Angles, R_TDC, R_TDC]
+      output: angle
+    - min: angle
+
+- parameter: Right Hip Angles_range
+  steps:
+    - subtract: [Right Hip Angles_max, Right Hip Angles_min]
+
+# Trunk angles at events
+- parameter: Trunk Angles@L_TDC
+  steps:
+    - import: Trunk Angles@L_TDC
+
+- parameter: Trunk Angles@L_BDC
+  steps:
+    - import: Trunk Angles@L_BDC
+
+- parameter: Trunk Angles@L_PP
+  steps:
+    - import: Trunk Angles@L_PP
+
+- parameter: Trunk Angles@L_RP
+  steps:
+    - import: Trunk Angles@L_RP
+
+- parameter: Trunk Angles@R_TDC
+  steps:
+    - import: Trunk Angles@R_TDC
+
+- parameter: Trunk Angles@R_BDC
+  steps:
+    - import: Trunk Angles@R_BDC
+
+- parameter: Trunk Angles@R_PP
+  steps:
+    - import: Trunk Angles@R_PP
+
+- parameter: Trunk Angles@R_RP
+  steps:
+    - import: Trunk Angles@R_RP
+
+# Knee angles
+- parameter: Left Knee Angles_max
+  steps:
+    - eventMask: [Left Knee Angles, L_TDC, L_TDC]
+      output: angle
+    - max: angle
+
+- parameter: Left Knee Angles_min
+  steps:
+    - eventMask: [Left Knee Angles, L_TDC, L_TDC]
+      output: angle
+    - min: angle
+
+- parameter: Left Knee Angles_range
+  steps:
+    - subtract: [Left Knee Angles_max, Left Knee Angles_min]
+
+- parameter: Right Knee Angles_max
+  steps:
+    - eventMask: [Right Knee Angles, R_TDC, R_TDC]
+      output: angle
+    - max: angle
+
+- parameter: Right Knee Angles_min
+  steps:
+    - eventMask: [Right Knee Angles, R_TDC, R_TDC]
+      output: angle
+    - min: angle
+
+- parameter: Right Knee Angles_range
+  steps:
+    - subtract: [Right Knee Angles_max, Right Knee Angles_min]
 

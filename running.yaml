@@ -945,9 +945,13 @@
 # number of steps
 - parameter: Cycle_Time_Count
   steps:
-  - eventDuration: [LFS, LFS]
-    output: number_of_cycles
-  - count: number_of_cycles
+  - eventDuration: [LFS, RFS]
+    output: number_of_l_to_r_events
+  - count: number_of_l_to_r_events => l_to_r_count
+  - eventDuration: [RFS, LFS]
+    output: number_of_r_to_l_events
+  - count: number_of_r_to_l_events => r_to_l_count
+  - add: [l_to_r_count, r_to_l_count]
 
 # --- Pelvis angles ---
 # at FS

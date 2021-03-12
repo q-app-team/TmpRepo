@@ -7,7 +7,7 @@
     segment: Hips
 
 ############
-# Bike metrics
+# Bike trials
 ############
 
 # Bottom bracket
@@ -36,13 +36,13 @@
 
 # Drop
 #   Vertical difference between top of bars and top of saddle. Neg=bars lower Pos =bars higher
-- parameter: Drop_mean
-  steps:
-    - marker: B_Handle_Bar.z => bars
-    - marker: B_Seat_Mid.z = seat
-    - subtract: [bars, seat]
-      output: drop
-    - mean: drop
+#- parameter: Drop_mean
+#  steps:
+#    - marker: B_Handle_Bar.z => bars
+#    - marker: B_Seat_Mid.z = seat
+#    - subtract: [bars, seat]
+#      output: drop
+#    - mean: drop
 
 # Reach (Saddle)
 #   Reach is measured from saddle_front to handle_bar, direct connection (not measured horizontally)
@@ -63,11 +63,14 @@
 #     DERIVED::Bike_Geometry::B_Head_Tube_VirtLab::Y-DERIVED::Bike_Geometry::B_Bottom_Bracket_proj_VirtLab::Y
 
 ############
+# Cycling trials
+############
+
 # Crank Angle
 ############
 # for now we allow to put crank marker only at opposite side of crank in respect to pedal (near axis)
 
-# Left crank angle ###################
+# Left crank angle
 
 - event: L_TDC_Temp
   steps:
@@ -124,7 +127,7 @@
       output: deg
     - add: [180, deg]
 
-# Right crank angle ###################
+# Right crank angle 
 
 - event: R_TDC_Temp
   steps:
@@ -190,9 +193,9 @@
     - peakFinder: Left_Crank_Angle
       width: 10
 
-#- event: L_TDC1
-#  steps:
-#    - subtract: [L_TDC, 1]
+- event: L_TDC1
+  steps:
+    - subtract: [L_TDC, 1]
 
 - event: L_BDC
   steps:
@@ -217,6 +220,10 @@
     - peakFinder: Right_Crank_Angle
       width: 10
 
+- event: R_TDC1
+  steps:
+    - subtract: [R_TDC, 1]
+
 - event: R_BDC
   steps:
     - threshold: Right_Crank_Angle
@@ -238,35 +245,110 @@
 # We do not have hip landmark, so we use origin of thigh segment
 - event: LEFT_HIP_max
   steps:
-    - segment: LeftUpLeg => Left_Thigh
+    - segment: LeftUpLeg => Left_Hip
       space: VirtualLab
-      export: Left_Thigh
-    - peakFinder: Left_Thigh.z
+      export: Left_Hip
+    - peakFinder: Left_Hip.z
       width: 100
 
 - event: LEFT_HIP_min
   steps:
-    - negate: Left_Thigh => inv
+    - negate: Left_Hip => inv
     - peakFinder: [inv.z, LEFT_HIP_max, LEFT_HIP_max]
       width: 50
 
 - event: RIGHT_HIP_max
   steps:
-    - segment: RightUpLeg => Right_Thigh
+    - segment: RightUpLeg => Right_Hip
       space: VirtualLab
-      export: Right_Thigh
-    - peakFinder: Right_Thigh.z
+      export: Right_Hip
+    - peakFinder: Right_Hip.z
       width: 100
 
 - event: RIGHT_HIP_min
   steps:
-    - negate: Right_Thigh => inv
+    - negate: Right_Hip => inv
     - peakFinder: [inv.z, RIGHT_HIP_max, RIGHT_HIP_max]
       width: 50
 
 ############
 ## SERIES ##
 ############
+
+# --- Pelvis ---
+
+- parameter: Left Pelvic Angles
+  set: left
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+      output: pelvicAngle
+    - multiply: [pelvicAngle, [-1, -1, -1]]
+
+- parameter: Right Pelvic Angles
+  set: right
+  steps:
+    - jointAngle: Hips
+      space: VirtualLab
+      output: pelvicAngle
+    - multiply: [pelvicAngle, [-1, 1, 1]]
+
+# --- Hips ---
+
+- parameter: Left Hip Angles
+  set: left
+  steps:
+    - jointAngle: [Hips, LeftUpLeg]
+      output: hipAngle
+    - multiply: [hipAngle, [1, -1, 1]]
+
+- parameter: Right Hip Angles
+  set: right
+  steps:
+    - jointAngle: [Hips, RightUpLeg]
+
+# --- Knee ---
+
+- parameter: Left Knee Angles
+  set: left
+  steps:
+    - jointAngle: [LeftUpLeg, LeftLeg]
+      output: kneeAngle
+    - multiply: [kneeAngle, [-1, -1, -1]]
+
+- parameter: Right Knee Angles
+  set: right
+  steps:
+    - jointAngle: [RightUpLeg, RightLeg]
+      output: kneeAngle
+    - multiply: [kneeAngle, [-1, 1, 1]]
+
+# --- Ankle ---
+
+- parameter: Left Ankle Angles
+  set: left
+  steps:
+    - jointAngle: [LeftLeg, LeftFoot]
+      output: ankleAngle
+    - multiply: [ankleAngle, [1, -1, 1]]
+
+- parameter: Right Ankle Angles
+  set: right
+  steps:
+    - jointAngle: [RightLeg, RightFoot]
+
+# --- Upper body ---
+
+- parameter: Trunk Angles_wrt_LAB
+  steps:
+    - jointAngle: Spine2 => trunkAngle
+      space: VirtualLab
+    - multiply: [trunkAngle, [-1,1,1]]
+
+- parameter: Shoulder_Pelvis Angle
+  steps:
+    - jointAngle: [Hips, Spine2]
+
 
 #############
 ## METRICS ##
@@ -278,26 +360,25 @@
   steps:
     - count: L_TDC
       output: Cycle_count
-    - frameTime: L_TDC
-      output: TDC_times
-    - min: TDC_times
-      output: first_TDC
-    - max: TDC_times
-      output: last_TDC
     - subtract: [Cycle_count, 1]
       output: cyc_count_cor
     - multiply: [cyc_count_cor, 360]
       output: cyc_count_cor_m
+
+    - eventTime: L_TDC => TDC_times
+    - min: TDC_times => first_TDC
+    - max: TDC_times => last_TDC
     - subtract: [last_TDC, first_TDC]
       output: time_first_to_last_TDC
+
     - divide: [cyc_count_cor_m, time_first_to_last_TDC]
 
 # Hip vertical travel
 - parameter: LEFT_HIP_range
   steps:
-    - import: Left_Thigh@LEFT_HIP_min
+    - import: Left_Hip@LEFT_HIP_min
       output: min
-    - import: Left_Thigh@LEFT_HIP_max
+    - import: Left_Hip@LEFT_HIP_max
       output: max
     - subtract: [max, min]
       output: sub
@@ -308,9 +389,9 @@
 
 - parameter: RIGHT_HIP_range
   steps:
-    - import: Right_Thigh@RIGHT_HIP_min
+    - import: Right_Hip@RIGHT_HIP_min
       output: min
-    - import: Right_Thigh@RIGHT_HIP_max
+    - import: Right_Hip@RIGHT_HIP_max
       output: max
     - subtract: [max, min]
       output: sub
@@ -319,4 +400,107 @@
     - stdDev: sub
       export: RIGHT_HIP_range_sd
 
-# Knee lateral travel
+# Wrist height relative to hip
+- parameter: Left_Wrist_rt_Hip
+  steps:
+    - segment: LeftHand => wrist
+      space: VirtualLab
+    - subtract: [wrist, Left_Hip]
+      output: wrist_hip_dist
+    - convert: wrist_hip_dist
+      from: mm
+      to: m
+
+- parameter: Right_Wrist_rt_Hip
+  steps:
+    - segment: RightHand => wrist
+      space: VirtualLab
+    - subtract: [wrist, Right_Hip]
+      output: wrist_hip_dist
+    - convert: wrist_hip_dist
+      from: mm
+      to: m
+
+# Elbows distance
+- parameter: Elbows_distance
+  steps:
+    - distance: [LeftForeArm, RightForeArm]
+      output: dist
+    - convert: dist
+      from: mm
+      to: m
+
+# Wrists distance
+- parameter: Wrists_distance
+  steps:
+    - distance: [LeftHand, RightHand]
+      output: dist
+    - convert: dist
+      from: mm
+      to: m
+
+# Pelvis angles at events
+- parameter: PELVIS_ANGLE@R_TDC
+  steps:
+    - import: Right Pelvic Angles@R_TDC
+
+- parameter: PELVIS_ANGLE@R_BDC
+  steps:
+    - import: Right Pelvic Angles@R_BDC
+
+- parameter: PELVIS_ANGLE@R_PP
+  steps:
+    - import: Right Pelvic Angles@R_PP
+
+- parameter: PELVIS_ANGLE@R_RP
+  steps:
+    - import: Right Pelvic Angles@R_RP
+
+- parameter: PELVIS_ANGLE@L_TDC
+  steps:
+    - import: Right Pelvic Angles@L_TDC
+
+- parameter: PELVIS_ANGLE@L_BDC
+  steps:
+    - import: Right Pelvic Angles@L_BDC
+
+- parameter: PELVIS_ANGLE@L_PP
+  steps:
+    - import: Right Pelvic Angles@L_PP
+
+- parameter: PELVIS_ANGLE@L_RP
+  steps:
+    - import: Right Pelvic Angles@L_RP
+
+- parameter: Left Pelvic Angles_max
+  steps:
+    - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
+      output: angle
+    - max: angle
+
+- parameter: Left Pelvic Angles_min
+  steps:
+    - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
+      output: angle
+    - min: angle
+
+- parameter: Left Pelvic Angles_range
+  steps:
+    - subtract: [Left Pelvic Angles_max, Left Pelvic Angles_min]
+
+- parameter: Right Pelvic Angles_max
+  steps:
+    - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
+      output: angle
+    - max: angle
+
+- parameter: Right Pelvic Angles_min
+  steps:
+    - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
+      output: angle
+    - min: angle
+
+- parameter: Right Pelvic Angles_range
+  steps:
+    - subtract: [Right Pelvic Angles_max, Right Pelvic Angles_min]
+

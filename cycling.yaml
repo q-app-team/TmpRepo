@@ -727,13 +727,13 @@
   steps:
     - eventMask: [Right Knee Angles, R_TDC, R_TDC]
       output: angle
-    - max: angle
+    - max: angle.x
 
 - parameter: Right Knee Angles_min
   steps:
     - eventMask: [Right Knee Angles, R_TDC, R_TDC]
       output: angle
-    - min: angle
+    - min: angle.x
 
 - parameter: Right Knee Angles_range
   steps:
@@ -785,13 +785,13 @@
       export: RIGHT_KNEE_VLab
 
     - import: knee@R_TDC => knee_TDC
-      export: Right_Knee_VLab@L_TDC
+      export: Right_Knee_VLab@R_TDC
     - import: knee@R_BDC => knee_BDC
-      export: Right_Knee_VLab@L_BDC
+      export: Right_Knee_VLab@R_BDC
     - import: knee@R_PP => knee_PP
-      export: Right_Knee_VLab@L_PP
+      export: Right_Knee_VLab@R_PP
     - import: knee@R_RP => knee_RP
-      export: Right_Knee_VLab@L_RP
+      export: Right_Knee_VLab@R_RP
 
     - eventMask: [knee, R_TDC, R_TDC]
       output: knee_mask

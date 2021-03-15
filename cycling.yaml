@@ -441,6 +441,10 @@
     - import: Left_Hip@LEFT_HIP_max
       output: max
     - subtract: [max, min]
+      output: sub_mm
+    - convert: sub_mm
+      from: mm
+      to: m
       output: sub
     - mean: sub
       export: LEFT_HIP_range_mean
@@ -454,6 +458,10 @@
     - import: Right_Hip@RIGHT_HIP_max
       output: max
     - subtract: [max, min]
+      output: sub_mm
+    - convert: sub_mm
+      from: mm
+      to: m
       output: sub
     - mean: sub
       export: RIGHT_HIP_range_mean
@@ -780,8 +788,9 @@
 #   - range of knee movement in med/lat direction wrt to Virtual lab or pelvis
 - parameter: LEFT_KNEE_VLab
   steps:
-    - segment: LeftLeg => knee_mm
+    - segment: LeftLeg
       space: VirtualLab
+      output: knee_mm
     - convert: knee_mm
       from: mm
       to: m
@@ -814,8 +823,9 @@
 - parameter: LEFT_KNEE_RPV
   steps:
     - import: LEFT_KNEE_VLab => knee
-    - segment: Hips => pelvis_mm
+    - segment: Hips
       space: VirtualLab
+      output: pelvis_mm
     - convert: pelvis_mm
       from: mm
       to: m

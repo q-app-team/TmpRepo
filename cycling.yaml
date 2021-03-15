@@ -73,17 +73,20 @@
 # Left crank angle
 
 - event: L_TDC_Temp
+  set: left
   steps:
     - negate: Left_Crank_Vlab.z => crank_inv
     - peakFinder: crank_inv
       width: 10
 
 - event: L_BDC_Temp
+  set: left
   steps:
     - peakFinder: Left_Crank_Vlab.z
       width: 10
 
 - parameter: Left_Crank_Vlab
+  set: left
   steps:
     - marker: L_crank => crank
       space: VirtualLab
@@ -92,6 +95,7 @@
       to: m
 
 - parameter: Left_Crank_Angle
+  set: left
   steps:
     # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
     - mean: Left_Crank_Vlab.z@L_TDC_Temp
@@ -130,17 +134,20 @@
 # Right crank angle 
 
 - event: R_TDC_Temp
+  set: right
   steps:
     - negate: Right_Crank_Vlab.z => crank_inv
     - peakFinder: crank_inv
       width: 10
 
 - event: R_BDC_Temp
+  set: right
   steps:
     - peakFinder: Right_Crank_Vlab.z
       width: 10
 
 - parameter: Right_Crank_Vlab
+  set: right
   steps:
     - marker: R_crank => crank
       space: VirtualLab
@@ -149,6 +156,7 @@
       to: m
 
 - parameter: Right_Crank_Angle
+  set: right
   steps:
     # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
     - mean: Right_Crank_Vlab.z@R_TDC_Temp
@@ -189,54 +197,64 @@
 ############
 
 - event: L_TDC
+  set: left
   steps:
     - peakFinder: Left_Crank_Angle
       width: 10
 
 - event: L_TDC1
+  set: left
   steps:
     - subtract: [L_TDC, 1]
 
 - event: L_BDC
+  set: left
   steps:
     - threshold: Left_Crank_Angle
       value: 180
       direction: up
 
 - event: L_PP
+  set: left
   steps:
     - threshold: Left_Crank_Angle
       value: 90
       direction: up
 
 - event: L_RP
+  set: left
   steps:
     - threshold: Left_Crank_Angle
       value: 270
       direction: up
 
 - event: R_TDC
+  set: left
   steps:
     - peakFinder: Right_Crank_Angle
       width: 10
 
 - event: R_TDC1
+  set: right
   steps:
     - subtract: [R_TDC, 1]
 
 - event: R_BDC
+  set: right
   steps:
     - threshold: Right_Crank_Angle
       value: 180
       direction: up
     
 - event: R_PP
+  set: right
   steps:
     - threshold: Right_Crank_Angle
       value: 90
       direction: up
     
 - event: R_RP
+  set: right
   steps:
     - threshold: Right_Crank_Angle
       value: 270
@@ -244,6 +262,7 @@
     
 # We do not have hip landmark, so we use origin of thigh segment
 - event: LEFT_HIP_max
+  set: left
   steps:
     - segment: LeftUpLeg => Left_Hip
       space: VirtualLab
@@ -252,12 +271,14 @@
       width: 100
 
 - event: LEFT_HIP_min
+  set: left
   steps:
     - negate: Left_Hip => inv
     - peakFinder: [inv.z, LEFT_HIP_max, LEFT_HIP_max]
       width: 50
 
 - event: RIGHT_HIP_max
+  set: right
   steps:
     - segment: RightUpLeg => Right_Hip
       space: VirtualLab
@@ -266,6 +287,7 @@
       width: 100
 
 - event: RIGHT_HIP_min
+  set: right
   steps:
     - negate: Right_Hip => inv
     - peakFinder: [inv.z, RIGHT_HIP_max, RIGHT_HIP_max]
@@ -357,7 +379,6 @@
 # --- Trunk ---
 
 - parameter: Trunk Angles
-  set: left
   steps:
     - jointAngle: [Hips, LeftUpLeg]
       output: hipAngle
@@ -371,22 +392,26 @@
 
 # --- Shoulders ---
 - parameter: Left Shoulder Angles
+  set: left
   steps:
     - jointAngle: [Spine2, LeftArm]
     
 - parameter: Right Shoulder Angles
+  set: right
   steps:
     - jointAngle: [Spine2, RightArm]
       output: shoudlerAngle
     - multiply: [shoudlerAngle, [1, -1, 1]]
    
 - parameter: Left Shoulder_Pelvis Angle
+  set: left
   steps:
     - jointAngle: [Hips, LeftShoulder]
       output: shoudlerAngle
     - multiply: [shoudlerAngle, [1, -1, -1]]
 
 - parameter: Right Shoulder_Pelvis Angle
+  set: right
   steps:
     - jointAngle: [Hips, RightShoulder]
 
@@ -397,10 +422,12 @@
 
 # --- Wrists ---
 - parameter: Left Wrist Angles
+  set: left
   steps:
     - jointAngle: [LeftHand, LeftForeArm]
 
 - parameter: Right Wrist Angles
+  set: right
   steps:
     - jointAngle: [RightHand, RightForeArm]
 
@@ -435,6 +462,7 @@
 
 # Hip vertical travel
 - parameter: LEFT_HIP_range
+  set: left
   steps:
     - import: Left_Hip@LEFT_HIP_min
       output: min
@@ -452,6 +480,7 @@
       export: LEFT_HIP_range_sd
 
 - parameter: RIGHT_HIP_range
+  set: right
   steps:
     - import: Right_Hip@RIGHT_HIP_min
       output: min
@@ -470,6 +499,7 @@
 
 # Wrist height relative to hip
 - parameter: Left_Wrist_rt_Hip
+  set: left
   steps:
     - segment: LeftHand => wrist
       space: VirtualLab
@@ -480,6 +510,7 @@
       to: m
 
 - parameter: Right_Wrist_rt_Hip
+  set: right
   steps:
     - segment: RightHand => wrist
       space: VirtualLab

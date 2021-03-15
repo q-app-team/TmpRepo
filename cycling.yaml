@@ -741,7 +741,7 @@
 
 # Knee lateral travel (wobble)
 #   - range of knee movement in med/lat direction wrt to Virtual lab or pelvis which is X
-- parameter: LEFT_KNEE_lat_travel
+- parameter: LEFT_KNEE_lat_travel_VLab
   steps:
     - segment: LeftLeg => knee_mm
       space: VirtualLab
@@ -774,7 +774,7 @@
     - subtract: [knee_min_y_inv, knee_max_y_inv]
       export: LEFT_KNEE_lat_travel_range_VLab_mean
 
-- parameter: RIGHT_KNEE_lat_travel
+- parameter: RIGHT_KNEE_lat_travel_VLab
   steps:
     - segment: RightLeg => knee_mm
       space: VirtualLab
@@ -941,7 +941,7 @@
       output: angle
     - min: angle
 
-- parameter: Left Ankle Angles_range
+- parameter: Left Ankle Angles_range_mean
   steps:
     - subtract: [Left Ankle Angles_max, Left Ankle Angles_min]
 
@@ -957,7 +957,7 @@
       output: angle
     - min: angle
 
-- parameter: Right Ankle Angles_range
+- parameter: Right Ankle Angles_range_mean
   steps:
     - subtract: [Right Ankle Angles_max, Right Ankle Angles_min]
 

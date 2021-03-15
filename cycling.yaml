@@ -859,6 +859,10 @@
   steps:
     - import: Left_Knee_Foot_distance@L_RP
 
+- parameter: Left_Knee_Foot_distance@L_PP_MEAN
+  steps:
+    - mean: Left_Knee_Foot_distance@L_PP
+  
 - parameter: Left_Knee_Foot_distance_max
   steps:
     - eventMask: [Left_Knee_Foot_distance, L_TDC, L_TDC]
@@ -903,6 +907,10 @@
   steps:
     - import: Right_Knee_Foot_distance@R_RP
 
+- parameter: Right_Knee_Foot_distance@R_PP_MEAN
+  steps:
+    - mean: Right_Knee_Foot_distance@R_PP
+  
 - parameter: Right_Knee_Foot_distance_max
   steps:
     - eventMask: [Right_Knee_Foot_distance, R_TDC, R_TDC]
@@ -1033,6 +1041,10 @@
   steps:
     - import: Right Foot Progression@R_RP
 
+- parameter: Left Foot Progression_mean_MEAN
+  steps:
+    - mean: Left Foot Progression
+
 - parameter: Left Foot Progression_max
   steps:
     - eventMask: [Left Foot Progression, L_TDC, L_TDC]
@@ -1048,6 +1060,10 @@
 - parameter: Left Foot Progression_range
   steps:
     - subtract: [Left Foot Progression_max, Left Foot Progression_min]
+
+- parameter: Right Foot Progression_mean_MEAN
+  steps:
+    - mean: Right Foot Progression
 
 - parameter: Right Foot Progression_max
   steps:
@@ -1298,9 +1314,12 @@
       output: angle
     - min: angle
 
-- parameter: Shoulders_wrt_VLab_range
+- parameter: Shoulders_wrt_VLab_range_mean
   steps:
     - subtract: [Shoulders_wrt_VLab_max, Shoulders_wrt_VLab_min]
+      output: Shoulders_wrt_VLab_range
+      export: Shoulders_wrt_VLab_range
+    - mean: Shoulders_wrt_VLab_range
 
 # Elbow distance
 - parameter: Elbows_distance_mean

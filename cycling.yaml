@@ -777,16 +777,17 @@
     - subtract: [Right Knee Angles_max, Right Knee Angles_min]
 
 # Knee lateral travel (wobble)
-#   - range of knee movement in med/lat direction wrt to Virtual lab or pelvis which is X
-- parameter: LEFT_KNEE_lat_travel_VLab
+#   - range of knee movement in med/lat direction wrt to Virtual lab or pelvis
+- parameter: LEFT_KNEE_VLab
   steps:
     - segment: LeftLeg => knee_mm
       space: VirtualLab
     - convert: knee_mm
       from: mm
       to: m
-      output: knee
-      export: LEFT_KNEE_VLab
+
+- parameter: LEFT_KNEE_lat_travel_range_VLab_mean
+    - import: LEFT_KNEE_VLab => knee
 
     - import: knee@L_TDC => knee_TDC
       export: Left_Knee_VLab@L_TDC
@@ -809,17 +810,53 @@
     - multiply: [knee_min.y, -1]
       output: knee_min_y_inv
     - subtract: [knee_min_y_inv, knee_max_y_inv]
-      export: LEFT_KNEE_lat_travel_range_VLab_mean
 
-- parameter: RIGHT_KNEE_lat_travel_VLab
+- parameter: LEFT_KNEE_RPV
+  steps:
+    - import: LEFT_KNEE_VLab => knee
+    - segment: Hips => pelvis_mm
+      space: VirtualLab
+    - convert: pelvis_mm
+      from: mm
+      to: m
+      output: pelvis
+    - subtract: [knee, pelvis]
+
+- parameter: LEFT_KNEE_lat_travel_range_RPV_mean
+    - import: LEFT_KNEE_RPV => knee
+
+    - import: knee@L_TDC => knee_TDC
+      export: Left_Knee_RPV@L_TDC
+    - import: knee@L_BDC => knee_BDC
+      export: Left_Knee_RPV@L_BDC
+    - import: knee@L_PP => knee_PP
+      export: Left_Knee_RPV@L_PP
+    - import: knee@L_RP => knee_RP
+      export: Left_Knee_RPV@L_RP
+
+    - eventMask: [knee, L_TDC, L_TDC]
+      output: knee_mask
+    - max: knee_mask => knee_max
+      export: LEFT_KNEE_RPV_max
+    - min: knee_mask => knee_min
+      export: LEFT_KNEE_RPV_min
+    # invert left X component to give it positive sign in report
+    - multiply: [knee_max.y, -1]
+      output: knee_max_y_inv
+    - multiply: [knee_min.y, -1]
+      output: knee_min_y_inv
+    - subtract: [knee_min_y_inv, knee_max_y_inv]
+
+- parameter: RIGHT_KNEE_VLab
   steps:
     - segment: RightLeg => knee_mm
       space: VirtualLab
     - convert: knee_mm
       from: mm
       to: m
-      output: knee
-      export: RIGHT_KNEE_VLab
+
+- parameter: RIGHT_KNEE_lat_travel_range_VLab_mean
+    - import: RIGHT_KNEE_VLab => knee
 
     - import: knee@R_TDC => knee_TDC
       export: Right_Knee_VLab@R_TDC
@@ -842,7 +879,42 @@
     - multiply: [knee_min.y, -1]
       output: knee_min_y_inv
     - subtract: [knee_min_y_inv, knee_max_y_inv]
-      export: RIGHT_KNEE_lat_travel_range_VLab_mean
+
+- parameter: RIGHT_KNEE_RPV
+  steps:
+    - import: RIGHT_KNEE_VLab => knee
+    - segment: Hips => pelvis_mm
+      space: VirtualLab
+    - convert: pelvis_mm
+      from: mm
+      to: m
+      output: pelvis
+    - subtract: [knee, pelvis]
+
+- parameter: RIGHT_KNEE_lat_travel_range_RPV_mean
+    - import: RIGHT_KNEE_RPV => knee
+
+    - import: knee@R_TDC => knee_TDC
+      export: Right_Knee_RPV@R_TDC
+    - import: knee@R_BDC => knee_BDC
+      export: Right_Knee_RPV@R_BDC
+    - import: knee@R_PP => knee_PP
+      export: Right_Knee_RPV@R_PP
+    - import: knee@R_RP => knee_RP
+      export: Right_Knee_RPV@R_RP
+
+    - eventMask: [knee, R_TDC, R_TDC]
+      output: knee_mask
+    - max: knee_mask => knee_max
+      export: RIGHT_KNEE_RPV_max
+    - min: knee_mask => knee_min
+      export: RIGHT_KNEE_RPV_min
+    # invert left X component to give it positive sign in report
+    - multiply: [knee_max.y, -1]
+      output: knee_max_y_inv
+    - multiply: [knee_min.y, -1]
+      output: knee_min_y_inv
+    - subtract: [knee_min_y_inv, knee_max_y_inv]
 
 # Knee forward of foot
 - parameter: Left_Knee_Foot_distance

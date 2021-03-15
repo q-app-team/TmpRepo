@@ -592,6 +592,10 @@
   steps:
     - import: Right Hip Angles@R_RP
 
+- parameter: Left Hip Angles@L_TDC_MEAN
+  steps:
+    - mean: Left Hip Angles@L_TDC
+
 - parameter: Left Hip Angles_max
   steps:
     - eventMask: [Left Hip Angles, L_TDC, L_TDC]
@@ -607,6 +611,10 @@
 - parameter: Left Hip Angles_range
   steps:
     - subtract: [Left Hip Angles_max, Left Hip Angles_min]
+
+- parameter: Right Hip Angles@R_TDC_MEAN
+  steps:
+    - mean: Right Hip Angles@R_TDC
 
 - parameter: Right Hip Angles_max
   steps:
@@ -690,6 +698,22 @@
   steps:
     - import: Right Knee Angles@R_RP
 
+- parameter: Left Knee Angles@L_TDC_MEAN
+  steps:
+    - mean: Left Knee Angles@L_TDC
+
+- parameter: Left Knee Angles@L_BDC_MEAN
+  steps:
+    - mean: Left Knee Angles@L_BDC
+
+- parameter: Left Knee Angles@L_PP_MEAN
+  steps:
+    - mean: Left Knee Angles@L_PP
+
+- parameter: Left Knee Angles@L_RP_MEAN
+  steps:
+    - mean: Left Knee Angles@L_RP
+
 - parameter: Left Knee Angles_max
   steps:
     - eventMask: [Left Knee Angles, L_TDC, L_TDC]
@@ -705,6 +729,22 @@
 - parameter: Left Knee Angles_range
   steps:
     - subtract: [Left Knee Angles_max, Left Knee Angles_min]
+
+- parameter: Right Knee Angles@R_TDC_MEAN
+  steps:
+    - mean: Right Knee Angles@R_TDC
+
+- parameter: Right Knee Angles@R_BDC_MEAN
+  steps:
+    - mean: Right Knee Angles@R_BDC
+
+- parameter: Right Knee Angles@R_PP_MEAN
+  steps:
+    - mean: Right Knee Angles@R_PP
+
+- parameter: Right Knee Angles@R_RP_MEAN
+  steps:
+    - mean: Right Knee Angles@R_RP
 
 - parameter: Right Knee Angles_max
   steps:
@@ -912,6 +952,14 @@
   steps:
     - import: Right Ankle Angles@R_RP
 
+- parameter: Left Ankle Angles@L_TDC_MEAN
+  steps:
+    - mean: Left Ankle Angles@L_TDC
+
+- parameter: Left Ankle Angles@L_BDC_MEAN
+  steps:
+    - mean: Left Ankle Angles@L_BDC
+
 - parameter: Left Ankle Angles_max
   steps:
     - eventMask: [Left Ankle Angles, L_TDC, L_TDC]
@@ -927,6 +975,14 @@
 - parameter: Left Ankle Angles_range_mean
   steps:
     - subtract: [Left Ankle Angles_max, Left Ankle Angles_min]
+
+- parameter: Right Ankle Angles@R_TDC_MEAN
+  steps:
+    - mean: Right Ankle Angles@R_TDC
+
+- parameter: Right Ankle Angles@R_BDC_MEAN
+  steps:
+    - mean: Right Ankle Angles@R_BDC
 
 - parameter: Right Ankle Angles_max
   steps:

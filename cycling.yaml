@@ -559,6 +559,20 @@
   steps:
     - subtract: [Right Pelvic Angles.y@L_PP, Right Pelvic Angles.y@L_RP]
 
+# Pelvis range of vertical movement (bouncing)
+- parameter: PelvisCG_pos_rt_SaddleCG_pos_range
+  steps:
+    - segment: Hips => pelvis
+    - eventMask: [pelvis, L_TDC, L_TDC]
+      output: mask
+    - min: mask.z => min
+    - max: mask.z => max
+    - subtract: [max, min]
+      output: sub
+    - convert: sub
+      from: mm
+      to: m
+ 
 # Hip angles at events
 - parameter: Left Hip Angles@L_TDC
   steps:

@@ -796,6 +796,7 @@
       to: m
 
 - parameter: LEFT_KNEE_lat_travel_range_VLab_mean
+  steps:
     - import: LEFT_KNEE_VLab => knee
 
     - import: knee@L_TDC => knee_TDC
@@ -833,6 +834,7 @@
     - subtract: [knee, pelvis]
 
 - parameter: LEFT_KNEE_lat_travel_range_RPV_mean
+  steps:
     - import: LEFT_KNEE_RPV => knee
 
     - import: knee@L_TDC => knee_TDC
@@ -866,6 +868,7 @@
       to: m
 
 - parameter: RIGHT_KNEE_lat_travel_range_VLab_mean
+  steps:
     - import: RIGHT_KNEE_VLab => knee
 
     - import: knee@R_TDC => knee_TDC
@@ -902,6 +905,7 @@
     - subtract: [knee, pelvis]
 
 - parameter: RIGHT_KNEE_lat_travel_range_RPV_mean
+  steps:
     - import: RIGHT_KNEE_RPV => knee
 
     - import: knee@R_TDC => knee_TDC

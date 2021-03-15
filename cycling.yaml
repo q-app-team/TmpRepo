@@ -481,24 +481,6 @@
       from: mm
       to: m
 
-# Elbows distance
-- parameter: Elbows_distance
-  steps:
-    - distance: [LeftForeArm, RightForeArm]
-      output: dist
-    - convert: dist
-      from: mm
-      to: m
-
-# Wrists distance
-- parameter: Wrists_distance
-  steps:
-    - distance: [LeftHand, RightHand]
-      output: dist
-    - convert: dist
-      from: mm
-      to: m
-
 # Pelvis angles at events
 - parameter: PELVIS_ANGLE@R_TDC
   steps:
@@ -1268,8 +1250,11 @@
 - parameter: Elbows_distance_mean
   steps:
     - distance: [LeftForeArm, RightForeArm]
-      output: dist
-    - mean: dist
+      output: dist_mm
+    - mean: dist_mm => dist_mm_mean
+    - convert: dist_mm_mean
+      from: mm
+      to: m
 
 # Wrist Angles
 - parameter: Left Wrist Angles_mean
@@ -1295,8 +1280,11 @@
 - parameter: Left_Wrist_rt_Hip_mean
   steps:
     - distance: [LeftHand, Hips]
-      output: dist
-    - mean: dist
+      output: dist_mm
+    - mean: dist_mm => dist_mm_mean
+    - convert: dist_mm_mean
+      from: mm
+      to: m
 
 - parameter: Right Wrist Angles_mean
   steps:
@@ -1321,14 +1309,20 @@
 - parameter: Wrists_distance_mean
   steps:
     - distance: [LeftHand, RightHand]
-      output: dist
-    - mean: dist
+      output: dist_mm
+    - mean: dist_mm => dist_mm_mean
+    - convert: dist_mm_mean
+      from: mm
+      to: m
 
 - parameter: Right_Wrist_rt_Hip_mean
   steps:
     - distance: [RightHand, Hips]
-      output: dist
-    - mean: dist
+      output: dist_mm
+    - mean: dist_mm => dist_mm_mean
+    - convert: dist_mm_mean
+      from: mm
+      to: m
 
 # Head Angles
 - parameter: Head Angles_max

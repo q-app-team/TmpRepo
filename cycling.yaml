@@ -418,9 +418,10 @@
 - parameter: Cadence
   steps:
     - count: L_TDC
-      output: Cycle_count
-    - subtract: [Cycle_count, 1]
+      output: noOfCycles
+    - subtract: [noOfCycles, 1]
       output: cyc_count_cor
+      export: Cycle_count
     - multiply: [cyc_count_cor, 360]
       output: cyc_count_cor_m
 
@@ -1027,6 +1028,10 @@
     - subtract: [Right Foot Progression_max, Right Foot Progression_min]
 
 # Trunk to Horizontal
+- parameter: Trunk Angles_wrt_LAB_mean
+  steps:
+    - mean: Trunk Angles_wrt_LAB
+
 - parameter: Trunk Angles_wrt_LAB@L_TDC
   steps:
     - import: Trunk Angles_wrt_LAB@L_TDC
@@ -1157,6 +1162,14 @@
   steps:
     - subtract: [Trunk Angles_max_right, Trunk Angles_min_right]
 
+# Shoulder angles
+- parameter: Left Shoulder Angles_mean
+  steps:
+    - mean: Left Shoulder Angles
+
+- parameter: Right Shoulder Angles_mean
+  steps:
+    - mean: Right Shoulder Angles
 
 # Shoulder_Pelvis Angle
 - parameter: Left Shoulder_Pelvis Angle@L_TDC
@@ -1251,7 +1264,18 @@
   steps:
     - subtract: [Shoulders_wrt_VLab_max, Shoulders_wrt_VLab_min]
 
+# Elbow distance
+- parameter: Elbows_distance_mean
+  steps:
+    - distance: [LeftForeArm, RightForeArm]
+      output: dist
+    - mean: dist
+
 # Wrist Angles
+- parameter: Left Wrist Angles_mean
+  steps:
+    - mean: Left Wrist Angles
+  
 - parameter: Left Wrist Angles_max
   steps:
     - eventMask: [Left Wrist Angles, L_TDC, L_TDC]
@@ -1268,6 +1292,16 @@
   steps:
     - subtract: [Left Wrist Angles_max, Left Wrist Angles_min]
 
+- parameter: Left_Wrist_rt_Hip_mean
+  steps:
+    - distance: [LeftHand, Hips]
+      output: dist
+    - mean: dist
+
+- parameter: Right Wrist Angles_mean
+  steps:
+    - mean: Right Wrist Angles
+  
 - parameter: Right Wrist Angles_max
   steps:
     - eventMask: [Right Wrist Angles, R_TDC, R_TDC]
@@ -1283,6 +1317,18 @@
 - parameter: Right Wrist Angles_range
   steps:
     - subtract: [Right Wrist Angles_max, Right Wrist Angles_min]
+
+- parameter: Wrists_distance_mean
+  steps:
+    - distance: [LeftHand, RightHand]
+      output: dist
+    - mean: dist
+
+- parameter: Right_Wrist_rt_Hip_mean
+  steps:
+    - distance: [RightHand, Hips]
+      output: dist
+    - mean: dist
 
 # Head Angles
 - parameter: Head Angles_max

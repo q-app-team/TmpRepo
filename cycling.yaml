@@ -1570,3 +1570,53 @@
 
 # Forearm angle to horizontal
 # to do: requires planar angles
+
+# Trajectories
+- parameter: Left_FM2_VLab
+  steps:
+    - marker: LForefoot2 => marker
+      space: VirtualLab
+    - convert: marker
+      from: mm
+      to: m
+
+- parameter: Left_FCC_VLab
+  steps:
+    - marker: LHeelBack => marker
+      space: VirtualLab
+    - convert: marker
+      from: mm
+      to: m
+
+- parameter: LEFT_ANKLE_VLab
+  steps:
+    - segment: LeftFoot => segment
+      space: VirtualLab
+    - convert: segment
+      from: mm
+      to: m
+
+- parameter: Right_FM2_VLab
+  steps:
+    - marker: RForefoot2 => marker
+      space: VirtualLab
+    - convert: marker
+      from: mm
+      to: m
+
+- parameter: Right_FCC_VLab
+  steps:
+    - marker: RHeelBack => marker
+      space: VirtualLab
+    - convert: marker
+      from: mm
+      to: m
+
+- parameter: RIGHT_ANKLE_VLab
+  steps:
+    - segment: RightFoot => segment
+      space: VirtualLab
+    - convert: segment
+      from: mm
+      to: m
+

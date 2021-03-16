@@ -205,7 +205,7 @@
 - event: L_TDC1
   set: left
   steps:
-    - subtract: [L_TDC, 1]
+    - add: [L_TDC, 1]
 
 - event: L_BDC
   set: left
@@ -237,7 +237,7 @@
 - event: R_TDC1
   set: right
   steps:
-    - subtract: [R_TDC, 1]
+    - add: [R_TDC, 1]
 
 - event: R_BDC
   set: right

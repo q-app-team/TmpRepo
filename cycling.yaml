@@ -420,6 +420,11 @@
     - jointAngle: Neck => shoulders
       space: VirtualLab
 
+- parameter: Shoulders_pos
+  steps:
+    - segment: Neck => shoulders
+      space: VirtualLab
+
 # --- Wrists ---
 - parameter: Left Wrist Angles
   set: left
@@ -1430,7 +1435,18 @@
     - subtract: [Right Shoulder_Pelvis Angle_max, Right Shoulder_Pelvis Angle_min]
 
 # Shoulder shift to bike plane line 5481
-# to do, line 5481
+#   Calculated wrt VLab not bike LCS
+- parameter: Shoulders_shift_wrt_bike_range_mean
+  steps:
+    - eventMask: [Shoulders_pos, R_TDC, R_TDC]
+      output: mask
+    - max: mask => max
+    - min: mask => min
+    - subtract: [max, min]
+      output: sub
+    - convert: sub
+      from: mm
+      to: m
 
 # Shoulder wrt Lab
 - parameter: Shoulders_wrt_VLab_max

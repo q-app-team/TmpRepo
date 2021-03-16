@@ -746,7 +746,7 @@
       space: VirtualLab
     - segment: RightFoot => r_foot
       space: VirtualLab
-    - subtract: [l_foot.x@LFS, r_foot.x@RFS]
+    - subtract: [l_foot.y@LFS, r_foot.y@RFS]
       output: step_length_mm
     - convert: step_length_mm
       from: mm
@@ -762,7 +762,7 @@
       space: VirtualLab
     - segment: RightFoot => r_foot
       space: VirtualLab
-    - subtract: [r_foot.x@RFS, l_foot.x@LFS]
+    - subtract: [r_foot.y@RFS, l_foot.y@LFS]
       output: step_length_mm
     - convert: step_length_mm
       from: mm

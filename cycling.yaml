@@ -527,79 +527,96 @@
 
 # Pelvis angles at events
 - parameter: PELVIS_ANGLE@R_TDC
+  set: right
   steps:
     - import: Right Pelvic Angles@R_TDC
 
 - parameter: PELVIS_ANGLE@R_BDC
+  set: right
   steps:
     - import: Right Pelvic Angles@R_BDC
 
 - parameter: PELVIS_ANGLE@R_PP
+  set: right
   steps:
     - import: Right Pelvic Angles@R_PP
 
 - parameter: PELVIS_ANGLE@R_RP
+  set: right
   steps:
     - import: Right Pelvic Angles@R_RP
 
 - parameter: PELVIS_ANGLE@L_TDC
+  set: right
   steps:
     - import: Right Pelvic Angles@L_TDC
 
 - parameter: PELVIS_ANGLE@L_BDC
+  set: right
   steps:
     - import: Right Pelvic Angles@L_BDC
 
 - parameter: PELVIS_ANGLE@L_PP
+  set: right
   steps:
     - import: Right Pelvic Angles@L_PP
 
 - parameter: PELVIS_ANGLE@L_RP
+  set: right
   steps:
     - import: Right Pelvic Angles@L_RP
 
 - parameter: Left Pelvic Angles_max
+  set: left
   steps:
     - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
       output: angle
     - max: angle
 
 - parameter: Left Pelvic Angles_min
+  set: left
   steps:
     - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
       output: angle
     - min: angle
 
 - parameter: Left Pelvic Angles_range
+  set: left
   steps:
     - subtract: [Left Pelvic Angles_max, Left Pelvic Angles_min]
 
 - parameter: Right Pelvic Angles_max
+  set: right
   steps:
     - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
       output: angle
     - max: angle
 
 - parameter: Right Pelvic Angles_min
+  set: right
   steps:
     - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
       output: angle
     - min: angle
 
 - parameter: Right Pelvic Angles_range
+  set: right
   steps:
     - subtract: [Right Pelvic Angles_max, Right Pelvic Angles_min]
 
 # Pelvis range of lateral movement (rocking)
 - parameter: Pelvis_Angle_rocking_R_TDC_R_BDC_range
+  set: right
   steps:
     - subtract: [Right Pelvic Angles.y@R_TDC, Right Pelvic Angles.y@R_BDC]
 
 - parameter: Pelvis_Angle_rocking_R_PP_R_RP_range
+  set: right
   steps:
     - subtract: [Right Pelvic Angles.y@R_PP, Right Pelvic Angles.y@R_RP]
 
 - parameter: Pelvis_Angle_rocking_L_PP_L_RP_range
+  set: left
   steps:
     - subtract: [Right Pelvic Angles.y@L_PP, Right Pelvic Angles.y@L_RP]
 
@@ -619,74 +636,90 @@
  
 # Hip angles at events
 - parameter: Left Hip Angles@L_TDC
+  set: left
   steps:
     - import: Left Hip Angles@L_TDC
 
 - parameter: Left Hip Angles@L_BDC
+  set: left
   steps:
     - import: Left Hip Angles@L_BDC
 
 - parameter: Left Hip Angles@L_PP
+  set: left
   steps:
     - import: Left Hip Angles@L_PP
 
 - parameter: Left Hip Angles@L_RP
+  set: left
   steps:
     - import: Left Hip Angles@L_RP
 
 - parameter: Right Hip Angles@R_TDC
+  set: left
   steps:
     - import: Right Hip Angles@R_TDC
 
 - parameter: Right Hip Angles@R_BDC
+  set: left
   steps:
     - import: Right Hip Angles@R_BDC
 
 - parameter: Right Hip Angles@R_PP
+  set: left
   steps:
     - import: Right Hip Angles@R_PP
 
 - parameter: Right Hip Angles@R_RP
+  set: left
   steps:
     - import: Right Hip Angles@R_RP
 
 - parameter: Left Hip Angles@L_TDC_MEAN
+  set: left
   steps:
     - mean: Left Hip Angles@L_TDC
 
 - parameter: Left Hip Angles_max
+  set: left
   steps:
     - eventMask: [Left Hip Angles, L_TDC, L_TDC]
       output: angle
     - max: angle
 
 - parameter: Left Hip Angles_min
+  set: left
   steps:
     - eventMask: [Left Hip Angles, L_TDC, L_TDC]
       output: angle
     - min: angle
 
 - parameter: Left Hip Angles_range
+  set: left
   steps:
     - subtract: [Left Hip Angles_max, Left Hip Angles_min]
 
 - parameter: Right Hip Angles@R_TDC_MEAN
+  set: right
   steps:
     - mean: Right Hip Angles@R_TDC
 
 - parameter: Right Hip Angles_max
+  set: right
   steps:
     - eventMask: [Right Hip Angles, R_TDC, R_TDC]
       output: angle
     - max: angle
 
 - parameter: Right Hip Angles_min
+  set: right
   steps:
     - eventMask: [Right Hip Angles, R_TDC, R_TDC]
       output: angle
     - min: angle
 
 - parameter: Right Hip Angles_range
+  set: right
   steps:
     - subtract: [Right Hip Angles_max, Right Hip Angles_min]
 
@@ -725,104 +758,127 @@
 
 # Knee angles
 - parameter: Left Knee Angles@L_TDC
+  set: left
   steps:
     - import: Left Knee Angles@L_TDC
 
 - parameter: Left Knee Angles@L_BDC
+  set: left
   steps:
     - import: Left Knee Angles@L_BDC
 
 - parameter: Left Knee Angles@L_PP
+  set: left
   steps:
     - import: Left Knee Angles@L_PP
 
 - parameter: Left Knee Angles@L_RP
+  set: left
   steps:
     - import: Left Knee Angles@L_RP
 
 - parameter: Right Knee Angles@R_TDC
+  set: right
   steps:
     - import: Right Knee Angles@R_TDC
 
 - parameter: Right Knee Angles@R_BDC
+  set: right
   steps:
     - import: Right Knee Angles@R_BDC
 
 - parameter: Right Knee Angles@R_PP
+  set: right
   steps:
     - import: Right Knee Angles@R_PP
 
 - parameter: Right Knee Angles@R_RP
+  set: right
   steps:
     - import: Right Knee Angles@R_RP
 
 - parameter: Left Knee Angles@L_TDC_MEAN
+  set: left
   steps:
     - mean: Left Knee Angles@L_TDC
 
 - parameter: Left Knee Angles@L_BDC_MEAN
+  set: left
   steps:
     - mean: Left Knee Angles@L_BDC
 
 - parameter: Left Knee Angles@L_PP_MEAN
+  set: left
   steps:
     - mean: Left Knee Angles@L_PP
 
 - parameter: Left Knee Angles@L_RP_MEAN
+  set: left
   steps:
     - mean: Left Knee Angles@L_RP
 
 - parameter: Left Knee Angles_max
+  set: left
   steps:
     - eventMask: [Left Knee Angles, L_TDC, L_TDC]
       output: angle
     - max: angle.x
 
 - parameter: Left Knee Angles_min
+  set: left
   steps:
     - eventMask: [Left Knee Angles, L_TDC, L_TDC]
       output: angle
     - min: angle.x
 
 - parameter: Left Knee Angles_range
+  set: left
   steps:
     - subtract: [Left Knee Angles_max, Left Knee Angles_min]
 
 - parameter: Right Knee Angles@R_TDC_MEAN
+  set: right
   steps:
     - mean: Right Knee Angles@R_TDC
 
 - parameter: Right Knee Angles@R_BDC_MEAN
+  set: right
   steps:
     - mean: Right Knee Angles@R_BDC
 
 - parameter: Right Knee Angles@R_PP_MEAN
+  set: right
   steps:
     - mean: Right Knee Angles@R_PP
 
 - parameter: Right Knee Angles@R_RP_MEAN
+  set: right
   steps:
     - mean: Right Knee Angles@R_RP
 
 - parameter: Right Knee Angles_max
+  set: right
   steps:
     - eventMask: [Right Knee Angles, R_TDC, R_TDC]
       output: angle
     - max: angle.x
 
 - parameter: Right Knee Angles_min
+  set: right
   steps:
     - eventMask: [Right Knee Angles, R_TDC, R_TDC]
       output: angle
     - min: angle.x
 
 - parameter: Right Knee Angles_range
+  set: right
   steps:
     - subtract: [Right Knee Angles_max, Right Knee Angles_min]
 
 # Knee lateral travel (wobble)
 #   - range of knee movement in med/lat direction wrt to Virtual lab or pelvis
 - parameter: LEFT_KNEE_VLab
+  set: left
   steps:
     - segment: LeftLeg
       space: VirtualLab
@@ -832,6 +888,7 @@
       to: m
 
 - parameter: LEFT_KNEE_lat_travel_range_VLab_mean
+  set: left
   steps:
     - import: LEFT_KNEE_VLab => knee
 
@@ -858,6 +915,7 @@
     - subtract: [knee_min_y_inv, knee_max_y_inv]
 
 - parameter: LEFT_KNEE_RPV
+  set: left
   steps:
     - import: LEFT_KNEE_VLab => knee
     - segment: Hips
@@ -870,6 +928,7 @@
     - subtract: [knee, pelvis]
 
 - parameter: LEFT_KNEE_lat_travel_range_RPV_mean
+  set: left
   steps:
     - import: LEFT_KNEE_RPV => knee
 
@@ -896,6 +955,7 @@
     - subtract: [knee_min_y_inv, knee_max_y_inv]
 
 - parameter: RIGHT_KNEE_VLab
+  set: right
   steps:
     - segment: RightLeg => knee_mm
       space: VirtualLab
@@ -904,6 +964,7 @@
       to: m
 
 - parameter: RIGHT_KNEE_lat_travel_range_VLab_mean
+  set: right
   steps:
     - import: RIGHT_KNEE_VLab => knee
 
@@ -930,6 +991,7 @@
     - subtract: [knee_min_y_inv, knee_max_y_inv]
 
 - parameter: RIGHT_KNEE_RPV
+  set: right
   steps:
     - import: RIGHT_KNEE_VLab => knee
     - segment: Hips => pelvis_mm
@@ -941,6 +1003,7 @@
     - subtract: [knee, pelvis]
 
 - parameter: RIGHT_KNEE_lat_travel_range_RPV_mean
+  set: right
   steps:
     - import: RIGHT_KNEE_RPV => knee
 
@@ -968,6 +1031,7 @@
 
 # Knee forward of foot
 - parameter: Left_Knee_Foot_distance
+  set: left
   steps:
     - segment: LeftLeg => knee
       space: VirtualLab
@@ -980,42 +1044,51 @@
       to: m
 
 - parameter: Left_Knee_Foot_distance@L_TDC
+  set: left
   steps:
     - import: Left_Knee_Foot_distance@L_TDC
 
 - parameter: Left_Knee_Foot_distance@L_BDC
+  set: left
   steps:
     - import: Left_Knee_Foot_distance@L_BDC
 
 - parameter: Left_Knee_Foot_distance@L_PP
+  set: left
   steps:
     - import: Left_Knee_Foot_distance@L_PP
 
 - parameter: Left_Knee_Foot_distance@L_RP
+  set: left
   steps:
     - import: Left_Knee_Foot_distance@L_RP
 
 - parameter: Left_Knee_Foot_distance@L_PP_MEAN
+  set: left
   steps:
     - mean: Left_Knee_Foot_distance@L_PP
   
 - parameter: Left_Knee_Foot_distance_max
+  set: left
   steps:
     - eventMask: [Left_Knee_Foot_distance, L_TDC, L_TDC]
       output: knee_mask
     - max: knee_mask.x
 
 - parameter: Left_Knee_Foot_distance_min
+  set: left
   steps:
     - eventMask: [Left_Knee_Foot_distance, L_TDC, L_TDC]
       output: knee_mask
     - min: knee_mask.x
     
 - parameter: Left_Knee_Foot_distance_range
+  set: left
   steps:
     - subtract: [Left_Knee_Foot_distance_max, Left_Knee_Foot_distance_min]
 
 - parameter: Right_Knee_Foot_distance
+  set: right
   steps:
     - segment: RightLeg => knee
       space: VirtualLab
@@ -1028,192 +1101,234 @@
       to: m
 
 - parameter: Right_Knee_Foot_distance@R_TDC
+  set: right
   steps:
     - import: Right_Knee_Foot_distance@R_TDC
 
 - parameter: Right_Knee_Foot_distance@R_BDC
+  set: right
   steps:
     - import: Right_Knee_Foot_distance@R_BDC
 
 - parameter: Right_Knee_Foot_distance@R_PP
+  set: right
   steps:
     - import: Right_Knee_Foot_distance@R_PP
 
 - parameter: Right_Knee_Foot_distance@R_RP
+  set: right
   steps:
     - import: Right_Knee_Foot_distance@R_RP
 
 - parameter: Right_Knee_Foot_distance@R_PP_MEAN
+  set: right
   steps:
     - mean: Right_Knee_Foot_distance@R_PP
   
 - parameter: Right_Knee_Foot_distance_max
+  set: right
   steps:
     - eventMask: [Right_Knee_Foot_distance, R_TDC, R_TDC]
       output: knee_mask
     - max: knee_mask.x
 
 - parameter: Right_Knee_Foot_distance_min
+  set: right
   steps:
     - eventMask: [Right_Knee_Foot_distance, R_TDC, R_TDC]
       output: knee_mask
     - min: knee_mask.x
     
 - parameter: Right_Knee_Foot_distance_range
+  set: right
   steps:
     - subtract: [Right_Knee_Foot_distance_max, Right_Knee_Foot_distance_min]
 
 # Ankle angle
 - parameter: Left Ankle Angles@L_TDC
+  set: left
   steps:
     - import: Left Ankle Angles@L_TDC
 
 - parameter: Left Ankle Angles@L_BDC
+  set: left
   steps:
     - import: Left Ankle Angles@L_BDC
 
 - parameter: Left Ankle Angles@L_PP
+  set: left
   steps:
     - import: Left Ankle Angles@L_PP
 
 - parameter: Left Ankle Angles@L_RP
+  set: left
   steps:
     - import: Left Ankle Angles@L_RP
 
 - parameter: Right Ankle Angles@R_TDC
+  set: right
   steps:
     - import: Right Ankle Angles@R_TDC
 
 - parameter: Right Ankle Angles@R_BDC
+  set: right
   steps:
     - import: Right Ankle Angles@R_BDC
 
 - parameter: Right Ankle Angles@R_PP
+  set: right
   steps:
     - import: Right Ankle Angles@R_PP
 
 - parameter: Right Ankle Angles@R_RP
+  set: right
   steps:
     - import: Right Ankle Angles@R_RP
 
 - parameter: Left Ankle Angles@L_TDC_MEAN
+  set: left
   steps:
     - mean: Left Ankle Angles@L_TDC
 
 - parameter: Left Ankle Angles@L_BDC_MEAN
+  set: left
   steps:
     - mean: Left Ankle Angles@L_BDC
 
 - parameter: Left Ankle Angles_max
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, L_TDC, L_TDC]
       output: angle
     - max: angle
 
 - parameter: Left Ankle Angles_min
+  set: left
   steps:
     - eventMask: [Left Ankle Angles, L_TDC, L_TDC]
       output: angle
     - min: angle
 
 - parameter: Left Ankle Angles_range_mean
+  set: left
   steps:
     - subtract: [Left Ankle Angles_max, Left Ankle Angles_min]
 
 - parameter: Right Ankle Angles@R_TDC_MEAN
+  set: right
   steps:
     - mean: Right Ankle Angles@R_TDC
 
 - parameter: Right Ankle Angles@R_BDC_MEAN
+  set: right
   steps:
     - mean: Right Ankle Angles@R_BDC
 
 - parameter: Right Ankle Angles_max
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, R_TDC, R_TDC]
       output: angle
     - max: angle
 
 - parameter: Right Ankle Angles_min
+  set: right
   steps:
     - eventMask: [Right Ankle Angles, R_TDC, R_TDC]
       output: angle
     - min: angle
 
 - parameter: Right Ankle Angles_range_mean
+  set: right
   steps:
     - subtract: [Right Ankle Angles_max, Right Ankle Angles_min]
 
 # Foot progression angle
 - parameter: Left Foot Progression@L_TDC
+  set: left
   steps:
     - import: Left Foot Progression@L_TDC
 
 - parameter: Left Foot Progression@L_BDC
+  set: left
   steps:
     - import: Left Foot Progression@L_BDC
 
 - parameter: Left Foot Progression@L_PP
+  set: left
   steps:
     - import: Left Foot Progression@L_PP
 
 - parameter: Left Foot Progression@L_RP
+  set: left
   steps:
     - import: Left Foot Progression@L_RP
 
 - parameter: Right Foot Progression@R_TDC
+  set: right
   steps:
     - import: Right Foot Progression@R_TDC
 
 - parameter: Right Foot Progression@R_BDC
+  set: right
   steps:
     - import: Right Foot Progression@R_BDC
 
 - parameter: Right Foot Progression@R_PP
+  set: right
   steps:
     - import: Right Foot Progression@R_PP
 
 - parameter: Right Foot Progression@R_RP
+  set: right
   steps:
     - import: Right Foot Progression@R_RP
 
 - parameter: Left Foot Progression_mean_MEAN
+  set: left
   steps:
     - mean: Left Foot Progression
 
 - parameter: Left Foot Progression_max
+  set: left
   steps:
     - eventMask: [Left Foot Progression, L_TDC, L_TDC]
       output: angle
     - max: angle
 
 - parameter: Left Foot Progression_min
+  set: left
   steps:
     - eventMask: [Left Foot Progression, L_TDC, L_TDC]
       output: angle
     - min: angle
 
 - parameter: Left Foot Progression_range
+  set: left
   steps:
     - subtract: [Left Foot Progression_max, Left Foot Progression_min]
 
 - parameter: Right Foot Progression_mean_MEAN
+  set: right
   steps:
     - mean: Right Foot Progression
 
 - parameter: Right Foot Progression_max
+  set: right
   steps:
     - eventMask: [Right Foot Progression, R_TDC, R_TDC]
       output: angle
     - max: angle
 
 - parameter: Right Foot Progression_min
+  set: right
   steps:
     - eventMask: [Right Foot Progression, R_TDC, R_TDC]
       output: angle
     - min: angle
 
 - parameter: Right Foot Progression_range
+  set: right
   steps:
     - subtract: [Right Foot Progression_max, Right Foot Progression_min]
 
@@ -1354,47 +1469,58 @@
 
 # Shoulder angles
 - parameter: Left Shoulder Angles_mean
+  set: left
   steps:
     - mean: Left Shoulder Angles
 
 - parameter: Right Shoulder Angles_mean
+  set: right
   steps:
     - mean: Right Shoulder Angles
 
 # Shoulder_Pelvis Angle
 - parameter: Left Shoulder_Pelvis Angle@L_TDC
+  set: left
   steps:
     - import: Left Shoulder_Pelvis Angle@L_TDC
 
 - parameter: Left Shoulder_Pelvis Angle@L_BDC
+  set: left
   steps:
     - import: Left Shoulder_Pelvis Angle@L_BDC
 
 - parameter: Left Shoulder_Pelvis Angle@L_PP
+  set: left
   steps:
     - import: Left Shoulder_Pelvis Angle@L_PP
 
 - parameter: Left Shoulder_Pelvis Angle@L_RP
+  set: left
   steps:
     - import: Left Shoulder_Pelvis Angle@L_RP
 
 - parameter: Right Shoulder_Pelvis Angle@R_TDC
+  set: right
   steps:
     - import: Right Shoulder_Pelvis Angle@R_TDC
 
 - parameter: Right Shoulder_Pelvis Angle@R_BDC
+  set: right
   steps:
     - import: Right Shoulder_Pelvis Angle@R_BDC
 
 - parameter: Right Shoulder_Pelvis Angle@R_PP
+  set: right
   steps:
     - import: Right Shoulder_Pelvis Angle@R_PP
 
 - parameter: Right Shoulder_Pelvis Angle@R_RP
+  set: right
   steps:
     - import: Right Shoulder_Pelvis Angle@R_RP
 
 - parameter: Left Shoulder_Pelvis Angle_max
+  set: left
   steps:
     - eventMask: [Left Shoulder_Pelvis Angle, L_TDC, L_TDC]
       output: angle
@@ -1403,6 +1529,7 @@
     - max: angle_neg
 
 - parameter: Left Shoulder_Pelvis Angle_min
+  set: left
   steps:
     - eventMask: [Left Shoulder_Pelvis Angle, L_TDC, L_TDC]
       output: angle
@@ -1411,10 +1538,12 @@
     - min: angle_neg
 
 - parameter: Left Shoulder_Pelvis Angle_range
+  set: left
   steps:
     - subtract: [Left Shoulder_Pelvis Angle_max, Left Shoulder_Pelvis Angle_min]
 
 - parameter: Right Shoulder_Pelvis Angle_max
+  set: right
   steps:
     - eventMask: [Right Shoulder_Pelvis Angle, R_TDC, R_TDC]
       output: angle
@@ -1423,6 +1552,7 @@
     - max: angle_neg
 
 - parameter: Right Shoulder_Pelvis Angle_min
+  set: right
   steps:
     - eventMask: [Right Shoulder_Pelvis Angle, R_TDC, R_TDC]
       output: angle
@@ -1431,6 +1561,7 @@
     - min: angle_neg
 
 - parameter: Right Shoulder_Pelvis Angle_range
+  set: right
   steps:
     - subtract: [Right Shoulder_Pelvis Angle_max, Right Shoulder_Pelvis Angle_min]
 
@@ -1480,26 +1611,31 @@
 
 # Wrist Angles
 - parameter: Left Wrist Angles_mean
+  set: left
   steps:
     - mean: Left Wrist Angles
   
 - parameter: Left Wrist Angles_max
+  set: left
   steps:
     - eventMask: [Left Wrist Angles, L_TDC, L_TDC]
       output: angle
     - max: angle
 
 - parameter: Left Wrist Angles_min
+  set: left
   steps:
     - eventMask: [Left Wrist Angles, L_TDC, L_TDC]
       output: angle
     - min: angle
 
 - parameter: Left Wrist Angles_range
+  set: left
   steps:
     - subtract: [Left Wrist Angles_max, Left Wrist Angles_min]
 
 - parameter: Left_Wrist_rt_Hip_mean
+  set: left
   steps:
     - distance: [LeftHand, Hips]
       output: dist_mm
@@ -1509,22 +1645,26 @@
       to: m
 
 - parameter: Right Wrist Angles_mean
+  set: right
   steps:
     - mean: Right Wrist Angles
   
 - parameter: Right Wrist Angles_max
+  set: right
   steps:
     - eventMask: [Right Wrist Angles, R_TDC, R_TDC]
       output: angle
     - max: angle
 
 - parameter: Right Wrist Angles_min
+  set: right
   steps:
     - eventMask: [Right Wrist Angles, R_TDC, R_TDC]
       output: angle
     - min: angle
 
 - parameter: Right Wrist Angles_range
+  set: right
   steps:
     - subtract: [Right Wrist Angles_max, Right Wrist Angles_min]
 
@@ -1538,6 +1678,7 @@
       to: m
 
 - parameter: Right_Wrist_rt_Hip_mean
+  set: right
   steps:
     - distance: [RightHand, Hips]
       output: dist_mm
@@ -1573,6 +1714,7 @@
 
 # Trajectories
 - parameter: Left_FM2_VLab
+  set: left
   steps:
     - marker: LForefoot2 => marker
       space: VirtualLab
@@ -1581,6 +1723,7 @@
       to: m
 
 - parameter: Left_FCC_VLab
+  set: left
   steps:
     - marker: LHeelBack => marker
       space: VirtualLab
@@ -1589,6 +1732,7 @@
       to: m
 
 - parameter: LEFT_ANKLE_VLab
+  set: left
   steps:
     - segment: LeftFoot => segment
       space: VirtualLab
@@ -1597,6 +1741,7 @@
       to: m
 
 - parameter: Right_FM2_VLab
+  set: right
   steps:
     - marker: RForefoot2 => marker
       space: VirtualLab
@@ -1605,6 +1750,7 @@
       to: m
 
 - parameter: Right_FCC_VLab
+  set: right
   steps:
     - marker: RHeelBack => marker
       space: VirtualLab
@@ -1613,6 +1759,7 @@
       to: m
 
 - parameter: RIGHT_ANKLE_VLab
+  set: right
   steps:
     - segment: RightFoot => segment
       space: VirtualLab

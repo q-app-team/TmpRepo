@@ -358,6 +358,8 @@
   set: right
   steps:
     - jointAngle: [RightLeg, RightFoot]
+      output: ankleAngle
+    - multiply: [ankleAngle, [1, 1, -1]]
 
 - parameter: Left Foot Progression
   set: left

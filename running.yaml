@@ -627,6 +627,11 @@
       to: m
       export: L_ELBOW_RT_PELVIS_X
 
+    - convert: elbowPelvis.z
+      from: mm
+      to: m
+      export: L_ELBOW_RT_PELVIS_Z
+
     - convert: elbowPelvis.x
       from: mm
       to: m
@@ -641,6 +646,11 @@
       from: mm
       to: m
       export: R_ELBOW_RT_PELVIS_X
+
+    - convert: elbowPelvis.z
+      from: mm
+      to: m
+      export: R_ELBOW_RT_PELVIS_Z
 
     - convert: elbowPelvis.x
       from: mm
@@ -659,6 +669,11 @@
       to: m
       export: L_WRIST_RT_PELVIS_X
 
+    - convert: wristPelvis.z
+      from: mm
+      to: m
+      export: L_WRIST_RT_PELVIS_Z
+
     - convert: wristPelvis.x
       from: mm
       to: m
@@ -673,6 +688,11 @@
       from: mm
       to: m
       export: R_WRIST_RT_PELVIS_X
+
+    - convert: wristPelvis.z
+      from: mm
+      to: m
+      export: R_WRIST_RT_PELVIS_Z
 
     - convert: wristPelvis.x
       from: mm

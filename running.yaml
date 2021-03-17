@@ -376,7 +376,7 @@
 
 # ---
 
-- parameter: L_KNEE
+- parameter: L_KNEE_X
   set: left
   steps:
     - segment: LeftLeg => shank
@@ -385,13 +385,13 @@
       space: VirtualLab
     - subtract: [pelvis, shank]
       output: knee
-    - multiply: [knee,[-1,-1,1]]
+    - multiply: [knee.y,-1]
       output: knee_inv
     - convert: knee_inv
       from: mm
       to: m
 
-- parameter: R_KNEE
+- parameter: R_KNEE_X
   set: right
   steps:
     - segment: RightLeg
@@ -399,7 +399,7 @@
     - subtract: [Hips, RightLeg]
       space: VirtualLab
       output: knee
-    - multiply: [knee,[-1,-1,1]]
+    - multiply: [knee.y,-1]
       output: knee_inv
     - convert: knee_inv
       from: mm
@@ -496,7 +496,7 @@
 
 # ---
 
-- parameter: L_ANKLE
+- parameter: L_ANKLE_Y
   set: left
   steps:
     - segment: LeftFoot => foot
@@ -505,13 +505,21 @@
       space: VirtualLab
     - subtract: [pelvis, foot]
       output: ankle
-    - multiply: [ankle,[-1,-1,1]]
+
+    - multiply: [ankle.y,-1]
+      output: ankle_inv
+    - convert: ankle_inv
+      from: mm
+      to: m
+      export: L_ANKLE_X
+
+    - multiply: [ankle.x,-1]
       output: ankle_inv
     - convert: ankle_inv
       from: mm
       to: m
 
-- parameter: R_ANKLE
+- parameter: R_ANKLE_Y
   set: right
   steps:
     - segment: RightFoot
@@ -519,7 +527,15 @@
     - subtract: [Hips, RightFoot]
       space: VirtualLab
       output: ankle
-    - multiply: [ankle,[-1,-1,1]]
+
+    - multiply: [ankle.y,-1]
+      output: ankle_inv
+    - convert: ankle_inv
+      from: mm
+      to: m
+      export: R_ANKLE_X
+
+    - multiply: [ankle.x,-1]
       output: ankle_inv
     - convert: ankle_inv
       from: mm

@@ -522,8 +522,6 @@
 - parameter: R_ANKLE_Y
   set: right
   steps:
-    - segment: RightFoot
-    - segment: Hips
     - subtract: [Hips, RightFoot]
       space: VirtualLab
       output: ankle
@@ -618,45 +616,65 @@
 
 # ---
 
-- parameter: L_ELBOW_RT_PELVIS
+- parameter: L_ELBOW_RT_PELVIS_Y
   set: left
   steps:
     - subtract: [LeftForeArm, Hips]
       space: VirtualLab
       output: elbowPelvis
-    - convert: elbowPelvis
+    - convert: elbowPelvis.y
+      from: mm
+      to: m
+      export: L_ELBOW_RT_PELVIS_X
+
+    - convert: elbowPelvis.x
       from: mm
       to: m
 
-- parameter: R_ELBOW_RT_PELVIS
+- parameter: R_ELBOW_RT_PELVIS_Y
   set: right
   steps:
     - subtract: [RightForeArm, Hips]
       space: VirtualLab
       output: elbowPelvis
-    - convert: elbowPelvis
+    - convert: elbowPelvis.y
+      from: mm
+      to: m
+      export: R_ELBOW_RT_PELVIS_X
+
+    - convert: elbowPelvis.x
       from: mm
       to: m
 
 # ---
 
-- parameter: L_WRIST_RT_PELVIS
+- parameter: L_WRIST_RT_PELVIS_Y
   set: left
   steps:
     - subtract: [LeftHand, Hips]
       space: VirtualLab
       output: wristPelvis
-    - convert: wristPelvis
+    - convert: wristPelvis.y
+      from: mm
+      to: m
+      export: L_WRIST_RT_PELVIS_X
+
+    - convert: wristPelvis.x
       from: mm
       to: m
 
-- parameter: R_WRIST_RT_PELVIS
+- parameter: R_WRIST_RT_PELVIS_Y
   set: right
   steps:
     - subtract: [RightHand, Hips]
       space: VirtualLab
       output: wristPelvis
-    - convert: wristPelvis
+    - convert: wristPelvis.y
+      from: mm
+      to: m
+      export: R_WRIST_RT_PELVIS_X
+
+    - convert: wristPelvis.x
       from: mm
       to: m
 

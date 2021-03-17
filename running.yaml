@@ -33,17 +33,17 @@
 - parameter: Left_ZENI
   set: left
   steps:
-    - lowpass: LeftFoot.x => heel
+    - lowpass: LeftFoot.y => heel
       space: VirtualLab
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: LeftToeBase.x => toe
+    - lowpass: LeftToeBase.y => toe
       space: VirtualLab
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: Hips.x => sacrum
+    - lowpass: Hips.y => sacrum
       space: VirtualLab
       extrapolate: 100
       order: 6
@@ -101,17 +101,17 @@
 - parameter: Right_ZENI
   set: right
   steps:
-    - lowpass: RightFoot.x => heel
+    - lowpass: RightFoot.y => heel
       space: VirtualLab
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: RightToeBase.x => toe
+    - lowpass: RightToeBase.y => toe
       space: VirtualLab
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: Hips.x => sacrum
+    - lowpass: Hips.y => sacrum
       space: VirtualLab
       extrapolate: 100
       order: 6
@@ -653,7 +653,7 @@
       from: mm
       to: m
       output: pel
-    - subtract: [pel.x, LEFT_ANKLE.x]
+    - subtract: [pel.y, LEFT_ANKLE.y]
 
 - parameter: R_ankle_crossing_pelvis
   steps:
@@ -663,7 +663,7 @@
       to: m
       space: VirtualLab
       output: pel
-    - subtract: [pel.x, RIGHT_ANKLE.x]
+    - subtract: [pel.y, RIGHT_ANKLE.y]
 
 
 #############
@@ -677,7 +677,9 @@
     - velocity: l_foot => l_foot_vel
     - multiply: [l_foot_vel, [-1,1,1]]
       output: l_foot_vel_inv
+      export: l_foot_vel_inv
     - mean: l_foot_vel_inv@L_MID_STANCE => l_foot_vel_L_MID_STANCE
+      export: l_foot_vel_L_MID_STANCE
     - convert: l_foot_vel_L_MID_STANCE
       from: mm/s
       to: m/s

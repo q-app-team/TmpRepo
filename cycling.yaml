@@ -382,14 +382,13 @@
 
 - parameter: Trunk Angles
   steps:
-    - jointAngle: [Hips, LeftUpLeg]
+    - jointAngle: [Hips, Spine2]
       output: hipAngle
-    - multiply: [hipAngle, [1, -1, 1]]
+    - multiply: [hipAngle, [-1, 1, -1]]
 
 - parameter: Trunk Angles_wrt_LAB
   steps:
     - jointAngle: Spine2 => trunkAngle
-      space: VirtualLab
     - multiply: [trunkAngle, [-1, 1, 1]]
 
 # --- Shoulders ---
@@ -910,11 +909,11 @@
     - min: knee_mask => knee_min
       export: LEFT_KNEE_VLab_min
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+      output: knee_max_x_inv
+    - multiply: [knee_min.x, -1]
+      output: knee_min_x_inv
+    - subtract: [knee_min_x_inv, knee_max_x_inv]
 
 - parameter: LEFT_KNEE_RPV
   set: left
@@ -950,11 +949,11 @@
     - min: knee_mask => knee_min
       export: LEFT_KNEE_RPV_min
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+      output: knee_max_x_inv
+    - multiply: [knee_min.x, -1]
+      output: knee_min_x_inv
+    - subtract: [knee_min_x_inv, knee_max_x_inv]
 
 - parameter: RIGHT_KNEE_VLab
   set: right
@@ -986,11 +985,11 @@
     - min: knee_mask => knee_min
       export: RIGHT_KNEE_VLab_min
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+      output: knee_max_x_inv
+    - multiply: [knee_min.x, -1]
+      output: knee_min_x_inv
+    - subtract: [knee_min_x_inv, knee_max_x_inv]
 
 - parameter: RIGHT_KNEE_RPV
   set: right
@@ -1025,11 +1024,11 @@
     - min: knee_mask => knee_min
       export: RIGHT_KNEE_RPV_min
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+      output: knee_max_x_inv
+    - multiply: [knee_min.x, -1]
+      output: knee_min_x_inv
+    - subtract: [knee_min_x_inv, knee_max_x_inv]
 
 # Knee forward of foot
 - parameter: Left_Knee_Foot_distance

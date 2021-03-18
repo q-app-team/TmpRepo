@@ -906,19 +906,13 @@
 - parameter: Pelvis_Height_RANGE
   steps:
     - segment: Hips => pelvis
-    - peakFinder: pelvis.z => pel_max
-      width: 10
-    - eventMask: [pel_max, LFS, RFS]
-      output: pelvis_max
-    - multiply: [pelvis,[1,1,-1]]
-      output: pelvis_inv
-    - peakFinder: pelvis_inv.z => pel_min
-      width: 10
-    - eventMask: [pel_min, LFS, RFS]
-      output: pelvis_min
-    - subtract: [pelvis_max, pelvis_min]
-      output: pelvis_range
-    - convert: pelvis_range
+    - eventMask: [pelvis, LFS, RFS]
+      output: mask
+    - max: mask.z => max
+    - min: mask.z => min
+    - subtract: [max, min]
+      output: range
+    - convert: range
       from: mm
       to: m
 
@@ -966,35 +960,39 @@
   - divide: [Flight_time_RTO_LFS, Right_Stance_Time_Mean]
 
 #foot position at FS
-- parameter: Left_HEEL_PELVIS_MEAN
+- parameter: Left_HEEL_PELVIS_MEAN_X
   set: left
   steps:
     - segment: LeftFoot => l_foot
+      space: VirtualLab
     - segment: Hips => pelvis
-    - subtract: [l_foot, pelvis]
+      space: VirtualLab
+    - subtract: [l_foot.y, pelvis.y]
       output: foot_pelvis_mm
     - convert: foot_pelvis_mm
       from: mm
       to: m
       output: heel_pelvis
     - import: heel_pelvis@LFS
-      export: LHEEL_PELVIS 
-    - mean: heel_pelvis@LFS => heel_pelvis_LFS_mean
+      export: LHEEL_PELVIS_X 
+    - mean: heel_pelvis@LFS
 
-- parameter: Right_HEEL_PELVIS_MEAN
+- parameter: Right_HEEL_PELVIS_MEAN_X
   set: right
   steps:
-    - segment: RightFoot => l_foot
+    - segment: RightFoot => r_foot
+      space: VirtualLab
     - segment: Hips => pelvis
-    - subtract: [l_foot, pelvis]
+      space: VirtualLab
+    - subtract: [r_foot.y, pelvis.y]
       output: foot_pelvis_mm
     - convert: foot_pelvis_mm
       from: mm
       to: m
       output: heel_pelvis
     - import: heel_pelvis@RFS
-      export: RHEEL_PELVIS 
-    - mean: heel_pelvis@RFS => heel_pelvis_RFS_mean
+      export: RHEEL_PELVIS_X 
+    - mean: heel_pelvis@RFS
 
 # number of steps
 - parameter: Cycle_Time_Count

@@ -729,11 +729,9 @@
     - segment: LeftFoot => l_foot
       space: VirtualLab
     - velocity: l_foot => l_foot_vel
-    - multiply: [l_foot_vel, [-1,1,1]]
+    - multiply: [l_foot_vel, [1,-1,1]]
       output: l_foot_vel_inv
-      export: l_foot_vel_inv
     - mean: l_foot_vel_inv@L_MID_STANCE => l_foot_vel_L_MID_STANCE
-      export: l_foot_vel_L_MID_STANCE
     - convert: l_foot_vel_L_MID_STANCE
       from: mm/s
       to: m/s
@@ -748,7 +746,7 @@
       output: pelvis_vel_ms
     - add: [pelvis_vel_ms, treadmill_speed]
       output: pelvis_vel_adj
-    - mean: pelvis_vel_adj.y => pelvis_vel_mean
+    - mean: pelvis_vel_adj.y
 
 # stride angle
 - parameter: Left Stride Angle@max

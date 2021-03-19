@@ -1610,7 +1610,21 @@
 # Armpit angle = Shoulder Angles
 
 # Elbow Angle
-# to do: requires planar angles
+- parameter: Left Elbow Angle
+  set: left
+  steps:
+    - angle: [LeftArm, LeftForeArm, LeftHand]
+    - convert: $prev
+      from: radians
+      to: degrees
+
+- parameter: Right Elbow Angle
+  set: right
+  steps:
+    - angle: [RightArm, RightForeArm, RightHand]
+    - convert: $prev
+      from: radians
+      to: degrees
 
 # Forearm angle to horizontal
 # to do: requires planar angles

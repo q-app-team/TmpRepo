@@ -611,7 +611,8 @@
       to: m
       export: L_ELBOW_RT_PELVIS_Z
 
-    - convert: elbowPelvis.x
+    - multiply: [elbowPelvis.x,-1]
+    - convert: $prev
       from: mm
       to: m
 
@@ -631,7 +632,8 @@
       to: m
       export: R_ELBOW_RT_PELVIS_Z
 
-    - convert: elbowPelvis.x
+    - multiply: [elbowPelvis.x,-1]
+    - convert: $prev
       from: mm
       to: m
 
@@ -653,7 +655,8 @@
       to: m
       export: L_WRIST_RT_PELVIS_Z
 
-    - convert: wristPelvis.x
+    - multiply: [wristPelvis.x,-1]
+    - convert: $prev
       from: mm
       to: m
 
@@ -673,7 +676,8 @@
       to: m
       export: R_WRIST_RT_PELVIS_Z
 
-    - convert: wristPelvis.x
+    - multiply: [wristPelvis.x,-1]
+    - convert: $prev
       from: mm
       to: m
 

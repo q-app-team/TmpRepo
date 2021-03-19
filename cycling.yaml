@@ -303,6 +303,7 @@
   set: left
   steps:
     - jointAngle: Hips
+      space: VirtualLab
       output: pelvicAngle
     - multiply: [pelvicAngle, [-1, 1, -1]]
 
@@ -310,6 +311,7 @@
   set: right
   steps:
     - jointAngle: Hips
+      space: VirtualLab
       output: pelvicAngle
     - multiply: [pelvicAngle, [-1, -1, 1]]
 
@@ -416,12 +418,7 @@
 
 - parameter: Shoulders_wrt_VLab
   steps:
-    - jointAngle: Neck => shoulders
-      space: VirtualLab
-
-- parameter: Shoulders_pos
-  steps:
-    - segment: Neck => shoulders
+    - jointAngle: Neck
       space: VirtualLab
 
 # --- Wrists ---
@@ -1568,7 +1565,7 @@
 #   Calculated wrt VLab not bike LCS
 - parameter: Shoulders_shift_wrt_bike_range_mean
   steps:
-    - eventMask: [Shoulders_pos, R_TDC, R_TDC]
+    - eventMask: [Shoulders_wrt_VLab, R_TDC, R_TDC]
       output: mask
     - max: mask => max
     - min: mask => min

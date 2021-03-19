@@ -65,11 +65,9 @@
     - subtract: [mid_foot, sacrum]
       export: Left_ZENI_mid_foot_wrt_hip_x
 
-    - subtract: [toe, sacrum]
-      output: toe_diff
     - abs: toe_diff => abs_toe_diff
       export: abs_toe_diff
-    - negate: abs_toe_diff => toe_diff_inv
+    - negate: abs_toe_diff
       export: Left_ZENI_toe_diff_abs_inv
 
 - event: LFS
@@ -133,11 +131,9 @@
     - subtract: [mid_foot, sacrum]
       export: Right_ZENI_mid_foot_wrt_hip_x
 
-    - subtract: [toe, sacrum]
-      output: toe_diff
     - abs: toe_diff => abs_toe_diff
       export: abs_toe_diff
-    - negate: abs_toe_diff => toe_diff_inv
+    - negate: abs_toe_diff
       export: Right_ZENI_toe_diff_abs_inv
 
 - event: RFS

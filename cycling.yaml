@@ -389,6 +389,7 @@
 - parameter: Trunk Angles_wrt_LAB
   steps:
     - jointAngle: Spine2 => trunkAngle
+      space: VirtualLab
     - multiply: [trunkAngle, [-1, 1, 1]]
 
 # --- Shoulders ---

@@ -162,7 +162,7 @@
     - peakFinder: Right_ZENI_toe_diff_abs_inv => sign_change
       width: 10
       prominence: 100
-    - eventMask: [sign_change, LFS, LTO]
+    - eventMask: [sign_change, RFS, RTO]
 
 - event: L_peak_knee_flex
   set: left

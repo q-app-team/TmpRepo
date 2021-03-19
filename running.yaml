@@ -497,8 +497,7 @@
     - subtract: [pelvis, foot]
       output: ankle
 
-    - multiply: [ankle.y,-1]
-    - convert: $prev
+    - convert: ankle.y
       from: mm
       to: m
       export: L_ANKLE_X
@@ -515,8 +514,7 @@
       space: VirtualLab
       output: ankle
 
-    - multiply: [ankle.y,-1]
-    - convert: $prev
+    - convert: ankle.y
       from: mm
       to: m
       export: R_ANKLE_X

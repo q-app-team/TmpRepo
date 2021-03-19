@@ -497,7 +497,7 @@
     - subtract: [pelvis, foot]
       output: ankle
 
-    - import: [ankle.y,1]
+    - multiply: [ankle.y,[-1]]
     - convert: $prev
       from: mm
       to: m

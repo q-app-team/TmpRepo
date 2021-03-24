@@ -2,15 +2,15 @@
 ## SPACES ##
 ############
 
-#- space: VirtualLab
-#  alignWithSegment:
-#    segment: Hips
-
 - space: VirtualLab
-  origin: B_Stem
-  primaryAxis: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
-  secondaryAxis: B_Down_Tube
-  order: yx
+  alignWithSegment:
+    segment: Hips
+
+#- space: VirtualLab
+#  origin: B_Stem
+#  primaryAxis: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
+#  secondaryAxis: B_Down_Tube
+#  order: yx
 
 ############
 # Bike trials

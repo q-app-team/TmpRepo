@@ -126,7 +126,7 @@
     # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
     - mean: Left_Crank_Vlab.z@L_TDC_Temp
       output: L_crank_Z_TDC
-    #- mean: Left_Crank_Vlab.y@L_TDC_Temp
+    #- mean: Left_Crank_Vlab.y@L_TDC_Temp # would be used if crank marker is on crank itself
     #  output: L_crank_VLY_TDC
     - mean: Left_Crank_Vlab.z@L_BDC_Temp
       output: L_crank_Z_BDC
@@ -146,10 +146,11 @@
     - subtract: [Left_Crank_Vlab.z, L_crank_Z_TDC]
     - subtract: [$prev, L_Crank_Radius]
       output: L_Pedal_Z
-      
+
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [L_Pedal_Y, L_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
+    - negate: 
     - add: [180, $prev]
 
 # Right crank angle 
@@ -212,6 +213,7 @@
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [R_Pedal_Y, R_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
+    - negate: 
     - add: [180, $prev]
 
 ############

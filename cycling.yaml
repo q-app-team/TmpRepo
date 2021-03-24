@@ -2,9 +2,15 @@
 ## SPACES ##
 ############
 
+#- space: VirtualLab
+#  alignWithSegment:
+#    segment: Hips
+
 - space: VirtualLab
-  alignWithSegment:
-    segment: Hips
+  origin: B_Stem
+  primaryAxis: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
+  secondaryAxis: B_Down_Tube
+  order: yx
 
 ############
 # Bike trials
@@ -100,36 +106,31 @@
     # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
     - mean: Left_Crank_Vlab.z@L_TDC_Temp
       output: L_crank_Z_TDC
-    - mean: Left_Crank_Vlab.x@L_TDC_Temp
-      output: L_crank_VLY_TDC
+    #- mean: Left_Crank_Vlab.y@L_TDC_Temp
+    #  output: L_crank_VLY_TDC
     - mean: Left_Crank_Vlab.z@L_BDC_Temp
       output: L_crank_Z_BDC
-    - mean: Left_Crank_Vlab.x@L_BDC_Temp
+    - mean: Left_Crank_Vlab.y@L_BDC_Temp
       output: L_crank_VLY_BDC
 
     - subtract: [L_crank_Z_BDC, L_crank_Z_TDC]
-      output: sub
-    - divide: [sub, 2]
-      output: out
-    - abs: out
+    - divide: [$prev, 2]
+    - abs: $prev
       output: L_Crank_Radius
 
     # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean y (forward) position at BDC using transformed crank
-    - subtract: [Left_Crank_Vlab.x, L_crank_VLY_BDC]
+    - subtract: [Left_Crank_Vlab.y, L_crank_VLY_BDC]
       output: L_Pedal_Y
 
     # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean Z (vertical) position at TDC and then subtracting the radius
     - subtract: [Left_Crank_Vlab.z, L_crank_Z_TDC]
-      output: sub1
-    - subtract: [sub1, L_Crank_Radius]
+    - subtract: [$prev, L_Crank_Radius]
       output: L_Pedal_Z
       
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [L_Pedal_Y, L_Pedal_Z]
-      output: rad
-    - multiply: [rad, 57.2958] #to deg
-      output: deg
-    - add: [180, deg]
+    - multiply: [$prev, 57.2958] #to deg
+    - add: [180, $prev]
 
 # Right crank angle 
 
@@ -161,36 +162,29 @@
     # Calculate radius of the crank from mean vertical distance (Z) from BDC to TDC divided by 2
     - mean: Right_Crank_Vlab.z@R_TDC_Temp
       output: R_crank_Z_TDC
-    - mean: Right_Crank_Vlab.x@R_TDC_Temp
-      output: R_crank_VLY_TDC
     - mean: Right_Crank_Vlab.z@R_BDC_Temp
       output: R_crank_Z_BDC
-    - mean: Right_Crank_Vlab.x@R_BDC_Temp
+    - mean: Right_Crank_Vlab.y@R_BDC_Temp
       output: R_crank_VLY_BDC
 
     - subtract: [R_crank_Z_BDC, R_crank_Z_TDC]
-      output: sub
-    - divide: [sub, 2]
-      output: out
-    - abs: out
+    - divide: [$prev, 2]
+    - abs: $prev
       output: R_Crank_Radius
 
     # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean y (forward) position at BDC using transformed crank
-    - subtract: [Right_Crank_Vlab.x, R_crank_VLY_BDC]
+    - subtract: [Right_Crank_Vlab.y, R_crank_VLY_BDC]
       output: R_Pedal_Y
 
     # Adjust crank target marker to center of the crank (reference to Center of the crank) by subtracting mean Z (vertical) position at TDC and then subtracting the radius
     - subtract: [Right_Crank_Vlab.z, R_crank_Z_TDC]
-      output: sub1
-    - subtract: [sub1, R_Crank_Radius]
+    - subtract: [$prev, R_Crank_Radius]
       output: R_Pedal_Z
       
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [R_Pedal_Y, R_Pedal_Z]
-      output: rad
-    - multiply: [rad, 57.2958] #to deg
-      output: deg
-    - add: [180, deg]
+    - multiply: [$prev, 57.2958] #to deg
+    - add: [180, $prev]
 
 ############
 ## EVENTS ##
@@ -304,16 +298,14 @@
   steps:
     - jointAngle: Hips
       space: VirtualLab
-      output: pelvicAngle
-    - multiply: [pelvicAngle, [-1, -1, -1]]
+    - multiply: [$prev, [-1, 1, -1]]
 
 - parameter: Right Pelvic Angles
   set: right
   steps:
     - jointAngle: Hips
       space: VirtualLab
-      output: pelvicAngle
-    - multiply: [pelvicAngle, [-1, 1, 1]]
+    - multiply: [$prev, [-1, -1, 1]]
 
 # --- Hips ---
 
@@ -321,8 +313,7 @@
   set: left
   steps:
     - jointAngle: [Hips, LeftUpLeg]
-      output: hipAngle
-    - multiply: [hipAngle, [1, -1, 1]]
+    - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Hip Angles
   set: right
@@ -342,8 +333,7 @@
   set: right
   steps:
     - jointAngle: [RightUpLeg, RightLeg]
-      output: kneeAngle
-    - multiply: [kneeAngle, [-1, 1, 1]]
+    - multiply: [$prev, [-1, 1, 1]]
 
 # --- Ankle ---
 
@@ -351,44 +341,41 @@
   set: left
   steps:
     - jointAngle: [LeftLeg, LeftFoot]
-      output: ankleAngle
-    - multiply: [ankleAngle, [1, -1, 1]]
+    - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Ankle Angles
   set: right
   steps:
     - jointAngle: [RightLeg, RightFoot]
+    - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Left Foot Progression
   set: left
   steps:
     - jointAngle: LeftFoot
       space: VirtualLab
-      output: ankleAngle
-    - multiply: [ankleAngle, [-1, 1, -1]]
+    - multiply: [$prev, [-1, 1, -1]]
 
 - parameter: Right Foot Progression
   set: right
   steps:
     - jointAngle: RightFoot
       space: VirtualLab
-      output: ankleAngle
-    - multiply: [ankleAngle, [-1, 1, 1]]
+    - multiply: [$prev, [-1, 1, 1]]
 
 
 # --- Trunk ---
 
 - parameter: Trunk Angles
   steps:
-    - jointAngle: [Hips, LeftUpLeg]
-      output: hipAngle
-    - multiply: [hipAngle, [1, -1, 1]]
+    - jointAngle: [Hips, Spine2]
+    - multiply: [$prev, [-1, 1, -1]]
 
 - parameter: Trunk Angles_wrt_LAB
   steps:
-    - jointAngle: Spine2 => trunkAngle
+    - jointAngle: Spine2
       space: VirtualLab
-    - multiply: [trunkAngle, [-1, 1, 1]]
+    - multiply: [$prev, [-1, 1, 1]]
 
 # --- Shoulders ---
 - parameter: Left Shoulder Angles
@@ -400,15 +387,13 @@
   set: right
   steps:
     - jointAngle: [Spine2, RightArm]
-      output: shoudlerAngle
-    - multiply: [shoudlerAngle, [1, -1, 1]]
+    - multiply: [$prev, [1, -1, 1]]
    
 - parameter: Left Shoulder_Pelvis Angle
   set: left
   steps:
     - jointAngle: [Hips, LeftShoulder]
-      output: shoudlerAngle
-    - multiply: [shoudlerAngle, [1, -1, -1]]
+    - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Shoulder_Pelvis Angle
   set: right
@@ -417,12 +402,7 @@
 
 - parameter: Shoulders_wrt_VLab
   steps:
-    - jointAngle: Neck => shoulders
-      space: VirtualLab
-
-- parameter: Shoulders_pos
-  steps:
-    - segment: Neck => shoulders
+    - jointAngle: Neck
       space: VirtualLab
 
 # --- Wrists ---
@@ -450,11 +430,9 @@
 - parameter: Cadence
   steps:
     - count: L_TDC
-      output: noOfCycles
-    - subtract: [noOfCycles, 1]
-      output: cyc_count_cor
+    - subtract: [$prev, 1]
       export: Cycle_count
-    - multiply: [cyc_count_cor, 360]
+    - multiply: [$prev, 360]
       output: cyc_count_cor_m
 
     - eventTime: L_TDC => TDC_times
@@ -474,14 +452,12 @@
     - import: Left_Hip@LEFT_HIP_max
       output: max
     - subtract: [max, min]
-      output: sub_mm
-    - convert: sub_mm
+    - convert: $prev
       from: mm
       to: m
-      output: sub
-    - mean: sub
+    - mean: $prev
       export: LEFT_HIP_range_mean
-    - stdDev: sub
+    - stdDev: $prev(2)
       export: LEFT_HIP_range_sd
 
 - parameter: RIGHT_HIP_range
@@ -492,14 +468,12 @@
     - import: Right_Hip@RIGHT_HIP_max
       output: max
     - subtract: [max, min]
-      output: sub_mm
-    - convert: sub_mm
+    - convert: $prev
       from: mm
       to: m
-      output: sub
-    - mean: sub
+    - mean: $prev
       export: RIGHT_HIP_range_mean
-    - stdDev: sub
+    - stdDev: $prev(2)
       export: RIGHT_HIP_range_sd
 
 # Wrist height relative to hip
@@ -509,8 +483,7 @@
     - segment: LeftHand => wrist
       space: VirtualLab
     - subtract: [wrist, Left_Hip]
-      output: wrist_hip_dist
-    - convert: wrist_hip_dist
+    - convert: $prev
       from: mm
       to: m
 
@@ -520,8 +493,7 @@
     - segment: RightHand => wrist
       space: VirtualLab
     - subtract: [wrist, Right_Hip]
-      output: wrist_hip_dist
-    - convert: wrist_hip_dist
+    - convert: $prev
       from: mm
       to: m
 
@@ -570,15 +542,13 @@
   set: left
   steps:
     - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Left Pelvic Angles_min
   set: left
   steps:
     - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Left Pelvic Angles_range
   set: left
@@ -589,15 +559,13 @@
   set: right
   steps:
     - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Right Pelvic Angles_min
   set: right
   steps:
     - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Right Pelvic Angles_range
   set: right
@@ -623,14 +591,12 @@
 # Pelvis range of vertical movement (bouncing)
 - parameter: PelvisCG_pos_rt_SaddleCG_pos_range
   steps:
-    - segment: Hips => pelvis
-    - eventMask: [pelvis, L_TDC, L_TDC]
+    - eventMask: [Hips, L_TDC, L_TDC]
       output: mask
     - min: mask.z => min
     - max: mask.z => max
     - subtract: [max, min]
-      output: sub
-    - convert: sub
+    - convert: $prev
       from: mm
       to: m
  
@@ -684,15 +650,13 @@
   set: left
   steps:
     - eventMask: [Left Hip Angles, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Left Hip Angles_min
   set: left
   steps:
     - eventMask: [Left Hip Angles, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Left Hip Angles_range
   set: left
@@ -708,15 +672,13 @@
   set: right
   steps:
     - eventMask: [Right Hip Angles, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Right Hip Angles_min
   set: right
   steps:
     - eventMask: [Right Hip Angles, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Right Hip Angles_range
   set: right
@@ -882,8 +844,7 @@
   steps:
     - segment: LeftLeg
       space: VirtualLab
-      output: knee_mm
-    - convert: knee_mm
+    - convert: $prev
       from: mm
       to: m
 
@@ -902,30 +863,26 @@
       export: Left_Knee_VLab@L_RP
 
     - eventMask: [knee, L_TDC, L_TDC]
-      output: knee_mask
-    - max: knee_mask => knee_max
+    - max: $prev => knee_max
       export: LEFT_KNEE_VLab_max
-    - min: knee_mask => knee_min
+    - min: $prev(2) => knee_min
       export: LEFT_KNEE_VLab_min
+
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+    - multiply: [knee_min.x, -1]
+    - subtract: [$prev, $prev(2)]
 
 - parameter: LEFT_KNEE_RPV
   set: left
   steps:
-    - import: LEFT_KNEE_VLab => knee
     - segment: Hips
       space: VirtualLab
-      output: pelvis_mm
-    - convert: pelvis_mm
+    - convert: $prev
       from: mm
       to: m
       output: pelvis
-    - subtract: [knee, pelvis]
+    - subtract: [LEFT_KNEE_VLab, pelvis]
 
 - parameter: LEFT_KNEE_lat_travel_range_RPV_mean
   set: left
@@ -942,24 +899,22 @@
       export: Left_Knee_RPV@L_RP
 
     - eventMask: [knee, L_TDC, L_TDC]
-      output: knee_mask
-    - max: knee_mask => knee_max
+    - max: $prev => knee_max
       export: LEFT_KNEE_RPV_max
-    - min: knee_mask => knee_min
+    - min: $prev(2) => knee_min
       export: LEFT_KNEE_RPV_min
+
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+    - multiply: [knee_min.x, -1]
+    - subtract: [$prev, $prev(2)]
 
 - parameter: RIGHT_KNEE_VLab
   set: right
   steps:
-    - segment: RightLeg => knee_mm
+    - segment: RightLeg
       space: VirtualLab
-    - convert: knee_mm
+    - convert: $prev
       from: mm
       to: m
 
@@ -978,29 +933,26 @@
       export: Right_Knee_VLab@R_RP
 
     - eventMask: [knee, R_TDC, R_TDC]
-      output: knee_mask
-    - max: knee_mask => knee_max
+    - max: $prev => knee_max
       export: RIGHT_KNEE_VLab_max
-    - min: knee_mask => knee_min
+    - min: $prev(2) => knee_min
       export: RIGHT_KNEE_VLab_min
+
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+    - multiply: [knee_min.x, -1]
+    - subtract: [$prev, $prev(2)]
 
 - parameter: RIGHT_KNEE_RPV
   set: right
   steps:
-    - import: RIGHT_KNEE_VLab => knee
-    - segment: Hips => pelvis_mm
+    - segment: Hips
       space: VirtualLab
-    - convert: pelvis_mm
+    - convert: $prev
       from: mm
       to: m
       output: pelvis
-    - subtract: [knee, pelvis]
+    - subtract: [RIGHT_KNEE_VLab, pelvis]
 
 - parameter: RIGHT_KNEE_lat_travel_range_RPV_mean
   set: right
@@ -1017,17 +969,15 @@
       export: Right_Knee_RPV@R_RP
 
     - eventMask: [knee, R_TDC, R_TDC]
-      output: knee_mask
-    - max: knee_mask => knee_max
+    - max: $prev => knee_max
       export: RIGHT_KNEE_RPV_max
-    - min: knee_mask => knee_min
+    - min: $prev(2) => knee_min
       export: RIGHT_KNEE_RPV_min
+
     # invert left X component to give it positive sign in report
-    - multiply: [knee_max.y, -1]
-      output: knee_max_y_inv
-    - multiply: [knee_min.y, -1]
-      output: knee_min_y_inv
-    - subtract: [knee_min_y_inv, knee_max_y_inv]
+    - multiply: [knee_max.x, -1]
+    - multiply: [knee_min.x, -1]
+    - subtract: [$prev, $prev(2)]
 
 # Knee forward of foot
 - parameter: Left_Knee_Foot_distance
@@ -1038,8 +988,7 @@
     - segment: LeftToeBase => foot_tip
       space: VirtualLab
     - subtract: [knee, foot_tip]
-      output: knee_foot_dist_mm
-    - convert: knee_foot_dist_mm
+    - convert: $prev
       from: mm
       to: m
 
@@ -1095,8 +1044,7 @@
     - segment: RightToeBase => foot_tip
       space: VirtualLab
     - subtract: [knee, foot_tip]
-      output: knee_foot_dist_mm
-    - convert: knee_foot_dist_mm
+    - convert: $prev
       from: mm
       to: m
 
@@ -1199,15 +1147,13 @@
   set: left
   steps:
     - eventMask: [Left Ankle Angles, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Left Ankle Angles_min
   set: left
   steps:
     - eventMask: [Left Ankle Angles, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Left Ankle Angles_range_mean
   set: left
@@ -1228,15 +1174,13 @@
   set: right
   steps:
     - eventMask: [Right Ankle Angles, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Right Ankle Angles_min
   set: right
   steps:
     - eventMask: [Right Ankle Angles, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Right Ankle Angles_range_mean
   set: right
@@ -1293,15 +1237,13 @@
   set: left
   steps:
     - eventMask: [Left Foot Progression, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Left Foot Progression_min
   set: left
   steps:
     - eventMask: [Left Foot Progression, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Left Foot Progression_range
   set: left
@@ -1317,15 +1259,13 @@
   set: right
   steps:
     - eventMask: [Right Foot Progression, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Right Foot Progression_min
   set: right
   steps:
     - eventMask: [Right Foot Progression, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Right Foot Progression_range
   set: right
@@ -1372,14 +1312,12 @@
 - parameter: Trunk Angles_wrt_LAB_max_left
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Trunk Angles_wrt_LAB_min_left
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Trunk Angles_wrt_LAB_range_left
   steps:
@@ -1388,14 +1326,12 @@
 - parameter: Trunk Angles_wrt_LAB_max_right
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Trunk Angles_wrt_LAB_min_right
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Trunk Angles_wrt_LAB_range_right
   steps:
@@ -1438,14 +1374,12 @@
 - parameter: Trunk Angles_max_left
   steps:
     - eventMask: [Trunk Angles, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Trunk Angles_min_left
   steps:
     - eventMask: [Trunk Angles, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Trunk Angles_range_left
   steps:
@@ -1454,14 +1388,12 @@
 - parameter: Trunk Angles_max_right
   steps:
     - eventMask: [Trunk Angles, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Trunk Angles_min_right
   steps:
     - eventMask: [Trunk Angles, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Trunk Angles_range_right
   steps:
@@ -1523,19 +1455,15 @@
   set: left
   steps:
     - eventMask: [Left Shoulder_Pelvis Angle, L_TDC, L_TDC]
-      output: angle
-    - multiply: [angle, [1, 1, -1]]
-      output: angle_neg
-    - max: angle_neg
+    - multiply: [$prev, [1, 1, -1]]
+    - max: $prev
 
 - parameter: Left Shoulder_Pelvis Angle_min
   set: left
   steps:
     - eventMask: [Left Shoulder_Pelvis Angle, L_TDC, L_TDC]
-      output: angle
-    - multiply: [angle, [1, 1, -1]]
-      output: angle_neg
-    - min: angle_neg
+    - multiply: [$prev, [1, 1, -1]]
+    - min: $prev
 
 - parameter: Left Shoulder_Pelvis Angle_range
   set: left
@@ -1546,19 +1474,15 @@
   set: right
   steps:
     - eventMask: [Right Shoulder_Pelvis Angle, R_TDC, R_TDC]
-      output: angle
-    - multiply: [angle, [1, 1, -1]]
-      output: angle_neg
-    - max: angle_neg
+    - multiply: [$prev, [1, 1, -1]]
+    - max: $prev
 
 - parameter: Right Shoulder_Pelvis Angle_min
   set: right
   steps:
     - eventMask: [Right Shoulder_Pelvis Angle, R_TDC, R_TDC]
-      output: angle
-    - multiply: [angle, [1, 1, -1]]
-      output: angle_neg
-    - min: angle_neg
+    - multiply: [$prev, [1, 1, -1]]
+    - min: $prev
 
 - parameter: Right Shoulder_Pelvis Angle_range
   set: right
@@ -1569,13 +1493,11 @@
 #   Calculated wrt VLab not bike LCS
 - parameter: Shoulders_shift_wrt_bike_range_mean
   steps:
-    - eventMask: [Shoulders_pos, R_TDC, R_TDC]
-      output: mask
-    - max: mask => max
-    - min: mask => min
+    - eventMask: [Shoulders_wrt_VLab, R_TDC, R_TDC]
+    - max: $prev => max
+    - min: $prev(2) => min
     - subtract: [max, min]
-      output: sub
-    - convert: sub
+    - convert: $prev
       from: mm
       to: m
 
@@ -1583,29 +1505,25 @@
 - parameter: Shoulders_wrt_VLab_max
   steps:
     - eventMask: [Shoulders_wrt_VLab, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Shoulders_wrt_VLab_min
   steps:
     - eventMask: [Shoulders_wrt_VLab, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Shoulders_wrt_VLab_range_mean
   steps:
     - subtract: [Shoulders_wrt_VLab_max, Shoulders_wrt_VLab_min]
-      output: Shoulders_wrt_VLab_range
       export: Shoulders_wrt_VLab_range
-    - mean: Shoulders_wrt_VLab_range
+    - mean: $prev
 
 # Elbow distance
 - parameter: Elbows_distance_mean
   steps:
     - distance: [LeftForeArm, RightForeArm]
-      output: dist_mm
-    - mean: dist_mm => dist_mm_mean
-    - convert: dist_mm_mean
+    - mean: $prev
+    - convert: $prev
       from: mm
       to: m
 
@@ -1619,15 +1537,13 @@
   set: left
   steps:
     - eventMask: [Left Wrist Angles, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Left Wrist Angles_min
   set: left
   steps:
     - eventMask: [Left Wrist Angles, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Left Wrist Angles_range
   set: left
@@ -1638,9 +1554,8 @@
   set: left
   steps:
     - distance: [LeftHand, Hips]
-      output: dist_mm
-    - mean: dist_mm => dist_mm_mean
-    - convert: dist_mm_mean
+    - mean: $prev
+    - convert: $prev
       from: mm
       to: m
 
@@ -1653,15 +1568,13 @@
   set: right
   steps:
     - eventMask: [Right Wrist Angles, R_TDC, R_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Right Wrist Angles_min
   set: right
   steps:
     - eventMask: [Right Wrist Angles, R_TDC, R_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Right Wrist Angles_range
   set: right
@@ -1671,9 +1584,8 @@
 - parameter: Wrists_distance_mean
   steps:
     - distance: [LeftHand, RightHand]
-      output: dist_mm
-    - mean: dist_mm => dist_mm_mean
-    - convert: dist_mm_mean
+    - mean: $prev
+    - convert: $prev
       from: mm
       to: m
 
@@ -1681,9 +1593,8 @@
   set: right
   steps:
     - distance: [RightHand, Hips]
-      output: dist_mm
-    - mean: dist_mm => dist_mm_mean
-    - convert: dist_mm_mean
+    - mean: $prev
+    - convert: $prev
       from: mm
       to: m
 
@@ -1691,14 +1602,12 @@
 - parameter: Head Angles_max
   steps:
     - eventMask: [Head Angles, L_TDC, L_TDC]
-      output: angle
-    - max: angle
+    - max: $prev
 
 - parameter: Head Angles_min
   steps:
     - eventMask: [Head Angles, L_TDC, L_TDC]
-      output: angle
-    - min: angle
+    - min: $prev
 
 - parameter: Head Angles_range
   steps:
@@ -1707,7 +1616,21 @@
 # Armpit angle = Shoulder Angles
 
 # Elbow Angle
-# to do: requires planar angles
+- parameter: Left Elbow Angle
+  set: left
+  steps:
+    - angle: [LeftArm, LeftForeArm, LeftHand]
+    - convert: $prev
+      from: radians
+      to: degrees
+
+- parameter: Right Elbow Angle
+  set: right
+  steps:
+    - angle: [RightArm, RightForeArm, RightHand]
+    - convert: $prev
+      from: radians
+      to: degrees
 
 # Forearm angle to horizontal
 # to do: requires planar angles
@@ -1716,54 +1639,54 @@
 - parameter: Left_FM2_VLab
   set: left
   steps:
-    - marker: LForefoot2 => marker
+    - marker: LForefoot2
       space: VirtualLab
-    - convert: marker
+    - convert: $prev
       from: mm
       to: m
 
 - parameter: Left_FCC_VLab
   set: left
   steps:
-    - marker: LHeelBack => marker
+    - marker: LHeelBack
       space: VirtualLab
-    - convert: marker
+    - convert: $prev
       from: mm
       to: m
 
 - parameter: LEFT_ANKLE_VLab
   set: left
   steps:
-    - segment: LeftFoot => segment
+    - segment: LeftFoot
       space: VirtualLab
-    - convert: segment
+    - convert: $prev
       from: mm
       to: m
 
 - parameter: Right_FM2_VLab
   set: right
   steps:
-    - marker: RForefoot2 => marker
+    - marker: RForefoot2
       space: VirtualLab
-    - convert: marker
+    - convert: $prev
       from: mm
       to: m
 
 - parameter: Right_FCC_VLab
   set: right
   steps:
-    - marker: RHeelBack => marker
+    - marker: RHeelBack
       space: VirtualLab
-    - convert: marker
+    - convert: $prev
       from: mm
       to: m
 
 - parameter: RIGHT_ANKLE_VLab
   set: right
   steps:
-    - segment: RightFoot => segment
+    - segment: RightFoot
       space: VirtualLab
-    - convert: segment
+    - convert: $prev
       from: mm
       to: m
 

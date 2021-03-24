@@ -772,7 +772,7 @@
   - concatenate: [Left_Steps_Per_Minute_Mean, Right_Steps_Per_Minute_Mean]
   - mean: $prev
 
-# step length
+# step length test
 - parameter: Right_Step_Length_Mean
   steps:
     - segment: LeftFoot => l_foot

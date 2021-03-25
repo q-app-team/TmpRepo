@@ -27,7 +27,9 @@
     name: Cycling*
   steps:
     - marker: L_crank => L_spindle
+      space: VirtualLab
     - marker: R_crank => R_spindle
+      space: VirtualLab
     - mean: L_spindle => L_bracket
     - mean: R_spindle => R_bracket
     - concatenate: [L_bracket, R_bracket]
@@ -37,6 +39,18 @@
 #   distance of Seat_Mid_Adj landmark to B_Bottom_Bracket_proj
 #   Seat_Mid_Adj landmark is calcualted as B_seat_mid marker shifter vertically down by saddle marker radius
 #   TO DO!!! we will add settings to report cente pipeline definition, untill them we assume marker radius is 7 mm.
+- parameter: Saddle_Height_mean
+  where:
+    name: Bike*
+  steps:
+    - import: B_Seat_Mid
+      space: VirtualLab
+    - subtract: [$prev, [0,0,7]] # TO DO: use user specified value when available
+    - mean:
+    - distance: [$prev, Bottom_Bracket?name=Cycling*] #to do: use B_Bottom_Bracket_proj when available
+    - convert:
+      from: mm
+      to: m
 
 # Seat Fore/Aft position
 #   Vertical line from tip of saddle, to vertical line centered on bottom bracket. Neg = aft Pos = fore

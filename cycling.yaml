@@ -36,6 +36,7 @@
 # Saddle height
 #   distance of Seat_Mid_Adj landmark to B_Bottom_Bracket_proj
 #   Seat_Mid_Adj landmark is calcualted as B_seat_mid marker shifter vertically down by saddle marker radius
+#   TO DO!!! we will add settings to report cente pipeline definition, untill them we assume marker radius is 7 mm.
 
 # Seat Fore/Aft position
 #   Vertical line from tip of saddle, to vertical line centered on bottom bracket. Neg = aft Pos = fore
@@ -77,7 +78,10 @@
 #     DERIVED::Bike_Geometry::B_Head_Tube_VirtLab::Y-DERIVED::Bike_Geometry::B_Bottom_Bracket_proj_VirtLab::Y
 
 # Saddle angle
-# planar angle B_Seat_Back+B_Seat_Front+Bike Origin+Virtual Lab Y in 3D subtracted from 180
+#   planar angle B_Seat_Back+B_Seat_Front+Bike Origin+Virtual Lab Y in 3D subtracted from 180
+
+# Imported PAF fileds
+#   TO DO!!!
 
 
 ############
@@ -89,14 +93,13 @@
 # for now we allow to put crank marker only at opposite side of crank in respect to pedal (near axis)
 
 # Left crank angle
-
 - event: L_TDC_Temp
   where:
     name: Cycling*
   set: left
   steps:
-    - negate: Left_Crank_Vlab.z => crank_inv
-    - peakFinder: crank_inv
+    - negate: Left_Crank_Vlab.z
+    - peakFinder:
       width: 10
 
 - event: L_BDC_Temp
@@ -112,9 +115,9 @@
     name: Cycling*
   set: left
   steps:
-    - marker: L_crank => crank
+    - marker: L_crank
       space: VirtualLab
-    - convert: crank
+    - convert:
       from: mm
       to: m
 
@@ -154,14 +157,13 @@
     - add: [180, $prev]
 
 # Right crank angle 
-
 - event: R_TDC_Temp
   where:
     name: Cycling*
   set: right
   steps:
-    - negate: Right_Crank_Vlab.z => crank_inv
-    - peakFinder: crank_inv
+    - negate: Right_Crank_Vlab.z
+    - peakFinder:
       width: 10
 
 - event: R_BDC_Temp
@@ -177,9 +179,9 @@
     name: Cycling*
   set: right
   steps:
-    - marker: R_crank => crank
+    - marker: R_crank
       space: VirtualLab
-    - convert: crank
+    - convert:
       from: mm
       to: m
 
@@ -304,7 +306,7 @@
       value: 270
       direction: up
     
-# We do not have hip landmark, so we use origin of thigh segment
+# We do not have hip joint landmark, so we use origin of thigh segment
 - event: LEFT_HIP_max
   where:
     name: Cycling*
@@ -554,10 +556,10 @@
     - import: Left_Hip@LEFT_HIP_max
       output: max
     - subtract: [max, min]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
-    - mean: $prev
+    - mean:
       export: LEFT_HIP_range_mean
     - stdDev: $prev(2)
       export: LEFT_HIP_range_sd
@@ -572,10 +574,10 @@
     - import: Right_Hip@RIGHT_HIP_max
       output: max
     - subtract: [max, min]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
-    - mean: $prev
+    - mean:
       export: RIGHT_HIP_range_mean
     - stdDev: $prev(2)
       export: RIGHT_HIP_range_sd
@@ -589,7 +591,7 @@
     - segment: LeftHand => wrist
       space: VirtualLab
     - subtract: [wrist, Left_Hip]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -601,7 +603,7 @@
     - segment: RightHand => wrist
       space: VirtualLab
     - subtract: [wrist, Right_Hip]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -668,7 +670,7 @@
   set: left
   steps:
     - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Left Pelvic Angles_min
   where:
@@ -676,7 +678,7 @@
   set: left
   steps:
     - eventMask: [Left Pelvic Angles, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Left Pelvic Angles_range
   where:
@@ -691,7 +693,7 @@
   set: right
   steps:
     - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Right Pelvic Angles_min
   where:
@@ -699,7 +701,7 @@
   set: right
   steps:
     - eventMask: [Right Pelvic Angles, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Right Pelvic Angles_range
   where:
@@ -740,7 +742,7 @@
     - min: mask.z => min
     - max: mask.z => max
     - subtract: [max, min]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
  
@@ -814,7 +816,7 @@
   set: left
   steps:
     - eventMask: [Left Hip Angles, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Left Hip Angles_min
   where:
@@ -822,7 +824,7 @@
   set: left
   steps:
     - eventMask: [Left Hip Angles, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Left Hip Angles_range
   where:
@@ -844,7 +846,7 @@
   set: right
   steps:
     - eventMask: [Right Hip Angles, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Right Hip Angles_min
   where:
@@ -852,7 +854,7 @@
   set: right
   steps:
     - eventMask: [Right Hip Angles, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Right Hip Angles_range
   where:
@@ -1082,7 +1084,7 @@
   steps:
     - segment: LeftLeg
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -1120,7 +1122,7 @@
   steps:
     - segment: Hips
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: pelvis
@@ -1160,7 +1162,7 @@
   steps:
     - segment: RightLeg
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -1198,7 +1200,7 @@
   steps:
     - segment: Hips
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
       output: pelvis
@@ -1242,7 +1244,7 @@
     - segment: LeftToeBase => foot_tip
       space: VirtualLab
     - subtract: [knee, foot_tip]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -1316,7 +1318,7 @@
     - segment: RightToeBase => foot_tip
       space: VirtualLab
     - subtract: [knee, foot_tip]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -1457,7 +1459,7 @@
   set: left
   steps:
     - eventMask: [Left Ankle Angles, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Left Ankle Angles_min
   where:
@@ -1465,7 +1467,7 @@
   set: left
   steps:
     - eventMask: [Left Ankle Angles, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Left Ankle Angles_range_mean
   where:
@@ -1494,7 +1496,7 @@
   set: right
   steps:
     - eventMask: [Right Ankle Angles, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Right Ankle Angles_min
   where:
@@ -1502,7 +1504,7 @@
   set: right
   steps:
     - eventMask: [Right Ankle Angles, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Right Ankle Angles_range_mean
   where:
@@ -1581,7 +1583,7 @@
   set: left
   steps:
     - eventMask: [Left Foot Progression, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Left Foot Progression_min
   where:
@@ -1589,7 +1591,7 @@
   set: left
   steps:
     - eventMask: [Left Foot Progression, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Left Foot Progression_range
   where:
@@ -1611,7 +1613,7 @@
   set: right
   steps:
     - eventMask: [Right Foot Progression, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Right Foot Progression_min
   where:
@@ -1619,7 +1621,7 @@
   set: right
   steps:
     - eventMask: [Right Foot Progression, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Right Foot Progression_range
   where:
@@ -1688,14 +1690,14 @@
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Trunk Angles_wrt_LAB_min_left
   where:
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Trunk Angles_wrt_LAB_range_left
   where:
@@ -1708,14 +1710,14 @@
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Trunk Angles_wrt_LAB_min_right
   where:
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles_wrt_LAB, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Trunk Angles_wrt_LAB_range_right
   where:
@@ -1778,14 +1780,14 @@
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Trunk Angles_min_left
   where:
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Trunk Angles_range_left
   where:
@@ -1798,14 +1800,14 @@
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Trunk Angles_min_right
   where:
     name: Cycling*
   steps:
     - eventMask: [Trunk Angles, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Trunk Angles_range_right
   where:
@@ -1892,7 +1894,7 @@
   steps:
     - eventMask: [Left Shoulder_Pelvis Angle, L_TDC, L_TDC]
     - multiply: [$prev, [1, 1, -1]]
-    - max: $prev
+    - max:
 
 - parameter: Left Shoulder_Pelvis Angle_min
   where:
@@ -1901,7 +1903,7 @@
   steps:
     - eventMask: [Left Shoulder_Pelvis Angle, L_TDC, L_TDC]
     - multiply: [$prev, [1, 1, -1]]
-    - min: $prev
+    - min:
 
 - parameter: Left Shoulder_Pelvis Angle_range
   where:
@@ -1917,7 +1919,7 @@
   steps:
     - eventMask: [Right Shoulder_Pelvis Angle, R_TDC, R_TDC]
     - multiply: [$prev, [1, 1, -1]]
-    - max: $prev
+    - max:
 
 - parameter: Right Shoulder_Pelvis Angle_min
   where:
@@ -1926,7 +1928,7 @@
   steps:
     - eventMask: [Right Shoulder_Pelvis Angle, R_TDC, R_TDC]
     - multiply: [$prev, [1, 1, -1]]
-    - min: $prev
+    - min:
 
 - parameter: Right Shoulder_Pelvis Angle_range
   where:
@@ -1945,7 +1947,7 @@
     - max: $prev => max
     - min: $prev(2) => min
     - subtract: [max, min]
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -1955,14 +1957,14 @@
     name: Cycling*
   steps:
     - eventMask: [Shoulders_wrt_VLab, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Shoulders_wrt_VLab_min
   where:
     name: Cycling*
   steps:
     - eventMask: [Shoulders_wrt_VLab, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Shoulders_wrt_VLab_range_mean
   where:
@@ -1970,7 +1972,7 @@
   steps:
     - subtract: [Shoulders_wrt_VLab_max, Shoulders_wrt_VLab_min]
       export: Shoulders_wrt_VLab_range
-    - mean: $prev
+    - mean:
 
 # Elbow distance
 - parameter: Elbows_distance_mean
@@ -1978,8 +1980,8 @@
     name: Cycling*
   steps:
     - distance: [LeftForeArm, RightForeArm]
-    - mean: $prev
-    - convert: $prev
+    - mean: 
+    - convert: 
       from: mm
       to: m
 
@@ -1997,7 +1999,7 @@
   set: left
   steps:
     - eventMask: [Left Wrist Angles, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Left Wrist Angles_min
   where:
@@ -2005,7 +2007,7 @@
   set: left
   steps:
     - eventMask: [Left Wrist Angles, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Left Wrist Angles_range
   where:
@@ -2020,8 +2022,8 @@
   set: left
   steps:
     - distance: [LeftHand, Hips]
-    - mean: $prev
-    - convert: $prev
+    - mean:
+    - convert:
       from: mm
       to: m
 
@@ -2038,7 +2040,7 @@
   set: right
   steps:
     - eventMask: [Right Wrist Angles, R_TDC, R_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Right Wrist Angles_min
   where:
@@ -2046,7 +2048,7 @@
   set: right
   steps:
     - eventMask: [Right Wrist Angles, R_TDC, R_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Right Wrist Angles_range
   where:
@@ -2060,8 +2062,8 @@
     name: Cycling*
   steps:
     - distance: [LeftHand, RightHand]
-    - mean: $prev
-    - convert: $prev
+    - mean:
+    - convert:
       from: mm
       to: m
 
@@ -2071,8 +2073,8 @@
   set: right
   steps:
     - distance: [RightHand, Hips]
-    - mean: $prev
-    - convert: $prev
+    - mean:
+    - convert:
       from: mm
       to: m
 
@@ -2082,14 +2084,14 @@
     name: Cycling*
   steps:
     - eventMask: [Head Angles, L_TDC, L_TDC]
-    - max: $prev
+    - max:
 
 - parameter: Head Angles_min
   where:
     name: Cycling*
   steps:
     - eventMask: [Head Angles, L_TDC, L_TDC]
-    - min: $prev
+    - min:
 
 - parameter: Head Angles_range
   where:
@@ -2106,7 +2108,7 @@
   set: left
   steps:
     - angle: [LeftArm, LeftForeArm, LeftHand]
-    - convert: $prev
+    - convert:
       from: radians
       to: degrees
 
@@ -2116,7 +2118,7 @@
   set: right
   steps:
     - angle: [RightArm, RightForeArm, RightHand]
-    - convert: $prev
+    - convert:
       from: radians
       to: degrees
 
@@ -2131,7 +2133,7 @@
   steps:
     - marker: LForefoot2
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -2142,7 +2144,7 @@
   steps:
     - marker: LHeelBack
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -2153,7 +2155,7 @@
   steps:
     - segment: LeftFoot
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -2164,7 +2166,7 @@
   steps:
     - marker: RForefoot2
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -2175,7 +2177,7 @@
   steps:
     - marker: RHeelBack
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 
@@ -2186,7 +2188,7 @@
   steps:
     - segment: RightFoot
       space: VirtualLab
-    - convert: $prev
+    - convert:
       from: mm
       to: m
 

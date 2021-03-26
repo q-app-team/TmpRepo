@@ -1253,7 +1253,7 @@
   steps:
     - eventMask: [Left Hip Angles, LFS, LTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 - parameter: Right Hip Angles_MIN_stance
   where:
@@ -1261,7 +1261,7 @@
   steps:
     - eventMask: [Right Hip Angles, RFS, RTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 # max during stride
 - parameter: Left Hip Angles_MAX_stride

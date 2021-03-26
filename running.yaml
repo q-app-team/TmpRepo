@@ -1318,19 +1318,17 @@
   where:
     name: Running*
   steps:
-    - multiply: [Left Knee Angles, [-1,1,1]]
-    - eventMask: [$prev, LFS, LTO]
+    - eventMask: [Left Knee Angles, LFS, LTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 - parameter: Right Knee Angles_MIN_stance
   where:
     name: Running*
   steps:
-    - multiply: [Right Knee Angles, [-1,1,1]]
-    - eventMask: [$prev, RFS, RTO]
+    - eventMask: [Right Knee Angles, RFS, RTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 # max during stride
 - parameter: Left Knee Angles_MAX

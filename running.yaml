@@ -294,12 +294,10 @@
     - segment: Hips => hipsDynamic
     - segment: Hips?name=Static* => hipsStatic
     - mean: hipsStatic.z
-      output: dude0
     - subtract: [hipsDynamic.z, $prev]
     - convert: $prev
       from: mm
       to: m
-      export: dude1
 
 - parameter: Left Pelvic Angles
   set: left

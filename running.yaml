@@ -1370,19 +1370,17 @@
   where:
     name: Running*
   steps:
-    - multiply: [Left Ankle Angles, [-1,1,1]]
     - eventMask: [$prev, LFS, LTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 - parameter: Right Ankle Angles_MIN_stance
   where:
     name: Running*
   steps:
-    - multiply: [Right Ankle Angles, [-1,1,1]]
     - eventMask: [$prev, RFS, RTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 # foot wrt lab at footstrike
 - parameter: L_FOOT_CONTACT_ANGLE@LFS

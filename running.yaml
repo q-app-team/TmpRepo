@@ -1251,8 +1251,7 @@
   where:
     name: Running*
   steps:
-    - multiply: [Left Hip Angles, [-1,1,1]]
-    - eventMask: [$prev, LFS, LTO]
+    - eventMask: [Left Hip Angles, LFS, LTO]
       truncate: true
     - max: $prev
 
@@ -1260,8 +1259,7 @@
   where:
     name: Running*
   steps:
-    - multiply: [Right Hip Angles, [-1,1,1]]
-    - eventMask: [$prev, RFS, RTO]
+    - eventMask: [Right Hip Angles, RFS, RTO]
       truncate: true
     - max: $prev
 

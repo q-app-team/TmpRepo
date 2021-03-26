@@ -916,7 +916,7 @@
   - concatenate: [Left_Steps_Per_Minute_Mean, Right_Steps_Per_Minute_Mean]
   - mean: $prev
 
-# step length test
+# step length
 - parameter: Right_Step_Length_Mean
   where:
     name: Running*
@@ -925,7 +925,8 @@
       space: VirtualLab
     - segment: RightFoot => r_foot
       space: VirtualLab
-    - subtract: [l_foot.y@LFS, r_foot.y@RFS]
+    - subtract: [r_foot.y@RFS, l_foot.y@LFS]
+      frameSequenceOrder: reverse
     - convert: $prev
       from: mm
       to: m
@@ -942,7 +943,8 @@
       space: VirtualLab
     - segment: RightFoot => r_foot
       space: VirtualLab
-    - subtract: [r_foot.y@RFS, l_foot.y@LFS]
+    - subtract: [l_foot.y@LFS, r_foot.y@RFS]
+      frameSequenceOrder: reverse
     - convert: $prev
       from: mm
       to: m
@@ -968,7 +970,7 @@
     - eventDuration: [RFS, RFS]
       output: right_stride_time
       export: right_stride_time
-    - diff: foot.x@RFS
+    - diff: foot.y@RFS
     - convert: $prev
       from: mm
       to: m
@@ -986,7 +988,7 @@
     - eventDuration: [LFS, LFS]
       output: left_stride_time
       export: left_stride_time
-    - diff: foot.x@LFS
+    - diff: foot.y@LFS
     - convert: $prev
       from: mm
       to: m
@@ -1004,7 +1006,7 @@
 
 # stride width
 # note V3D is calculation it using stride vector
-- parameter: Stride_Width_Mean
+- parameter: Right_Stride_Width_Mean
   where:
     name: Running*
   steps:
@@ -1013,10 +1015,30 @@
     - segment: RightFoot => r_foot
       space: VirtualLab
     - subtract: [r_foot.x@RFS, l_foot.x@LFS]
+      frameSequenceOrder: reverse
+    - abs: $prev
+
+- parameter: Left_Stride_Width_Mean
+  where:
+    name: Running*
+  steps:
+    - segment: LeftFoot => l_foot
+      space: VirtualLab
+    - segment: RightFoot => r_foot
+      space: VirtualLab
+    - subtract: [l_foot.x@LFS, r_foot.x@RFS]
+      frameSequenceOrder: reverse
+    - abs: $prev
+
+- parameter: Stride_Width_Mean
+  where:
+    name: Running*
+  steps:
+    - concatenate: [Right_Stride_Width_Mean, Left_Stride_Width_Mean]
+    - mean: $prev
     - convert: $prev
       from: mm
       to: m
-    - abs: $prev
 
 # strides per minute
 - parameter: Left_Strides_Per_Minute_Mean

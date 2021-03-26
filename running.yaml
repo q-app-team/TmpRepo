@@ -1184,8 +1184,8 @@
   where:
     name: Running*
   steps:
-    - multiply: [Left Pelvic Angles, [-1,1,1]]
-    - eventMask: [$prev, LFS, LTO]
+    #- multiply: [Left Pelvic Angles, [-1,1,1]]
+    - eventMask: [Left Pelvic Angles, LFS, LTO]
       truncate: true
     - min: $prev
 
@@ -1193,8 +1193,8 @@
   where:
     name: Running*
   steps:
-    - multiply: [Right Pelvic Angles, [-1,1,1]]
-    - eventMask: [$prev, RFS, RTO]
+    #- multiply: [Right Pelvic Angles, [-1,1,1]]
+    - eventMask: [Right Pelvic Angles, RFS, RTO]
       truncate: true
     - min: $prev
 

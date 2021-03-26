@@ -1187,7 +1187,7 @@
     - multiply: [Left Pelvic Angles, [-1,1,1]]
     - eventMask: [$prev, LFS, LTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 - parameter: Right Pelvic Angles_MIN_stance
   where:
@@ -1196,7 +1196,7 @@
     - multiply: [Right Pelvic Angles, [-1,1,1]]
     - eventMask: [$prev, RFS, RTO]
       truncate: true
-    - max: $prev
+    - min: $prev
 
 # max during stride
 - parameter: Left Pelvic Angles_MAX_stride

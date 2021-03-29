@@ -35,18 +35,21 @@
   where:
     name: Running*
   steps:
-    - lowpass: LeftFoot.y => heel
+    - segment: LeftFoot => l_foot
       space: VirtualLab
+    - lowpass: l_foot.y => heel
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: LeftToeBase.y => toe
+    - segment: LeftToeBase => l_toe
       space: VirtualLab
+    - lowpass: l_toe.y => toe
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: Hips.y => sacrum
+    - segment: Hips => pelvis
       space: VirtualLab
+    - lowpass: pelvis.y => sacrum
       extrapolate: 100
       order: 6
       cutoff: 20
@@ -109,18 +112,21 @@
   where:
     name: Running*
   steps:
-    - lowpass: RightFoot.y => heel
+    - segment: RightFoot => r_foot
       space: VirtualLab
+    - lowpass: r_foot.y => heel
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: RightToeBase.y => toe
+    - segment: RightToeBase => r_toe
       space: VirtualLab
+    - lowpass: r_toe.y => toe
       extrapolate: 100
       order: 6
       cutoff: 20
-    - lowpass: Hips.y => sacrum
+    - segment: Hips => pelvis
       space: VirtualLab
+    - lowpass: pelvis.y => sacrum
       extrapolate: 100
       order: 6
       cutoff: 20

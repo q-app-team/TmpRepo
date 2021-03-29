@@ -840,18 +840,36 @@
 #############
 ## Metrics ##
 #############
-# treadmill speed (calculated from left foot at midstance)
-- parameter: treadmill_speed
+# treadmill speed (calculated from left foot and right foot at midstance)
+- parameter: left_treadmill_speed
   where:
     name: Running*
   steps:
     - segment: LeftFoot => l_foot
       space: VirtualLab
     - velocity: l_foot => l_foot_vel
-    - multiply: [l_foot_vel, [1,-1,1]]
+    - multiply: [l_foot_vel.y, -1]
       output: l_foot_vel_inv
-    - mean: l_foot_vel_inv@L_MID_STANCE => l_foot_vel_L_MID_STANCE
-    - convert: l_foot_vel_L_MID_STANCE
+    - mean: l_foot_vel_inv@L_MID_STANCE
+    
+- parameter: right_treadmill_speed
+  where:
+    name: Running*
+  steps:
+    - segment: RightFoot => r_foot
+      space: VirtualLab
+    - velocity: r_foot => r_foot_vel
+    - multiply: [r_foot_vel.y, -1]
+      output: r_foot_vel_inv
+    - mean: r_foot_vel_inv@R_MID_STANCE
+
+- parameter: treadmill_speed
+  where:
+    name: Running*
+  steps:
+    - concatenate: [left_treadmill_speed, right_treadmill_speed]
+    - mean: $prev
+    - convert: $prev
       from: mm/s
       to: m/s
 

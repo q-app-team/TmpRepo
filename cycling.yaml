@@ -30,9 +30,8 @@
       space: VirtualLab
     - marker: R_crank => R_spindle
       space: VirtualLab
-    - mean: L_spindle => L_bracket
-    - mean: R_spindle => R_bracket
-    - concatenate: [L_bracket, R_bracket]
+    - concatenate: [L_spindle, R_spindle]
+    - divide: [$prev, 2]
     - mean:
       output: Bottom_Bracket_temp
 

@@ -22,7 +22,7 @@
 #   B_Bottom_Bracket_proj is calculated as projection of 
 #     mean((TARGET::ORIGINAL::L_crank + TARGET::ORIGINAL::R_crank) / 2) 
 #     to plane created by B_Down_Tube+B_SEAT_TUBE+B_STEM
-- parameter: Bottom_Bracket
+- parameter: Bottom_Bracket_proj
   where:
     name: Cycling*
   steps:
@@ -34,20 +34,27 @@
     - mean: R_spindle => R_bracket
     - concatenate: [L_bracket, R_bracket]
     - mean:
+      output: Bottom_Bracket_temp
+
+    - plane: [B_Stem, B_Seat_Tube, B_Down_Tube]
+      export: BikePlane
+    - project: [Bottom_Bracket_temp, $prev]
+      space: VirtualLab
 
 # Saddle height
 #   distance of Seat_Mid_Adj landmark to B_Bottom_Bracket_proj
-#   Seat_Mid_Adj landmark is calcualted as B_seat_mid marker shifter vertically down by saddle marker radius
-#   TO DO!!! we will add settings to report cente pipeline definition, untill them we assume marker radius is 7 mm.
+#   Seat_Mid_Adj landmark is calculated as B_seat_mid marker shifter vertically down by saddle marker radius
+#   TO DO!!! we will add settings to report center pipeline definition, until them we assume marker radius is 7 mm.
 - parameter: Saddle_Height_mean
   where:
     name: Bike*
   steps:
     - import: B_Seat_Mid
       space: VirtualLab
+      export: test
     - subtract: [$prev, [0,0,7]] # TO DO: use user specified value when available
     - mean:
-    - distance: [$prev, Bottom_Bracket?name=Cycling*] #to do: use B_Bottom_Bracket_proj when available
+    - distance: [$prev, Bottom_Bracket_proj?name=Cycling*] #to do: use B_Bottom_Bracket_proj when available
     - convert:
       from: mm
       to: m
@@ -55,9 +62,18 @@
 # Seat Fore/Aft position
 #   Vertical line from tip of saddle, to vertical line centered on bottom bracket. Neg = aft Pos = fore
 #   Transform Seat_Front and Bottom_Bracket into the bike virtual lab to accommodate for bike direction
-
-# Seat Angle
-#   2 point angle between B_Seat_Back+B_Seat_Front and Bike Lab Y 
+- parameter: Saddle_Fore_mean
+  where:
+    name: Bike*
+  steps:
+    - import: B_Seat_Front => tip
+      space: VirtualLab
+    - subtract: [tip, Bottom_Bracket_proj?name=Cycling*]
+    - abs: $prev.x
+    - mean:
+    - convert:
+      from: mm
+      to: m
 
 # Drop
 #   Vertical difference between top of bars and top of saddle. Neg=bars lower Pos =bars higher
@@ -86,15 +102,37 @@
 # Stack
 #   Head_Tube marker (projected on bike sagittal plane) to bottom bracket, vertical height difference
 #     DERIVED::Bike_Geometry::B_Head_Tube_VirtLab::Z-DERIVED::Bike_Geometry::B_Bottom_Bracket_proj_VirtLab::Z
+- parameter: Geometry_stack_mean
+  where:
+    name: Bike*
+  steps:
+    - project: [B_Head_Tube, BikePlane]
+    - subtract: [$prev, Bottom_Bracket_proj?name=Cycling*]
+    - mean: $prev.z
+    - convert:
+      from: mm
+      to: m
 
 # Reach (Bottom)
 #   Head_Tube marker (projected on sagittal plane) to bottom bracket, horizontal distance
 #     DERIVED::Bike_Geometry::B_Head_Tube_VirtLab::Y-DERIVED::Bike_Geometry::B_Bottom_Bracket_proj_VirtLab::Y
+- parameter: Geometry_reach_mean
+  where:
+    name: Bike*
+  steps:
+    - project: [B_Head_Tube, BikePlane?name=Cycling*]
+      space: VirtualLab
+    - subtract: [$prev, Bottom_Bracket_proj?name=Cycling*]
+    - mean: $prev.y
+    - convert:
+      from: mm
+      to: m
 
 # Saddle angle
 #   planar angle B_Seat_Back+B_Seat_Front+Bike Origin+Virtual Lab Y in 3D subtracted from 180
+#- parameter: Saddle_angle_mean
 
-# Imported PAF fileds
+# Imported PAF fields
 #   TO DO!!!
 
 

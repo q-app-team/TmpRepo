@@ -1,16 +1,19 @@
 ############
 ## SPACES ##
 ############
-
-- space: VirtualLab
-  alignWithSegment:
-    segment: Hips
+- parameter: axis
+  steps:
+    - vector: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
 
 #- space: VirtualLab
-#  origin: B_Stem
-#  primaryAxis: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
-#  secondaryAxis: B_Down_Tube
-#  order: yx
+#  alignWithSegment:
+#    segment: Hips
+
+- space: VirtualLab
+  origin: B_Stem
+  primaryAxis: axis
+  secondaryAxis: B_Down_Tube
+  order: yx
 
 ############
 # Bike trials
@@ -105,7 +108,7 @@
   where:
     name: Bike*
   steps:
-    - project: [B_Head_Tube, BikePlane]
+    - project: [B_Head_Tube, BikePlane?name=Cycling*]
     - subtract: [$prev, Bottom_Bracket_proj?name=Cycling*]
     - mean: $prev.z
     - convert:

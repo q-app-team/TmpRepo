@@ -2084,7 +2084,8 @@
     name: Cycling*
   set: left
   steps:
-    - distance: [LeftHand, LeftUpLeg]
+    - subtract: [LeftHand, LeftUpLeg]
+      space: VirtualLab
     - mean:
     - convert:
       from: mm

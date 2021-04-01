@@ -216,7 +216,6 @@
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [L_Pedal_Y, L_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
-    - negate: 
     - add: [180, $prev]
 
 # Right crank angle 
@@ -278,7 +277,6 @@
     # Calculate crank angle in radians from ATAN2 using adjusted crank signals (Y and Z)
     - atan2: [R_Pedal_Y, R_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
-    - negate: 
     - add: [180, $prev]
 
 ############

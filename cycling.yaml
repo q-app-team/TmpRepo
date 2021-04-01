@@ -1,19 +1,21 @@
 ############
 ## SPACES ##
 ############
-- parameter: axis
-  steps:
-    - vector: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
-
 #- space: VirtualLab
 #  alignWithSegment:
 #    segment: Hips
 
+- parameter: seatTubeMoved
+  where:
+    name: Cycling*
+  steps:
+    - vector: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
+
 - space: VirtualLab
   origin: B_Stem
-  primaryAxis: axis
-  secondaryAxis: B_Down_Tube
-  order: yx
+  primaryAxis: [B_Stem, seatTubeMoved?name=Cycling*]
+  secondaryAxis: [0,0,1]
+  order: yz
 
 ############
 # Bike trials
@@ -30,17 +32,15 @@
     name: Cycling*
   steps:
     - marker: L_crank => L_spindle
-      space: VirtualLab
     - marker: R_crank => R_spindle
-      space: VirtualLab
     - concatenate: [L_spindle, R_spindle]
-    - divide: [$prev, 2]
     - mean:
       output: Bottom_Bracket_temp
 
     - plane: [B_Stem, B_Seat_Tube, B_Down_Tube]
       export: BikePlane
     - project: [Bottom_Bracket_temp, $prev]
+    - import: $prev
       space: VirtualLab
 
 # Saddle height
@@ -53,10 +53,9 @@
   steps:
     - import: B_Seat_Mid
       space: VirtualLab
-      export: test
     - subtract: [$prev, [0,0,7]] # TO DO: use user specified value when available
     - mean:
-    - distance: [$prev, Bottom_Bracket_proj?name=Cycling*] #to do: use B_Bottom_Bracket_proj when available
+    - distance: [$prev, Bottom_Bracket_proj?name=Cycling*]
     - convert:
       from: mm
       to: m
@@ -70,8 +69,7 @@
   steps:
     - import: B_Seat_Front => tip
       space: VirtualLab
-    - subtract: [tip, Bottom_Bracket_proj?name=Cycling*]
-    - abs: $prev.x
+    - subtract: [Bottom_Bracket_proj.y?name=Cycling*, tip.y]
     - mean:
     - convert:
       from: mm
@@ -109,12 +107,12 @@
     name: Bike*
   steps:
     - project: [B_Head_Tube, BikePlane?name=Cycling*]
-    - subtract: [$prev, Bottom_Bracket_proj?name=Cycling*]
-    - mean: $prev.z
+    - subtract: [$prev.z, Bottom_Bracket_proj.z?name=Cycling*]
+    - mean:
     - convert:
       from: mm
       to: m
-
+    
 # Reach (Bottom)
 #   Head_Tube marker (projected on sagittal plane) to bottom bracket, horizontal distance
 #     DERIVED::Bike_Geometry::B_Head_Tube_VirtLab::Y-DERIVED::Bike_Geometry::B_Bottom_Bracket_proj_VirtLab::Y
@@ -124,15 +122,25 @@
   steps:
     - project: [B_Head_Tube, BikePlane?name=Cycling*]
       space: VirtualLab
-    - subtract: [$prev, Bottom_Bracket_proj?name=Cycling*]
-    - mean: $prev.y
+    - subtract: [$prev.y, Bottom_Bracket_proj.y?name=Cycling*]
+    - mean: 
     - convert:
       from: mm
       to: m
 
 # Saddle angle
 #   planar angle B_Seat_Back+B_Seat_Front+Bike Origin+Virtual Lab Y in 3D subtracted from 180
-#- parameter: Saddle_angle_mean
+- parameter: Saddle_angle_mean
+  where:
+    name: Bike*
+  steps:
+    - angle: [B_Seat_Back, B_Seat_Front, B_Stem, seatTubeMoved?name=Cycling*]
+      project: xz
+    - mean:
+    - convert:
+      from: radians
+      to: degrees
+    - subtract: [180, $prev]
 
 # Imported PAF fields
 #   TO DO!!!

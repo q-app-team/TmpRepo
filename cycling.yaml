@@ -107,6 +107,7 @@
     name: Bike*
   steps:
     - project: [B_Head_Tube, BikePlane?name=Cycling*]
+      space: VirtualLab
     - subtract: [$prev.z, Bottom_Bracket_proj.z?name=Cycling*]
     - mean:
     - convert:
@@ -1697,7 +1698,7 @@
   where:
     name: Cycling*
   steps:
-    - mean: Trunk Angles_wrt_LAB
+    - mean: Trunk Angles_wrt_LAB.x
 
 - parameter: Trunk Angles_wrt_LAB@L_TDC
   where:
@@ -2083,7 +2084,7 @@
     name: Cycling*
   set: left
   steps:
-    - distance: [LeftHand, Hips]
+    - distance: [LeftHand, LeftUpLeg]
     - mean:
     - convert:
       from: mm
@@ -2134,7 +2135,8 @@
     name: Cycling*
   set: right
   steps:
-    - distance: [RightHand, Hips]
+    - subtract: [RightHand, RightUpLeg]
+      space: VirtualLab
     - mean:
     - convert:
       from: mm
@@ -2164,28 +2166,50 @@
 # Armpit angle = Shoulder Angles
 
 # Elbow Angle
-- parameter: Left Elbow Angle
+- parameter: Left Elbow Angle_mean
   where:
     name: Cycling*
   set: left
   steps:
     - angle: [LeftArm, LeftForeArm, LeftHand]
+    - mean:
     - convert:
       from: radians
       to: degrees
 
-- parameter: Right Elbow Angle
+- parameter: Right Elbow Angle_mean
   where:
     name: Cycling*
   set: right
   steps:
     - angle: [RightArm, RightForeArm, RightHand]
+    - mean:
     - convert:
       from: radians
       to: degrees
 
 # Forearm angle to horizontal
-# to do: requires planar angles
+- parameter: Left Forearm to Horizontal_mean
+  where:
+    name: Cycling*
+  set: left
+  steps:
+    - angle: [LeftForeArm, LeftHand, seatTubeMoved , B_Stem]
+    - mean:
+    - convert:
+      from: radians
+      to: degrees
+
+- parameter: Right Forearm to Horizontal_mean
+  where:
+    name: Cycling*
+  set: right
+  steps:
+    - angle: [RightForeArm, RightHand, seatTubeMoved , B_Stem]
+    - mean:
+    - convert:
+      from: radians
+      to: degrees
 
 # Trajectories
 - parameter: Left_FM2_VLab

@@ -12,9 +12,9 @@
     - vector: [B_Seat_Tube.x, B_Seat_Tube.y, B_Stem.z]
 
 - space: VirtualLab
-  origin: B_Stem
-  primaryAxis: [B_Stem, seatTubeMoved?name=Cycling*]
-  secondaryAxis: [0,0,1]
+  origin: B_Stem?name=Cycling*
+  primaryAxis: [B_Stem?name=Cycling*, seatTubeMoved?name=Cycling*]
+  secondaryAxis: [[0,0,1], [0,0,0]]
   order: yz
 
 ############
@@ -23,7 +23,6 @@
 
 # Bottom bracket
 # midpoint of mean position of L_crank and mean position of R_crank
-# TO DO: project it on bike frame plane
 #   B_Bottom_Bracket_proj is calculated as projection of 
 #     mean((TARGET::ORIGINAL::L_crank + TARGET::ORIGINAL::R_crank) / 2) 
 #     to plane created by B_Down_Tube+B_SEAT_TUBE+B_STEM

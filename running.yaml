@@ -1427,14 +1427,14 @@
 # Shank angular velocity at footstrike
 - parameter: Left Shank wrt VLab Ang Vel@LFS
   steps:
-    - jointAngleVelocity: [LeftLeg]
+    - angularVelocity: [LeftLeg]
       space: VirtualLab
       output: leg_ang_vel
     - import: leg_ang_vel@LFS
 
 - parameter: Right Shank wrt VLab Ang Vel@RFS
   steps:
-    - jointAngleVelocity: [RightLeg]
+    - angularVelocity: [RightLeg]
       space: VirtualLab
       output: leg_ang_vel
     - import: leg_ang_vel@RFS
@@ -1442,14 +1442,14 @@
 # Shank angular velocity at ankle cross
 - parameter: Left Shank wrt VLab Ang Vel@L_Ankle_cross
   steps:
-    - jointAngleVelocity: [LeftLeg]
+    - angularVelocity: [LeftLeg]
       space: VirtualLab
       output: leg_ang_vel
     - import: leg_ang_vel@L_Ankle_cross
 
 - parameter: Right Shank wrt VLab Ang Vel@R_Ankle_cross
   steps:
-    - jointAngleVelocity: [RightLeg]
+    - angularVelocity: [RightLeg]
       space: VirtualLab
       output: leg_ang_vel
     - import: leg_ang_vel@R_Ankle_cross

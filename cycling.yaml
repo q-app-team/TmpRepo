@@ -60,7 +60,7 @@
       to: m
 
 # Seat Fore/Aft position
-#   Vertical line from tip of saddle, to vertical line centered on bottom bracket. Neg = aft Pos = fore
+#   Vertical line from tip of saddle, to vertical line centered on bottom bracket. Neg = aft, Pos = fore
 #   Transform Seat_Front and Bottom_Bracket into the bike virtual lab to accommodate for bike direction
 - parameter: Saddle_Fore_mean
   where:
@@ -68,8 +68,8 @@
   steps:
     - import: B_Seat_Front => tip
       space: VirtualLab
-    - subtract: [Bottom_Bracket_proj.y?name=Cycling*, tip.y]
-    - mean:
+    - subtract: [tip.y, Bottom_Bracket_proj.y?name=Cycling*]
+    - mean: $prev
     - convert:
       from: mm
       to: m

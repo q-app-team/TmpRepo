@@ -130,7 +130,8 @@
 
 # Saddle angle
 #   planar angle B_Seat_Back+B_Seat_Front+Bike Origin+Virtual Lab Y in 3D subtracted from 180
-- parameter: Saddle_angle_mean
+#   calculation of Saddle angle field if it is set to default 'Calculated' 
+- parameter: Saddle_angle_temp
   where:
     name: Bike*
   steps:
@@ -141,6 +142,22 @@
       from: radians
       to: degrees
     - subtract: [180, $prev]
+
+# what to use if field set to calculated value
+- parameter: Saddle_angle_mean
+  where:
+    name: Bike*
+    fields:
+      Saddle angle: Calculated
+  steps:
+    - import: Saddle_angle_temp
+
+#what to use if field set to user entered value
+- parameter: Saddle_angle_mean
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Saddle angle)
 
 #--------------
 # PAF fields
@@ -235,12 +252,6 @@
     name: Bike*
   steps:
     - import: $field(Pedal brand)
-
-- parameter: pedal_model
-  where:
-    name: Bike*
-  steps:
-    - import: $field(Pedal model)
 
 - parameter: pedal_model
   where:

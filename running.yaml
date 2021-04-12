@@ -892,6 +892,16 @@
       output: pelvis_vel_adj
     - mean: pelvis_vel_adj.y
 
+# Milliseconds per kilometer
+- parameter: time_per_km
+  where:
+    name: Running*
+  steps:
+    - divide: [1, actual_running_speed_ms]
+    - convert: $prev
+      from: s/m
+      to: ms/km
+
 # stride angle
 - parameter: Left Stride Angle@max
   where:

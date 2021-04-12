@@ -142,16 +142,286 @@
       to: degrees
     - subtract: [180, $prev]
 
-# Imported PAF fields
-#   TO DO!!!
+#--------------
+# PAF fields
+#--------------
 
+#- parameter: LOAD_int
+#  where:
+#    name: Cycling*
+#  steps:
+#    import: $field(Load)
+
+- parameter: head_tube_spacers_above
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Head tube spacers above)
+
+- parameter: head_tube_spacers_below
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Head tube spacers below)
+
+- parameter: stem_length
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Stem length)
+
+- parameter: stem_angle
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Stem angle)
+
+- parameter: handlebar_width
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Handlebar width)
+
+- parameter: handlebar_reach
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Handlebar reach)
+
+- parameter: crank_length
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Crank length)
+
+- parameter: saddle_brand
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Saddle brand)
+
+- parameter: saddle_model
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Saddle model)
+
+- parameter: saddle_width
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Saddle width)
+
+- parameter: insole_arch_support
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Insole arch support)
+
+- parameter: shoe_brand
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Shoe brand)
+
+- parameter: shoe_model
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Shoe model)
+
+- parameter: pedal_brand
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Pedal brand)
+
+- parameter: pedal_model
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Pedal model)
+
+- parameter: pedal_model
+  where:
+    name: Bike*
+  steps:
+    - import: $field(Pedal model)
+
+- parameter: left_shoe_toe_rotation_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Left shoe toe rotation)
+
+- parameter: right_shoe_toe_rotation_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Right shoe toe rotation)
+
+- parameter: left_pedal_stance_width_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Left pedal stance width)
+
+- parameter: right_pedal_stance_width_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Right pedal stance width)
+
+- parameter: left_shoe_fore_position_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Left shoe fore position)
+
+- parameter: right_shoe_fore_position_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Right shoe fore position)
+
+- parameter: left_inside_shoe_lift_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Left inside shoe lift)
+
+- parameter: right_inside_shoe_lift_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Right inside shoe lift)
+
+- parameter: left_outside_shoe_lift_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Left outside shoe lift)
+
+- parameter: right_outside_shoe_lift_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Right outside shoe lift)
+
+- parameter: left_inside_shoe_canting_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Left inside shoe canting)
+
+- parameter: right_inside_shoe_canting_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Right inside shoe canting)
+
+- parameter: left_outside_shoe_canting_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Left outside shoe canting)
+
+- parameter: right_outside_shoe_canting_initial
+  where:
+    name: Bike trial - initial*
+  steps:
+    - import: $field(Right outside shoe canting)
+
+- parameter: left_shoe_toe_rotation_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Left shoe toe rotation)
+
+- parameter: right_shoe_toe_rotation_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Right shoe toe rotation)
+
+- parameter: left_pedal_stance_width_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Left pedal stance width)
+
+- parameter: right_pedal_stance_width_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Right pedal stance width)
+
+- parameter: left_shoe_fore_position_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Left shoe fore position)
+
+- parameter: right_shoe_fore_position_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Right shoe fore position)
+
+- parameter: left_inside_shoe_lift_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Left inside shoe lift)
+
+- parameter: right_inside_shoe_lift_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Right inside shoe lift)
+
+- parameter: left_outside_shoe_lift_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Left outside shoe lift)
+
+- parameter: right_outside_shoe_lift_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Right outside shoe lift)
+
+- parameter: left_inside_shoe_canting_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Left inside shoe canting)
+
+- parameter: right_inside_shoe_canting_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Right inside shoe canting)
+
+- parameter: left_outside_shoe_canting_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Left outside shoe canting)
+
+- parameter: right_outside_shoe_canting_final
+  where:
+    name: Bike trial - final*
+  steps:
+    - import: $field(Right outside shoe canting)
 
 ############
 # Cycling trials
 ############
 
 # Crank Angle
-############
+#-----------------
 # for now we allow to put crank marker only at opposite side of crank in respect to pedal (near axis)
 
 # Left crank angle

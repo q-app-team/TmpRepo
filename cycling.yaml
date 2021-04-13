@@ -13,8 +13,8 @@
 
 - space: VirtualLab
   origin: B_Stem?name=Cycling*
-  primaryAxis: [B_Stem?name=Cycling*, seatTubeMoved?name=Cycling*]
-  secondaryAxis: [[0,0,1], [0,0,0]]
+  primaryAxis: [seatTubeMoved?name=Cycling*, B_Stem?name=Cycling*]
+  secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
 
 ############

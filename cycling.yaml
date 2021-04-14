@@ -861,6 +861,7 @@
     name: Cycling*
   steps:
     - jointAngle: [Spine2, Head]
+    - multiply: [$prev, [-1, 1, 1]]
 
 #############
 ## METRICS ##

@@ -823,7 +823,7 @@
     name: Cycling*
   set: left
   steps:
-    - jointAngle: [Hips, LeftShoulder]
+    - jointAngle: [Hips, Spine2]
     - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Shoulder_Pelvis Angle
@@ -831,7 +831,7 @@
     name: Cycling*
   set: right
   steps:
-    - jointAngle: [Hips, RightShoulder]
+    - jointAngle: [Hips, Spine2]
 
 - parameter: Shoulders_wrt_VLab
   where:

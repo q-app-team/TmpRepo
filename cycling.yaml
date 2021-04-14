@@ -163,11 +163,11 @@
 # PAF fields
 #--------------
 
-#- parameter: LOAD_int
-#  where:
-#    name: Cycling*
-#  steps:
-#    import: $field(Load)
+- parameter: LOAD_int
+  where:
+    name: Cycling*
+  steps:
+    import: $field(Load, measurement, numeric)
 
 - parameter: head_tube_spacers_above
   where:

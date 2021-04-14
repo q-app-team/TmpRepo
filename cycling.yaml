@@ -2497,7 +2497,7 @@
     name: Cycling*
   set: left
   steps:
-    - marker: LForefoot2
+    - segment: LeftToeBase
       space: VirtualLab
     - convert:
       from: mm
@@ -2508,7 +2508,7 @@
     name: Cycling*
   set: left
   steps:
-    - marker: LHeelBack
+    - segment: LeftFoot
       space: VirtualLab
     - convert:
       from: mm
@@ -2530,7 +2530,7 @@
     name: Cycling*
   set: right
   steps:
-    - marker: RForefoot2
+    - segment: RightToeBase
       space: VirtualLab
     - convert:
       from: mm
@@ -2541,7 +2541,7 @@
     name: Cycling*
   set: right
   steps:
-    - marker: RHeelBack
+    - segment: RightFoot
       space: VirtualLab
     - convert:
       from: mm

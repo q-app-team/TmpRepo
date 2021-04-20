@@ -38,8 +38,6 @@
 
 - parameter: Left Pelvic Angles
   set: left
-  where:
-    name: Running*
   steps:
     - jointAngle: Hips
       space: VirtualLab
@@ -47,8 +45,6 @@
 
 - parameter: Right Pelvic Angles
   set: right
-  where:
-    name: Running*
   steps:
     - jointAngle: Hips
       space: VirtualLab
@@ -58,16 +54,12 @@
 
 - parameter: Left Hip Angles
   set: left
-  where:
-    name: Running*
   steps:
     - jointAngle: [Hips, LeftUpLeg]
     - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Hip Angles
   set: right
-  where:
-    name: Running*
   steps:
     - jointAngle: [Hips, RightUpLeg]
 
@@ -76,16 +68,12 @@
 
 - parameter: Left Knee Angles
   set: left
-  where:
-    name: Running*
   steps:
     - jointAngle: [LeftUpLeg, LeftLeg]
     - multiply: [$prev, [-1, -1, -1]]
 
 - parameter: Right Knee Angles
   set: right
-  where:
-    name: Running*
   steps:
     - jointAngle: [RightUpLeg, RightLeg]
     - multiply: [$prev, [-1, 1, 1]]
@@ -94,16 +82,12 @@
 
 - parameter: Left Ankle Angles
   set: left
-  where:
-    name: Running*
   steps:
     - jointAngle: [LeftLeg, LeftFoot]
     - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Ankle Angles
   set: right
-  where:
-    name: Running*
   steps:
     - jointAngle: [RightLeg, RightFoot]
 
@@ -111,16 +95,12 @@
 # --- Upper body ---
 
 - parameter: Trunk Angles_wrt_LAB
-  where:
-    name: Running*
   steps:
     - jointAngle: Spine2
       space: VirtualLab
     - multiply: [$prev, [-1,1,1]]
 
 - parameter: Shoulder_Pelvis Angle
-  where:
-    name: Running*
   steps:
     - jointAngle: [Hips, Spine2]
 
@@ -128,8 +108,6 @@
 
 - parameter: Left Elbow Angle
   set: left
-  where:
-    name: Running*
   steps:
     - angle: [LeftArm, LeftForeArm, LeftHand]
     - convert: $prev
@@ -138,8 +116,6 @@
 
 - parameter: Right Elbow Angle
   set: right
-  where:
-    name: Running*
   steps:
     - angle: [RightArm, RightForeArm, RightHand]
     - convert: $prev

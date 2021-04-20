@@ -36,14 +36,7 @@
 
 # --- Pelvis ---
 
-- parameter: Left Pelvic Angles
-  set: left
-  steps:
-    - jointAngle: Hips
-      space: VirtualLab
-    - multiply: [$prev, [-1, -1, -1]]
-
-- parameter: Right Pelvic Angles
+- parameter: Pelvic Angles
   set: right
   steps:
     - jointAngle: Hips
@@ -92,35 +85,35 @@
     - jointAngle: [RightLeg, RightFoot]
 
 
-# --- Upper body ---
+# --- Thorax ---
 
-- parameter: Trunk Angles_wrt_LAB
-  steps:
-    - jointAngle: Spine2
-      space: VirtualLab
-    - multiply: [$prev, [-1,1,1]]
-
-- parameter: Shoulder_Pelvis Angle
+- parameter: Thorax Angle
   steps:
     - jointAngle: [Hips, Spine2]
 
-# --- Arms ---
+# --- Shoulder ---
 
-- parameter: Left Elbow Angle
+- parameter: Left Shoulder Angles
   set: left
   steps:
-    - angle: [LeftArm, LeftForeArm, LeftHand]
-    - convert: $prev
-      from: radians
-      to: degrees
+    - jointAngle: [Spine2, LeftArm]
 
-- parameter: Right Elbow Angle
+- parameter: Right Shoulder Angles
   set: right
   steps:
-    - angle: [RightArm, RightForeArm, RightHand]
-    - convert: $prev
-      from: radians
-      to: degrees
+    - jointAngle: [Spine2, RightArm]
+
+# --- Arms ---
+
+- parameter: Left Elbow Angles
+  set: left
+  steps:
+    - jointAngle: [LeftArm, LeftForeArm]
+
+- parameter: Right Elbow Angles
+  set: right
+  steps:
+    - angle: [RightArm, RightForeArm]
 
 #############
 ## Metrics ##

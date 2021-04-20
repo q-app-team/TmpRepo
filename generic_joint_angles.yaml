@@ -105,7 +105,7 @@
     - jointAngle: [Spine2, RightArm]
     - multiply: [$prev, [1, -1, 1]]
 
-# --- Arms ---
+# --- Elbow ---
 
 - parameter: Left Elbow Angles
   set: left
@@ -117,6 +117,27 @@
   set: right
   steps:
     - angle: [RightArm, RightForeArm]
+
+# --- Wrist ---
+
+- parameter: Left Wrist Angles
+  set: left
+  steps:
+    - jointAngle: [LeftForeArm, LeftHand]
+    - multiply: [$prev, [1, 1, -1]]
+
+- parameter: Right Wrist Angles
+  set: right
+  steps:
+    - angle: [RightForeArm, RightHand]
+
+# --- Head ---
+
+- parameter: Head Angles
+  set: left
+  steps:
+    - jointAngle: [Head, Spine2]
+
 
 #############
 ## Metrics ##

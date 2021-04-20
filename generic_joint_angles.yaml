@@ -1,73 +1,93 @@
+# A pipeline is written in YAML and instructs the Calqulus processing engine what to calculate.
+# In order to process this pipeline, skeleton must be solved in QTM first.
+
+# A pipeline consists of any number of base nodes defined on the root level. 
+
+# Output nodes define an end result that is exported to the global scope and exported in the resulting JSON file.
+# Output node can be 'event' or 'parameter'
+# The main difference between the parameter and event is what type of data is stored. 
+# A parameter node will store series and scalar data, whereas an event node will store event data.
+
+# Space node defines custom coordinate systems. It is useful when orientation of subject changes
+# with regards to the global coordinate system, e.g. walking through lab in both directions.
+
+# Order of nodes is not important. They can be placed anywhere in YAML file.
+
 ############
 ## SPACES ##
 ############
 
+# Create a space named VirtualLab, that is defined by the orientation of Hips (Pelvis) segment.
 - space: VirtualLab
   alignWithSegment:
     segment: Hips
-
 
 ############
 ## EVENTS ##
 ############
 
-# - event: LFS
-#   steps:
-#     - velocity: LeftToeBase.z => ltb_vel
-#     - negate: ltb_vel => ltb_vel_inv
-#     - peakFinder: ltb_vel_inv
-#       width: 3
-#       distance: 100
-#       height: 1
+# An event node defines steps used to calculate an event.
+# An event is a label that describes one or more points in time.
+# Events can be used in both event and parameter calculations, as well as for normalization by the reporting framework. 
+# The resulting event is exported to the global scope and exported in the resulting JSON file.
 
-# - event: RFS
-#   steps:
-#     - velocity: RightToeBase.z => rtb_vel
-#     - negate: rtb_vel => rtb_vel_inv
-#     - peakFinder: rtb_vel_inv
-#       width: 3
-#       distance: 100
-#       height: 1
+# Create event at left knee maximum flexion
+- event: BOF
+  steps:
+    - import: [0]
+  
+- event: EOF
+  steps:
+    - import: [$length]
+  
+
+- event: Left_knee_flex_max
+  set: left # Used to specify which set the exported parameter will use. In most cases, this will be either left or right.
+  steps:
+    - max: Left Knee Angles.x
+#    - peakFinder: Left Knee Angles.x # To do calculation on x component of the signal, select the component by adding '.x'
+#    - eventMask: [$prev, BOF, EOF]
 
 
 ############
 ## SERIES ##
 ############
 
+# Calculating joint angles
+
 # --- Pelvis ---
 
 - parameter: Pelvic Angles
   steps:
-    - jointAngle: Hips
-      space: VirtualLab
-    - multiply: [$prev, [-1, 1, 1]]
+    - angle: Hips # angle is calculated relative to axes of global coordinate system, if only single input exists
+      space: VirtualLab # calculate angle relative to virtual lab
+    - multiply: [$prev, [-1, 1, 1]] # invert first component of output
 
 # --- Hips ---
 
 - parameter: Left Hip Angles
   set: left
   steps:
-    - jointAngle: [Hips, LeftUpLeg]
+    - angle: [Hips, LeftUpLeg] # when two segments are specified, joint angle between the segments is calculated
     - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Hip Angles
   set: right
   steps:
-    - jointAngle: [Hips, RightUpLeg]
-
+    - angle: [Hips, RightUpLeg]
 
 # --- Knee ---
 
 - parameter: Left Knee Angles
   set: left
   steps:
-    - jointAngle: [LeftUpLeg, LeftLeg]
+    - angle: [LeftUpLeg, LeftLeg]
     - multiply: [$prev, [-1, -1, -1]]
 
 - parameter: Right Knee Angles
   set: right
   steps:
-    - jointAngle: [RightUpLeg, RightLeg]
+    - angle: [RightUpLeg, RightLeg]
     - multiply: [$prev, [-1, 1, 1]]
 
 # --- Ankle ---
@@ -75,33 +95,32 @@
 - parameter: Left Ankle Angles
   set: left
   steps:
-    - jointAngle: [LeftLeg, LeftFoot]
+    - angle: [LeftLeg, LeftFoot]
     - multiply: [$prev, [1, -1, 1]]
 
 - parameter: Right Ankle Angles
   set: right
   steps:
-    - jointAngle: [RightLeg, RightFoot]
-
+    - angle: [RightLeg, RightFoot]
 
 # --- Thorax ---
 
 - parameter: Thorax Angles
   steps:
-    - jointAngle: [Hips, Spine2]
+    - angle: [Hips, Spine2]
 
 # --- Shoulder ---
 
 - parameter: Left Shoulder Angles
   set: left
   steps:
-    - jointAngle: [Spine2, LeftArm]
+    - angle: [Spine2, LeftArm]
     - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Shoulder Angles
   set: right
   steps:
-    - jointAngle: [Spine2, RightArm]
+    - angle: [Spine2, RightArm]
     - multiply: [$prev, [1, -1, 1]]
 
 # --- Elbow ---
@@ -109,7 +128,7 @@
 - parameter: Left Elbow Angles
   set: left
   steps:
-    - jointAngle: [LeftArm, LeftForeArm]
+    - angle: [LeftArm, LeftForeArm]
     - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Elbow Angles
@@ -122,7 +141,7 @@
 - parameter: Left Wrist Angles
   set: left
   steps:
-    - jointAngle: [LeftForeArm, LeftHand]
+    - angle: [LeftForeArm, LeftHand]
     - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Wrist Angles
@@ -134,7 +153,7 @@
 
 - parameter: Head Angles
   steps:
-    - jointAngle: [Head, Spine2]
+    - angle: [Head, Spine2]
 
 
 #############

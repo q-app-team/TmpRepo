@@ -87,7 +87,7 @@
 
 # --- Thorax ---
 
-- parameter: Thorax Angle
+- parameter: Thorax Angles
   steps:
     - jointAngle: [Hips, Spine2]
 

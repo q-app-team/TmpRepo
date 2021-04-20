@@ -37,7 +37,6 @@
 # --- Pelvis ---
 
 - parameter: Pelvic Angles
-  set: right
   steps:
     - jointAngle: Hips
       space: VirtualLab
@@ -134,7 +133,6 @@
 # --- Head ---
 
 - parameter: Head Angles
-  set: left
   steps:
     - jointAngle: [Head, Spine2]
 

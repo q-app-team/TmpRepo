@@ -97,11 +97,13 @@
   set: left
   steps:
     - jointAngle: [Spine2, LeftArm]
+    - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Shoulder Angles
   set: right
   steps:
     - jointAngle: [Spine2, RightArm]
+    - multiply: [$prev, [1, -1, 1]]
 
 # --- Arms ---
 
@@ -109,6 +111,7 @@
   set: left
   steps:
     - jointAngle: [LeftArm, LeftForeArm]
+    - multiply: [$prev, [1, 1, -1]]
 
 - parameter: Right Elbow Angles
   set: right

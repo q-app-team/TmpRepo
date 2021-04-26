@@ -69,7 +69,7 @@
   set: left
   steps:
     - angle: [Hips, LeftUpLeg] # when two segments are specified, joint angle between the segments is calculated
-    - multiply: [$prev, [1, -1, 1]]
+    - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Hip Angles
   set: right
@@ -96,7 +96,7 @@
   set: left
   steps:
     - angle: [LeftLeg, LeftFoot]
-    - multiply: [$prev, [1, -1, 1]]
+    - multiply: [$prev, [1, 1, 1]]
 
 - parameter: Right Ankle Angles
   set: right
@@ -108,6 +108,7 @@
 - parameter: Thorax Angles
   steps:
     - angle: [Hips, Spine2]
+    - multiply: [$prev, [-1, -1, 1]]
 
 # --- Shoulder ---
 
@@ -115,13 +116,13 @@
   set: left
   steps:
     - angle: [Spine2, LeftArm]
-    - multiply: [$prev, [1, 1, -1]]
+    - multiply: [$prev, [1, -1, -1]]
 
 - parameter: Right Shoulder Angles
   set: right
   steps:
     - angle: [Spine2, RightArm]
-    - multiply: [$prev, [1, -1, 1]]
+    - multiply: [$prev, [1, 1, 1]]
 
 # --- Elbow ---
 

@@ -498,6 +498,9 @@
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
 
+    # Gap fill as it is important to get clean data for further processing
+    - gapFill:
+
 # Right crank angle 
 - event: R_TDC_Temp
   where:
@@ -558,6 +561,9 @@
     - atan2: [R_Pedal_Y, R_Pedal_Z]
     - multiply: [$prev, 57.2958] #to deg
     - add: [180, $prev]
+
+    # Gap fill as it is important to get clean data for further processing
+    - gapFill:
 
 ############
 ## EVENTS ##

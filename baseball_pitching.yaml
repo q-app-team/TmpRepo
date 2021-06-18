@@ -5,18 +5,19 @@
 # Calculated from respective position of feet at Release
 # Assuming Release is entered manually in QTM for now
 
-- parameter: Feet_diff
+- parameter: Feet_unit_vector
   where: 
     name: Pitching*
   steps:
-    - subtract: [RightFoot@Release, LeftFoot@Release]
-    - magnitude:
-    - divide: [$prev(2), $prev] #is this a unit vector?
-    #- round: $prev
+    - subtract: [RForefoot2@Release, LForefoot2@Release]
+      export: aaa
+    - unitVector:
+      export: bbb
+    - round:
 
 #- space: VirtualLab
 #  alignWithSegment:
-#    segment: Feet_diff
+#    segment: Feet_unit_vector
 
 - parameter: rf
   where: 
@@ -31,8 +32,8 @@
     - import: LeftFoot@Release
 
 - space: VirtualLab
-  origin: rf?name=Pitching*
-  primaryAxis: [rf?name=Pitching*, lf?name=Pitching*]
+  origin: [0,0,0]
+  primaryAxis: [Feet_unit_vector?name=Pitching*]
   secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
 
@@ -133,18 +134,14 @@
       distance: 10
     - eventMask: [$prev, SETUP, Release]
 
-- event: EOF
-  steps:
-    - divide: [$length, $framerate]
-
 - event: Max_Shoulder_Int_Rot_FollowThru
   where: 
     name: Pitching*
   steps:
     - import: Pitching_Shoulder_Angle.z
     - peakFinder:
-      distance: 10
-    - eventMask: [$prev, Release, EOF]
+      distance: 1000 #could we use $length?
+    - eventMask: [$prev, Release, $length]
 
 - event: Max_Shoulder_Rot
   where: 
@@ -281,7 +278,7 @@
     name: Pitching*
   steps:
     - angle: [Hips]
-      #space: VirtualLab
+      space: VirtualLab
     - multiply: [$prev, [-1, -1, -1]]
 
 # Pelvis angular velocity

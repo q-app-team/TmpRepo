@@ -261,7 +261,7 @@
     - multiply: [$prev, [-1, -1, -1]]
 
 # Trunk wrt Pelvis Angle
-- parameter: Trunk_wrt_Pelvis_angle
+- parameter: Trunk_wrt_Pelvis_Angle
   where: 
     name: Pitching*
   steps:

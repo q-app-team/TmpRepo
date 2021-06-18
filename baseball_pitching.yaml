@@ -26,6 +26,19 @@
 ############
 ## EVENTS ##
 ############
+- event: PLOTSTART
+  where: 
+    name: Pitching*
+  steps:
+    - import: SETUP
+
+- event: PLOTEND
+  where: 
+    name: Pitching*
+  steps:
+    - import: Release100msAfter
+
+
 - event: MaxKneeHeight
   where: 
     name: Pitching*
@@ -61,11 +74,12 @@
       direction: up
       # to do: last instance before MaxKneeHeight
 
-- event: Release10msAfter
+- event: Release100msAfter
   where: 
     name: Pitching*
   steps:
-  - add: [Release, 0.1]
+    - divide: [$framerate, 10] 
+    - add: [Release, $prev] # use '0.1s' after available
 
 - event: Max_Elbow_Flex
   where: 
@@ -75,7 +89,7 @@
     - peakFinder:
       width: 100
       distance: 1000
-    - eventMask: [$prev, Footstrike, Release10msAfter]
+    - eventMask: [$prev, Footstrike, Release100msAfter]
 
 - event: Max_Forearm_PronSup
   where: 
@@ -84,7 +98,7 @@
     - import: Pitching_Elbow_Angle.z
     - peakFinder:
       distance: 10
-    - eventMask: [$prev, Footstrike, Release10msAfter]
+    - eventMask: [$prev, Footstrike, Release100msAfter]
 
 - event: Max_Elbow_Flex_Ang_Vel
   where: 
@@ -96,7 +110,7 @@
       cutoff: 12
     - peakFinder:
       distance: 30
-    - eventMask: [$prev, Footstrike, Release10msAfter]
+    - eventMask: [$prev, Footstrike, Release100msAfter]
 
 - event: Max_Forearm_PronSup_Ang_Vel # fix it after we can find max values instead of peak
   where: 
@@ -108,7 +122,7 @@
       cutoff: 12
     - peakFinder:
       distance: 30
-    - eventMask: [$prev, Footstrike, Release10msAfter]
+    - eventMask: [$prev, Footstrike, Release100msAfter]
 
 - event: Max_Shoulder_Int_Rot
   where: 
@@ -123,7 +137,7 @@
   where: 
     name: Pitching*
   steps:
-    - import: $length
+    - subtract: [$length, 1]
 
 - event: Max_Shoulder_Int_Rot_FollowThru
   where: 
@@ -148,28 +162,28 @@
   where: 
     name: Pitching*
   steps:
-    - eventMask: [Pelvis_Ang_Vel.x, SETUP, Release10msAfter]
+    - eventMask: [Pelvis_Ang_Vel.x, SETUP, Release100msAfter]
     - max:
 
 - event: MaxThoraxVel
   where: 
     name: Pitching*
   steps:
-    - eventMask: [Thorax_Ang_Vel.x, SETUP, Release10msAfter]
+    - eventMask: [Thorax_Ang_Vel.x, SETUP, Release100msAfter]
     - max:
 
 - event: MaxHumerusVel
   where: 
     name: Pitching*
   steps:
-    - eventMask: [Pitching_Humerus_Ang_Vel.x, SETUP, Release10msAfter]
+    - eventMask: [Pitching_Humerus_Ang_Vel.x, SETUP, Release100msAfter]
     - max:
 
 - event: MaxHandVel
   where: 
     name: Pitching*
   steps:
-    - eventMask: [Pitching_Hand_Ang_Vel.x, SETUP, Release10msAfter]
+    - eventMask: [Pitching_Hand_Ang_Vel.x, SETUP, Release100msAfter]
     - max:
 
 ############
@@ -349,6 +363,9 @@
     - distance: [LeftFoot@SETUP, RightFoot@SETUP]
       #space: VirtualLab
     - abs:
+    - convert:
+      from: mm
+      to: m
 
 - parameter: STRIDE_LENGTH_MEAN_PERCENT
   where:
@@ -393,7 +410,7 @@
   where:
     name: Pitching*
   steps:
-    - eventMask: [Pitching_Shoulder_Ang_Vel, MaxKneeHeight, Release10msAfter]
+    - eventMask: [Pitching_Shoulder_Ang_Vel, MaxKneeHeight, Release100msAfter]
     - min:
     - abs:
 
@@ -681,7 +698,7 @@
   where:
     name: Pitching*
   steps:
-    - eventMask: [Pitching_Elbow_Ang_Vel, Footstrike, Release10msAfter]
+    - eventMask: [Pitching_Elbow_Ang_Vel, Footstrike, Release100msAfter]
     - min:
 
 - parameter: Trunk Rot wrt Pelvis Rot@Footstrike

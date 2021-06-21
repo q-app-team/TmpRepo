@@ -189,76 +189,165 @@
 ############
 ## SERIES ##
 ############
+# find out which max hand linear velocity magnitude is higher
+- parameter: Left_Hand_Vel_max
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: LeftHand
+    - magnitude:
+    - max:
 
-# Pitching hand angle
+- parameter: Right_Hand_Vel_max
+  where: 
+    name: Pitching*
+  steps:
+    - velocity: RightHand
+    - magnitude:
+    - max:
+
+# define body side
+- parameter: PitchingArm
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightArm
+      else: LeftArm
+
+- parameter: PitchingForearm
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightForearm
+      else: LeftForearm
+
+- parameter: PitchingHand
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightHand
+      else: LeftHand
+
+- parameter: LeadThigh
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightUpLeg
+      else: LeftUpLeg
+
+- parameter: LeadShank
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightLeg
+      else: LeftLeg
+
+- parameter: BackFoot
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightFoot
+      else: LeftFoot
+
+- parameter: Hand_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [1, -1, 1]
+      else: [1, -1, 1]
+
+- parameter: Shoulder_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [1, -1, -1]
+      else: [1, -1, -1]
+
+- parameter: Knee_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [-1, -1, -1]
+      else: [-1, -1, -1]
+
+# Pitching Hand Angle
 - parameter: Pitching_Hand_Angle
   where: 
     name: Pitching*
   steps:
-    - angle: [RightForearm, RightHand]
-    - multiply: [$prev, [1, -1, 1]]
+    - angle: [PitchingForearm, PitchingHand]
+    - multiply: [$prev, Hand_Convention]
 
 # Pitching hand ang vel
 - parameter: Pitching_Hand_Ang_Vel
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [RightHand]
+    - angularVelocity: [PitchingHand]
       space: VirtualLab
-    - multiply: [$prev, [1, -1, 1]]
+    - multiply: [$prev, Hand_Convention]
 
 - parameter: Pitching_Elbow_Angle
   where: 
     name: Pitching*
   steps:
-    - angle: [RightArm, RightForeArm]
+    - angle: [PitchingArm, PitchingForearm]
 
 - parameter: Pitching_Elbow_Ang_Vel
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [RightArm, RightForeArm]
+    - angularVelocity: [PitchingArm, PitchingForearm]
 
 # Pitching shoulder angle
 - parameter: Pitching_Shoulder_Angle
   where: 
     name: Pitching*
   steps:
-    - angle: [Spine2, RightArm]
+    - angle: [Spine2, PitchingArm]
       rotationOrder: XYZ # we have to implement Euler sequence and use ZYZ
-    - multiply: [$prev, [1, -1, -1]]
+    - multiply: [$prev, Shoulder_Convention]
 
 - parameter: Pitching_Shoulder_Angle_XYZ
   where: 
     name: Pitching*
   steps:
-    - angle: [Spine2, RightArm]
-    - multiply: [$prev, [1, -1, -1]]
+    - angle: [Spine2, PitchingArm]
+    - multiply: [$prev, Shoulder_Convention]
 
-# pitching shoulder angular velocity
+# Pitching shoulder angular velocity
 - parameter: Pitching_Shoulder_Ang_Vel
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Spine2, RightArm]
+    - angularVelocity: [Spine2, PitchingArm]
     #- lowpass:
-    - multiply: [$prev, [1, -1, -1]]
+    - multiply: [$prev, Shoulder_Convention]
 
 # Lead Knee Angle
 - parameter: Lead_Knee_Angle
   where: 
     name: Pitching*
   steps:
-    - angle: [RightUpLeg, RightLeg]
-    - multiply: [$prev, [-1, -1, -1]]
+    - angle: [LeadThigh, LeadShank]
+    - multiply: [$prev, Knee_Convention]
 
 # Lead Knee Ang Vel
 - parameter: Lead_Knee_Ang_Vel
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [RightUpLeg, RightLeg]
-    - multiply: [$prev, [-1, -1, -1]]
+    - angularVelocity: [LeadThigh, LeadShank]
+    - multiply: [$prev, Knee_Convention]
 
 # Trunk wrt Pelvis Angle
 - parameter: Trunk_wrt_Pelvis_Angle
@@ -310,7 +399,7 @@
   where: 
     name: Pitching*
   steps:
-    - angle: [RightFoot]
+    - angle: [BackFoot]
       space: VirtualLab
 
 # Pitching humerus ang vel
@@ -318,7 +407,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [RightArm]
+    - angularVelocity: [PitchingArm]
       space: VirtualLab
 
 # Hip Shoulders Separation

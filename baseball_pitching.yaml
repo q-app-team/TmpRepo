@@ -209,9 +209,11 @@
   steps:
     - velocity: Hips
       space: VirtualLab
-    - peakFinder: $prev.y
-      distance: 1000
-    - eventMask: [$prev, 1, Release]
+    # - peakFinder: $prev.y
+    #   distance: 1000
+    - eventMask: [$prev.y, 1, Release]
+    - max:
+      frames: true
 
 - event: MaxTrunkLinearVel
   where: 
@@ -219,9 +221,11 @@
   steps:
     - velocity: Spine2
       space: VirtualLab
-    - peakFinder: $prev.y
-      distance: 1000
-    - eventMask: [$prev, 1, Release]
+#    - peakFinder: $prev.y
+#      distance: 1000
+    - eventMask: [$prev.y, 1, Release]
+    - max:
+      frames: true
 
 - event: MaxShoulderHorAngle
   where: 
@@ -1004,6 +1008,18 @@
   steps:
     - import: Lead_Ankle_Angle@Max_Shoulder_Int_Rot_FollowThru
 
+- parameter: Lead_Ankle_Angle@Setup
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@Setup
+
+- parameter: Lead_Ankle_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Ankle_Angle@MaxKneeHeight
+
 - parameter: Lead_Ankle_Angle@Release
   where:
     name: Pitching*
@@ -1062,25 +1078,26 @@
   where:
     name: Pitching*
   steps:
-    - max: Pelvis_Ang_Vel
+    - lowpass: Pelvis_Ang_Vel
+    - max: $prev.z
 
 - parameter: Thorax_Ang_Vel_max
   where:
     name: Pitching*
   steps:
-    - max: Thorax_Ang_Vel
+    - max: Thorax_Ang_Vel.z
 
 - parameter: Pitching_Humerus_Ang_Vel_max
   where:
     name: Pitching*
   steps:
-    - max: Pitching_Humerus_Ang_Vel
+    - max: Pitching_Humerus_Ang_Vel.z
 
 - parameter: Pitching_Hand_Ang_Vel_max
   where:
     name: Pitching*
   steps:
-    - max: Pitching_Hand_Ang_Vel
+    - max: Pitching_Hand_Ang_Vel.x
 
 - parameter: Pelvis_Angle@Footstrike
   where:
@@ -1390,6 +1407,12 @@
   steps:
     - import: Lead_Hip_Angle@Footstrike
 
+- parameter: Lead_Hip_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Lead_Hip_Angle@Release
+
 - parameter: Lead_Knee_Angle@Setup
   where:
     name: Pitching*
@@ -1432,6 +1455,12 @@
   steps:
     - import: Back_Hip_Angle@Max_Shoulder_Rot
 
+- parameter: Back_Hip_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Hip_Angle@Release
+
 - parameter: Back_Knee_Angle@Setup
   where:
     name: Pitching*
@@ -1456,6 +1485,12 @@
   steps:
     - import: Back_Knee_Angle@Max_Shoulder_Rot
 
+- parameter: Back_Knee_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Knee_Angle@Release
+
 - parameter: Back_Ankle_Angle@Setup
   where:
     name: Pitching*
@@ -1479,6 +1514,12 @@
     name: Pitching*
   steps:
     - import: Back_Ankle_Angle@Footstrike
+
+- parameter: Back_Ankle_Angle@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Back_Ankle_Angle@Release
 
 - parameter: Trunk_Angle@Setup
   where:

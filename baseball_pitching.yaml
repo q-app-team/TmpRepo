@@ -32,6 +32,18 @@
   steps:
     - import: SETUP
 
+- event: PLOTSTART_Footstrike
+  where: 
+    name: Pitching*
+  steps:
+    - import: Footstrike
+
+- event: PLOTSTART_MaxKneeHeight
+  where: 
+    name: Pitching*
+  steps:
+    - import: MaxKneeHeight
+
 - event: PLOTEND
   where: 
     name: Pitching*
@@ -640,7 +652,7 @@
       rotationOrder: ZYX
     - multiply: [$prev, [-1, -1, -1]]
 
-- parameter: Trunk_COG_MPH # we do not have segment COG, so using origin instead
+- parameter: Trunk_COG_Vel_MPH # we do not have segment COG, so using origin instead
   where: 
     name: Pitching*
   steps:
@@ -659,7 +671,7 @@
       from: m/s
       to: mph
 
-- parameter: Pelvis_COG_MPH # we do not have segment COG, so using origin instead
+- parameter: Pelvis_COG_Vel_MPH # we do not have segment COG, so using origin instead
   where: 
     name: Pitching*
   steps:
@@ -710,7 +722,7 @@
       from: mm/s
       to: m/s
 
-- parameter: Back_KNEE_dyn
+- parameter: Back_Knee_dyn
   where: 
     name: Pitching*
   steps:

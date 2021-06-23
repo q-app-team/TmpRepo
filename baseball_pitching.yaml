@@ -157,7 +157,6 @@
     name: Pitching*
   steps:
     - negate: Pitching_Shoulder_Angle.z
-      export: aaa
     - peakFinder:
       distance: 300
     - eventMask: [$prev, Release, EOF]
@@ -207,11 +206,13 @@
   where: 
     name: Pitching*
   steps:
-    - velocity: Hips
-      space: VirtualLab
-    # - peakFinder: $prev.y
-    #   distance: 1000
-    - eventMask: [$prev.y, 1, Release]
+    - import: Pelvis_COG_Vel
+    - lowpass:
+      order: 6
+      cutoff: 12
+    - peakFinder: $prev.y
+      distance: 1000
+    - eventMask: [$prev, SETUP, Release]
     - max:
       frames: true
 
@@ -219,13 +220,15 @@
   where: 
     name: Pitching*
   steps:
-    - velocity: Spine2
-      space: VirtualLab
-#    - peakFinder: $prev.y
-#      distance: 1000
-    - eventMask: [$prev.y, 1, Release]
-    - max:
-      frames: true
+    - import: Trunk_COG_Vel
+    - lowpass:
+      order: 6
+      cutoff: 12
+    - peakFinder: $prev.y
+      distance: 1000
+    - eventMask: [$prev, SETUP, Release]
+    #- max:
+    #  frames: true
 
 - event: MaxShoulderHorAngle
   where: 
@@ -1074,6 +1077,12 @@
   steps:
     - import: Trunk_wrt_Pelvis_Angle@Max_Shoulder_Int_Rot_FollowThru
 
+- parameter: Trunk_wrt_Pelvis_FE@Release
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_wrt_Pelvis_Angle@Release
+
 - parameter: Pelvis_Ang_Vel_max
   where:
     name: Pitching*
@@ -1154,25 +1163,25 @@
   where:
     name: Pitching*
   steps:
-    - eventDuration: [MaxPelvisVel, SETUP]
+    - eventDuration: [SETUP, MaxPelvisVel]
 
 - parameter: MaxThoraxVelTime
   where:
     name: Pitching*
   steps:
-    - eventDuration: [MaxThoraxVel, SETUP]
+    - eventDuration: [SETUP, MaxThoraxVel]
 
 - parameter: MaxHumerusVelTime
   where:
     name: Pitching*
   steps:
-    - eventDuration: [MaxHumerusVel, SETUP]
+    - eventDuration: [SETUP, MaxHumerusVel]
 
 - parameter: MaxHandVelTime
   where:
     name: Pitching*
   steps:
-    - eventDuration: [MaxHandVel, SETUP]
+    - eventDuration: [SETUP, MaxHandVel]
 
 - parameter: Pitching_Elbow_Ang_Vel_min
   where:
@@ -1279,109 +1288,109 @@
   where:
     name: Pitching*
   steps:
-    - eventTime: [SETUP, SETUP]
+    - eventDuration: [SETUP, SETUP]
 
 - parameter: MaxKneeHeightTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxKneeHeight, SETUP]
+    - eventDuration: [SETUP, MaxKneeHeight]
 
 - parameter: MaxPelvisLinearVelTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxPelvisLinearVel, SETUP]
+    - eventDuration: [SETUP, MaxPelvisLinearVel]
 
 - parameter: MaxPelvisVelTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxPelvisVel, SETUP]
+    - eventDuration: [SETUP, MaxPelvisVel]
 
 - parameter: MaxTrunkLinearVelTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxTrunkLinearVel, SETUP]
+    - eventDuration: [SETUP, MaxTrunkLinearVel]
 
 - parameter: MaxThoraxVelTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxThoraxVel, SETUP]
+    - eventDuration: [SETUP, MaxThoraxVel]
 
 - parameter: FootstrikeTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Footstrike, SETUP]
+    - eventDuration: [SETUP, Footstrike]
 
 - parameter: Max_Shoulder_Int_RotTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Max_Shoulder_Int_Rot, SETUP]
+    - eventDuration: [SETUP, Max_Shoulder_Int_Rot]
 
 - parameter: MaxShoulderHorAngleTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxShoulderHorAngle, SETUP]
+    - eventDuration: [SETUP, MaxShoulderHorAngle]
 
 - parameter: MaxHumerusVelTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxHumerusVel, SETUP]
+    - eventDuration: [SETUP, MaxHumerusVel]
 
 - parameter: Max_Shoulder_RotTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Max_Shoulder_Rot, SETUP]
+    - eventDuration: [SETUP, Max_Shoulder_Rot]
 
 - parameter: PeakShoulder_AngVel_HzShldAbdTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [MaxShoulder_AngVel_HzShldAbd, SETUP]
+    - eventDuration: [SETUP, MaxShoulder_AngVel_HzShldAbd]
 
 - parameter: Max_Elbow_FlexTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Max_Elbow_Flex, SETUP]
+    - eventDuration: [SETUP, Max_Elbow_Flex]
 
 - parameter: Max_Elbow_Flex_Ang_VelTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Max_Elbow_Flex_Ang_Vel, SETUP]
+    - eventDuration: [SETUP, Max_Elbow_Flex_Ang_Vel]
 
 - parameter: Max_Forearm_PronSupTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Max_Forearm_PronSup, SETUP]
+    - eventDuration: [SETUP, Max_Forearm_PronSup]
 
 - parameter: Max_Forearm_PronSup_Ang_VelTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Max_Forearm_PronSup_Ang_Vel, SETUP]
+    - eventDuration: [SETUP, Max_Forearm_PronSup_Ang_Vel]
 
 - parameter: PelvisRot_StopTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [PelvisRot_Stop, SETUP]
+    - eventDuration: [SETUP, PelvisRot_Stop]
 
 - parameter: ReleaseTime
   where:
     name: Pitching*
   steps:
-    - eventTime: [Release, SETUP]
+    - eventDuration: [SETUP, Release]
 
 - parameter: Lead_Hip_Angle@Setup
   where:

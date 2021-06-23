@@ -202,33 +202,31 @@
       distance: 1000
     - eventMask: [$prev, SETUP, Release100msAfter]
 
-- event: MaxPelvisLinearVel
+- event: MaxPelvisLinearVel_ev
   where: 
     name: Pitching*
   steps:
-    - import: Pelvis_COG_Vel
-    - lowpass:
+    - lowpass: Pelvis_COG_Vel.y
       order: 6
       cutoff: 12
-    - peakFinder: $prev.y
+    - peakFinder:
       distance: 1000
     - eventMask: [$prev, SETUP, Release]
     #- max:
     #  frames: true
 
-- event: MaxTrunkLinearVel
+- event: MaxTrunkLinearVel_ev
   where: 
     name: Pitching*
   steps:
-    - import: Trunk_COG_Vel
-    - lowpass:
+    - lowpass: Trunk_COG_Vel.y
       order: 6
       cutoff: 12
-    - peakFinder: $prev.y
-      distance: 1000
+    #- peakFinder: $prev.y
+    #  distance: 1000
     - eventMask: [$prev, SETUP, Release]
-    #- max:
-    #  frames: true
+    - max:
+      frames: true
 
 - event: MaxShoulderHorAngle
   where: 
@@ -1294,13 +1292,13 @@
   where:
     name: Pitching*
   steps:
-    - import: Pelvis_COG_Vel@MaxPelvisLinearVel
+    - import: Pelvis_COG_Vel@MaxPelvisLinearVel_ev
 
 - parameter: MaxTrunkLinearVel
   where:
     name: Pitching*
   steps:
-    - import: Trunk_COG_Vel@MaxTrunkLinearVel
+    - import: Trunk_COG_Vel@MaxTrunkLinearVel_ev
 
 
 - parameter: SetupTime #always zero
@@ -1319,7 +1317,7 @@
   where:
     name: Pitching*
   steps:
-    - eventDuration: [SETUP, MaxPelvisLinearVel]
+    - eventDuration: [SETUP, MaxPelvisLinearVel_ev]
 
 - parameter: MaxPelvisVelTime
   where:
@@ -1331,7 +1329,7 @@
   where:
     name: Pitching*
   steps:
-    - eventDuration: [SETUP, MaxTrunkLinearVel]
+    - eventDuration: [SETUP, MaxTrunkLinearVel_ev]
 
 - parameter: MaxThoraxVelTime
   where:

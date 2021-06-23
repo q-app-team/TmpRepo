@@ -206,26 +206,22 @@
   where: 
     name: Pitching*
   steps:
-    - lowpass: Pelvis_COG_Vel.y
+    - lowpass: Pelvis_COG_Vel
       order: 6
       cutoff: 12
-    - peakFinder:
-      distance: 1000
     - eventMask: [$prev, SETUP, Release]
-    #- max:
-    #  frames: true
+    - max: $prev.y
+      frames: true
 
 - event: MaxTrunkLinearVel_ev
   where: 
     name: Pitching*
   steps:
-    - lowpass: Trunk_COG_Vel.y
+    - lowpass: Trunk_COG_Vel
       order: 6
       cutoff: 12
-    #- peakFinder: $prev.y
-    #  distance: 1000
     - eventMask: [$prev, SETUP, Release]
-    - max:
+    - max: $prev.y
       frames: true
 
 - event: MaxShoulderHorAngle
@@ -1305,7 +1301,7 @@
   where:
     name: Pitching*
   steps:
-    - eventDuration: [SETUP, SETUP]
+    - subtract: [1, 1]
 
 - parameter: MaxKneeHeightTime
   where:

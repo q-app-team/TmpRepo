@@ -213,8 +213,8 @@
     - peakFinder: $prev.y
       distance: 1000
     - eventMask: [$prev, SETUP, Release]
-    - max:
-      frames: true
+    #- max:
+    #  frames: true
 
 - event: MaxTrunkLinearVel
   where: 
@@ -945,6 +945,12 @@
   steps:
     - import: Pitching_Elbow_Ang_Vel@Release100msAfter
 
+- parameter: Pitching_Hand_Angle@MaxKneeHeight
+  where:
+    name: Pitching*
+  steps:
+    - import: Pitching_Hand_Angle@MaxKneeHeight
+
 - parameter: Pitching_Hand_Angle@Footstrike
   where:
     name: Pitching*
@@ -1283,6 +1289,19 @@
     - convert:
       from: mm
       to: m
+
+- parameter: MaxPelvisLinearVel
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_COG_Vel@MaxPelvisLinearVel
+
+- parameter: MaxTrunkLinearVel
+  where:
+    name: Pitching*
+  steps:
+    - import: Trunk_COG_Vel@MaxTrunkLinearVel
+
 
 - parameter: SetupTime #always zero
   where:
@@ -1780,73 +1799,73 @@
   where:
     name: Pitching*
   steps:
-    - import: Pelvis_Ang_Vel@Footstrike
+    - import: Pelvis_Ang_Vel.z@Footstrike
 
 - parameter: Pelvis_Ang_Vel@Max_Shoulder_Rot
   where:
     name: Pitching*
   steps:
-    - import: Pelvis_Ang_Vel@Max_Shoulder_Rot
+    - import: Pelvis_Ang_Vel.z@Max_Shoulder_Rot
 
 - parameter: Pelvis_Ang_Vel@Release
   where:
     name: Pitching*
   steps:
-    - import: Pelvis_Ang_Vel@Release
+    - import: Pelvis_Ang_Vel.z@Release
 
 - parameter: Pelvis_Ang_Vel@Release100msAfter
   where:
     name: Pitching*
   steps:
-    - import: Pelvis_Ang_Vel@Release100msAfter
+    - import: Pelvis_Ang_Vel.z@Release100msAfter
 
 - parameter: Thorax_Ang_Vel@Footstrike
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Ang_Vel@Footstrike
+    - import: Thorax_Ang_Vel.z@Footstrike
 
 - parameter: Thorax_Ang_Vel@Max_Shoulder_Rot
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Ang_Vel@Max_Shoulder_Rot
+    - import: Thorax_Ang_Vel.z@Max_Shoulder_Rot
 
 - parameter: Thorax_Ang_Vel@Release
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Ang_Vel@Release
+    - import: Thorax_Ang_Vel.z@Release
 
 - parameter: Thorax_Ang_Vel@Release100msAfter
   where:
     name: Pitching*
   steps:
-    - import: Thorax_Ang_Vel@Release100msAfter
+    - import: Thorax_Ang_Vel.z@Release100msAfter
 
 - parameter: Pitching_Humerus_Ang_Vel@Footstrike
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Humerus_Ang_Vel@Footstrike
+    - import: Pitching_Humerus_Ang_Vel.z@Footstrike
 
 - parameter: Pitching_Humerus_Ang_Vel@Max_Shoulder_Rot
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Humerus_Ang_Vel@Max_Shoulder_Rot
+    - import: Pitching_Humerus_Ang_Vel.z@Max_Shoulder_Rot
 
 - parameter: Pitching_Humerus_Ang_Vel@Release
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Humerus_Ang_Vel@Release
+    - import: Pitching_Humerus_Ang_Vel.z@Release
 
 - parameter: Pitching_Humerus_Ang_Vel@Release100msAfter
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Humerus_Ang_Vel@Release100msAfter
+    - import: Pitching_Humerus_Ang_Vel.z@Release100msAfter
 
 - parameter: Pitching_Shoulder_AngVel_HzShldAbd@Footstrike
   where:
@@ -1876,25 +1895,25 @@
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Hand_Ang_Vel@Footstrike
+    - import: Pitching_Hand_Ang_Vel.x@Footstrike
 
 - parameter: Pitching_Hand_Ang_Vel@Max_Shoulder_Rot
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Hand_Ang_Vel@Max_Shoulder_Rot
+    - import: Pitching_Hand_Ang_Vel.x@Max_Shoulder_Rot
 
 - parameter: Pitching_Hand_Ang_Vel@Release
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Hand_Ang_Vel@Release
+    - import: Pitching_Hand_Ang_Vel.x@Release
 
 - parameter: Pitching_Hand_Ang_Vel@Release100msAfter
   where:
     name: Pitching*
   steps:
-    - import: Pitching_Hand_Ang_Vel@Release100msAfter
+    - import: Pitching_Hand_Ang_Vel.x@Release100msAfter
 
 - parameter: Pitching_Elbow_Angle_max
   where:

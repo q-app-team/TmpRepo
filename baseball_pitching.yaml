@@ -272,6 +272,14 @@
     - max:
 
 # define body side
+- parameter: PitchingShoulder
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RightShoulder
+      else: LeftShoulder
+
 - parameter: PitchingArm
   where: 
     name: Pitching*
@@ -295,6 +303,14 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: RightHand
       else: LeftHand
+
+- parameter: GloveShoulder
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LeftShoulder
+      else: RightShoulder
 
 - parameter: GloveArm
   where: 
@@ -413,8 +429,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [PitchingHand]
-      space: VirtualLab
+    - angularVelocity: [VirtualLab, PitchingHand, PitchingHand]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Hand_Convention]
 
 - parameter: Pitching_Elbow_Angle
@@ -427,7 +445,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [PitchingArm, PitchingForearm]
+    - angularVelocity: [PitchingArm, PitchingForearm, PitchingForearm]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
 
 # Pitching Shoulder angle
 - parameter: Pitching_Shoulder_Angle
@@ -435,7 +456,7 @@
     name: Pitching*
   steps:
     - angle: [Spine2, PitchingArm]
-      rotationOrder: XYZ # we have to implement Euler sequence and use ZYZ
+      rotationOrder: ZYZ # we have to implement Euler sequence and use ZYZ
     - multiply: [$prev, Shoulder_Convention]
 
 - parameter: Pitching_Shoulder_Angle_XYZ
@@ -450,8 +471,12 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Spine2, PitchingArm]
-    #- lowpass:
+    - angularVelocity: [PitchingShoulder, PitchingArm, Spine2]
+      useRotationOrder: true
+      rotationOrder: ZYZ
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Shoulder_Convention]
 
 # Pitching Shoulder Ang Vel Horizontal Shoulder Abduction
@@ -467,7 +492,7 @@
     name: Pitching*
   steps:
     - angle: [Spine2, GloveArm]
-      rotationOrder: XYZ # we have to implement Euler sequence and use ZYZ
+      rotationOrder: ZYZ # we have to implement Euler sequence and use ZYZ
     - multiply: [$prev, Shoulder_Convention]
 
 - parameter: Glove_Shoulder_Angle_XYZ
@@ -483,8 +508,11 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Spine2, GloveArm]
-      rotationOrder: XYZ # we have to implement Euler sequence and use ZYZ
+    - angularVelocity: [GloveShoulder, GloveArm, Spine2]
+      rotationOrder: ZYZ # we have to implement Euler sequence and use ZYZ
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Shoulder_Convention]
 
 # Lead Hip Angle
@@ -500,7 +528,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Hips, LeadThigh]
+    - angularVelocity: [Hips, LeadThigh, LeadThigh]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Hip_Convention]
 
 # Lead Knee Angle
@@ -516,7 +547,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [LeadThigh, LeadShank]
+    - angularVelocity: [LeadThigh, LeadShank, LeadShank]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Knee_Convention]
 
 # Lead Ankle Angle
@@ -532,7 +566,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [LeadShank, LeadFoot]
+    - angularVelocity: [LeadShank, LeadFoot, LeadFoot]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Ankle_Convention]
 
 # Back Hip Angle
@@ -548,7 +585,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Hips, BackThigh]
+    - angularVelocity: [Hips, BackThigh, BackThigh]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Hip_Convention]
 
 # Back Knee Angle
@@ -564,7 +604,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [BackThigh, BackShank]
+    - angularVelocity: [BackThigh, BackShank, BackShank]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Knee_Convention]
 
 # Back Ankle Angle
@@ -580,7 +623,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [BackShank, BackFoot]
+    - angularVelocity: [BackShank, BackFoot, BackFoot]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, Ankle_Convention]
 
 # Trunk wrt Pelvis Angle
@@ -605,8 +651,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Spine2]
-      space: VirtualLab
+    - angularVelocity: [VirtualLab, Spine2, Spine2]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - lowpass:
     - multiply: [$prev, [-1, -1, -1]]
 
@@ -624,8 +672,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Hips]
-      space: VirtualLab
+    - angularVelocity: [VirtualLab, Hips, Hips]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
     - multiply: [$prev, [-1, -1, 1]]
 
 # Back Foot wrt lab
@@ -641,8 +691,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [PitchingArm]
-      space: VirtualLab
+    - angularVelocity: [VirtualLab, PitchingArm, PitchingArm]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
 
 # Hip Shoulders Separation
 - parameter: Hip Shoulders Sep
@@ -711,8 +763,10 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: Head
-      space: VirtualLab
+    - angularVelocity: [VirtualLab, Head, Head]
+    - lowpass:
+      cutoff: 24
+      extrapolate: 5
 
 - parameter: Lead_KNEE_dyn
   where: 

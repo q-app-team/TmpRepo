@@ -429,7 +429,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, PitchingHand, PitchingHand]
+    - angularVelocity: [VirtualLab, PitchingHand, VirtualLab, PitchingHand]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -445,7 +445,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [PitchingArm, PitchingForearm, PitchingForearm]
+    - angularVelocity: [PitchingArm, PitchingForearm, PitchingArm, PitchingForearm]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -471,7 +471,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [PitchingShoulder, PitchingArm, Spine2]
+    - angularVelocity: [PitchingShoulder, PitchingArm, Spine2, PitchingArm]
       useRotationOrder: true
       rotationOrder: ZYZ
     - lowpass:
@@ -508,7 +508,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [GloveShoulder, GloveArm, Spine2]
+    - angularVelocity: [GloveShoulder, GloveArm, Spine2, GloveArm]
       rotationOrder: ZYZ # we have to implement Euler sequence and use ZYZ
     - lowpass:
       cutoff: 24
@@ -528,7 +528,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Hips, LeadThigh, LeadThigh]
+    - angularVelocity: [Hips, LeadThigh, Hips, LeadThigh]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -547,7 +547,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [LeadThigh, LeadShank, LeadShank]
+    - angularVelocity: [LeadThigh, LeadShank, LeadThigh, LeadShank]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -566,7 +566,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [LeadShank, LeadFoot, LeadFoot]
+    - angularVelocity: [LeadShank, LeadFoot, LeadShank, LeadFoot]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -585,7 +585,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [Hips, BackThigh, BackThigh]
+    - angularVelocity: [Hips, BackThigh, Hips, BackThigh]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -604,7 +604,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [BackThigh, BackShank, BackShank]
+    - angularVelocity: [BackThigh, BackShank, BackThigh, BackShank]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -623,7 +623,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [BackShank, BackFoot, BackFoot]
+    - angularVelocity: [BackShank, BackFoot, BackShank, BackFoot]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -651,7 +651,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, Spine2, Spine2]
+    - angularVelocity: [VirtualLab, Spine2, VirtualLab, Spine2]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -672,7 +672,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, Hips, Hips]
+    - angularVelocity: [VirtualLab, Hips, VirtualLab, Hips]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -691,7 +691,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, PitchingArm, PitchingArm]
+    - angularVelocity: [VirtualLab, PitchingArm, VirtualLab, PitchingArm]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -763,7 +763,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, Head, Head]
+    - angularVelocity: [VirtualLab, Head, VirtualLab, Head]
     - lowpass:
       cutoff: 24
       extrapolate: 5

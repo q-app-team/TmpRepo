@@ -22,6 +22,18 @@
   secondaryAxis: [[0,0,0], [0,0,1]]
   order: yz
 
+- parameter: VirtualLabOrigin
+  steps:
+    - marker: RForefoot2
+    - multiply: [$prev, 0]
+
+- segment: VirtualLabSegment
+  steps:
+    - segment:
+      origin: VirtualLabOrigin
+      primaryAxis: Feet_unit_vector?name=Pitching*
+      secondaryAxis: [[0,0,0], [0,0,1]]
+      order: yz  
 
 ############
 ## EVENTS ##
@@ -158,7 +170,7 @@
   steps:
     - negate: Pitching_Shoulder_Angle.z
     - peakFinder:
-      distance: 300
+      distance: 200
     - eventMask: [$prev, Release, EOF]
 
 - event: Max_Shoulder_Rot
@@ -429,7 +441,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, PitchingHand, VirtualLab, PitchingHand]
+    - angularVelocity: [VirtualLabSegment, PitchingHand, VirtualLabSegment, PitchingHand]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -456,7 +468,7 @@
     name: Pitching*
   steps:
     - angle: [Spine2, PitchingArm]
-      rotationOrder: ZYZ # we have to implement Euler sequence and use ZYZ
+      rotationOrder: ZYZ
     - multiply: [$prev, Shoulder_Convention]
 
 - parameter: Pitching_Shoulder_Angle_XYZ
@@ -492,7 +504,7 @@
     name: Pitching*
   steps:
     - angle: [Spine2, GloveArm]
-      rotationOrder: ZYZ # we have to implement Euler sequence and use ZYZ
+      rotationOrder: ZYZ
     - multiply: [$prev, Shoulder_Convention]
 
 - parameter: Glove_Shoulder_Angle_XYZ
@@ -504,12 +516,13 @@
     - multiply: [$prev, Shoulder_Convention]
 
 # Glove Shoulder Ang Vel
-- parameter: Glove_Shoulder_Angle
+- parameter: Glove_Shoulder_Angle_Vel
   where: 
     name: Pitching*
   steps:
     - angularVelocity: [GloveShoulder, GloveArm, Spine2, GloveArm]
-      rotationOrder: ZYZ # we have to implement Euler sequence and use ZYZ
+      useRotationOrder: true
+      rotationOrder: ZYZ
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -651,12 +664,11 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, Spine2, VirtualLab, Spine2]
+    - angularVelocity: [VirtualLabSegment, Spine2, VirtualLabSegment, Spine2]
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - lowpass:
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, [-1, -1, 1]]
 
 # Pelvis angle
 - parameter: Pelvis_Angle
@@ -672,7 +684,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, Hips, VirtualLab, Hips]
+    - angularVelocity: [VirtualLabSegment, Hips, VirtualLabSegment, Hips]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -691,7 +703,7 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, PitchingArm, VirtualLab, PitchingArm]
+    - angularVelocity: [VirtualLabSegment, PitchingArm, VirtualLabSegment, PitchingArm]
     - lowpass:
       cutoff: 24
       extrapolate: 5
@@ -763,10 +775,11 @@
   where: 
     name: Pitching*
   steps:
-    - angularVelocity: [VirtualLab, Head, VirtualLab, Head]
+    - angularVelocity: [VirtualLabSegment, Head, VirtualLabSegment, Head]
     - lowpass:
       cutoff: 24
       extrapolate: 5
+    - multiply: [$prev, [-1, 1, 1]]
 
 - parameter: Lead_KNEE_dyn
   where: 

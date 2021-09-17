@@ -44,12 +44,6 @@
   steps:
     - import: SETUP
 
-- event: PLOTSTART
-  where: 
-    name: Pitching*
-  steps:
-    - import: PLOTSTART_SETUP
-
 - event: PLOTSTART_Footstrike
   where: 
     name: Pitching*

@@ -337,24 +337,24 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightUpLeg
-      else: LeftUpLeg
+      then: LeftUpLeg
+      else: RightUpLeg
 
 - parameter: LeadShank
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightLeg
-      else: LeftLeg
+      then: LeftLeg
+      else: RightLeg
 
 - parameter: LeadFoot
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: RightFoot
-      else: LeftFoot
+      then: LeftFoot
+      else: RightFoot
 
 - parameter: BackThigh
   where: 
@@ -409,7 +409,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, -1]]
+      then: [[-1, 1, 1]]
       else: [[-1, -1, -1]]
 
 - parameter: Hip_Convention

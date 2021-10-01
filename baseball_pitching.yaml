@@ -487,6 +487,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
+    - multiply: [$prev, Elbow_Convention]
 
 # Pitching Shoulder angle
 - parameter: Pitching_Shoulder_Angle

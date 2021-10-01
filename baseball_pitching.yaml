@@ -1278,25 +1278,25 @@
   where:
     name: Pitching*
   steps:
-    - subtract: [Trunk_Angle@Footstrike, Pelvis_Angle@Footstrike]
+    - subtract: [Trunk_Angle.z@Footstrike, Pelvis_Angle.z@Footstrike]
 
 - parameter: Trunk Rot wrt Pelvis Rot@Max_Shoulder_Int_Rot_FollowThru
   where:
     name: Pitching*
   steps:
-    - subtract: [Trunk_Angle@Max_Shoulder_Int_Rot_FollowThru, Pelvis_Angle@Max_Shoulder_Int_Rot_FollowThru]
+    - subtract: [Trunk_Angle.z@Max_Shoulder_Int_Rot_FollowThru, Pelvis_Angle.z@Max_Shoulder_Int_Rot_FollowThru]
 
 - parameter: Trunk Rot wrt Pelvis Rot@Max_Shoulder_Rot
   where:
     name: Pitching*
   steps:
-    - subtract: [Trunk_Angle@Max_Shoulder_Rot, Pelvis_Angle@Max_Shoulder_Rot]
+    - subtract: [Trunk_Angle.z@Max_Shoulder_Rot, Pelvis_Angle.z@Max_Shoulder_Rot]
 
 - parameter: Trunk Rot wrt Pelvis Rot@Release
   where:
     name: Pitching*
   steps:
-    - subtract: [Trunk_Angle@Release, Pelvis_Angle@Release]
+    - subtract: [Trunk_Angle.z@Release, Pelvis_Angle.z@Release]
 
 - parameter: Pitching_Shoulder_Ang_Vel@Footstrike
   where:

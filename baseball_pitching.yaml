@@ -186,7 +186,7 @@
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Pelvis_Ang_Vel.x
+    - peakFinder: Pelvis_Ang_Vel.z
       distance: 1000
     - eventMask: [$prev, SETUP, Release100msAfter]
 
@@ -194,7 +194,7 @@
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Thorax_Ang_Vel.x
+    - peakFinder: Thorax_Ang_Vel.z
       distance: 1000
     - eventMask: [$prev, SETUP, Release100msAfter]
 
@@ -202,7 +202,7 @@
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Pitching_Humerus_Ang_Vel.x
+    - peakFinder: Pitching_Humerus_Ang_Vel.z
       distance: 1000
     - eventMask: [$prev, SETUP, Release100msAfter]
 
@@ -1247,8 +1247,14 @@
   steps:
     - import: Back_Foot_wrt_Lab@Footstrike
 
-# to do : "id": "kinematic-sequence-vel-table",
-
+- parameter: time_MaxPelvisVel_MaxThoraxVel
+  where:
+    name: Pitching*
+  steps:
+    - eventTime: MaxPelvisVel => pelvis
+    - eventTime: MaxThoraxVel => thorax
+    - subtract: [thorax, pelvis]
+    
 - parameter: MaxPelvisVelTime
   where:
     name: Pitching*

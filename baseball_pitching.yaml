@@ -74,7 +74,7 @@
   where: 
     name: Pitching*
   steps:
-    - lowpass: LForeFoot2
+    - lowpass: ForeFoot2
       extrapolate: 200
       order: 2
       cutoff: 12
@@ -92,7 +92,7 @@
   where: 
     name: Pitching*
   steps:
-    - velocity: LHeelBack.z
+    - velocity: LeadHeelBack.z
     - threshold:
       value: 0.02
       direction: up
@@ -388,6 +388,23 @@
       then: RightToeBase
       else: LeftToeBase
 
+- parameter: LeadForeFoot2
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LForeFoot2
+      else: RForeFoot2
+
+- parameter: LeadHeelBack
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: LHeelBack
+      else: RHeelBack
+
+# Set side conventions
 - parameter: Shoulder_Convention
   where: 
     name: Pitching*
@@ -829,11 +846,11 @@
   where:
     name: Pitching*
   steps:
-    - import: LeftFoot => left
+    - import: LeadFoot => lead
       space: VirtualLab
-    - import: RightFoot => right
+    - import: BackFoot => throw
       space: VirtualLab
-    - subtract: [left.y@SETUP, right.y@SETUP]
+    - subtract: [throw.y@SETUP, lead.y@Footstrike]
     - abs:
     - convert:
       from: mm

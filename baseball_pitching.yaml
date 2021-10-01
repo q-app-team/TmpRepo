@@ -1204,6 +1204,12 @@
   steps:
     - import: Pelvis_Angle@Max_Shoulder_Rot
 
+- parameter: Pelvis_Angle@Max_Shoulder_Int_Rot_FollowThru
+  where:
+    name: Pitching*
+  steps:
+    - import: Pelvis_Angle@Max_Shoulder_Int_Rot_FollowThru
+
 - parameter: Trunk_Angle@Footstrike
   where:
     name: Pitching*

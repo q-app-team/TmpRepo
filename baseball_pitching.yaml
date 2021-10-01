@@ -179,7 +179,7 @@
   steps:
     - import: Pitching_Shoulder_Angle.z
     - peakFinder:
-      distance: 10
+      distance: 1000
     - eventMask: [$prev, SETUP, Release]
 
 - event: MaxPelvisVel
@@ -1271,7 +1271,7 @@
   where:
     name: Pitching*
   steps:
-    - eventMask: [Pitching_Elbow_Ang_Vel, Footstrike, Release100msAfter]
+    - eventMask: [Pitching_Elbow_Ang_Vel, Max_Shoulder_Rot, Release]
     - min:
 
 - parameter: Trunk Rot wrt Pelvis Rot@Footstrike

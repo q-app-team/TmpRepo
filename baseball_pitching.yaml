@@ -426,7 +426,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, 1, 1]]
+      then: [[-1, -1, 1]]
       else: [[-1, -1, -1]]
 
 - parameter: Hip_Convention
@@ -444,6 +444,14 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, -1, -1]]
       else: [[1, -1, -1]]
+
+- parameter: Elbow_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, -1]]
+      else: [[1, 1, 1]]
 
 # Pitching Hand Angle
 - parameter: Pitching_Hand_Angle
@@ -469,6 +477,7 @@
     name: Pitching*
   steps:
     - angle: [PitchingArm, PitchingForearm]
+    - multiply: [$prev, Elbow_Convention]
 
 - parameter: Pitching_Elbow_Ang_Vel
   where: 
@@ -787,7 +796,8 @@
   steps:
     - angle: Head
       space: VirtualLab
-  
+    - multiply: [$prev, [1, 1, -1]]
+ 
 - parameter: Head_Ang_Vel
   where: 
     name: Pitching*

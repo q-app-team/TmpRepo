@@ -74,7 +74,7 @@
   where: 
     name: Pitching*
   steps:
-    - lowpass: ForeFoot2
+    - lowpass: LeadForeFoot2
       extrapolate: 200
       order: 2
       cutoff: 12

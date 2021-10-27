@@ -463,6 +463,14 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[-1, -1, -1]]
       else: [[1, -1, -1]]
+  
+- parameter: Trunk_wrt_Pelvis_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, -1, -1]]
 
 - parameter: Pelvis_Convention
   where: 
@@ -470,7 +478,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[-1, -1, -1]]
-      else: [[-1, -1, -1]]
+      else: [[1, -1, -1]]
 
 - parameter: Ankle_Convention
   where: 
@@ -710,7 +718,7 @@
     name: Pitching*
   steps:
     - angle: [Hips, Spine2]
-    - multiply: [$prev, Trunk_Convention]
+    - multiply: [$prev, Trunk_wrt_Pelvis_Convention]
 
 # Trunk angle
 - parameter: Trunk_Angle

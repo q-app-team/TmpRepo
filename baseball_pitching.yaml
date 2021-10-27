@@ -440,6 +440,14 @@
       then: [[-1, -1, 1]]
       else: [[-1, -1, -1]]
 
+- parameter: Back_Foot_wrt_Lab_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, -1]]
+
 - parameter: Hip_Convention
   where: 
     name: Pitching*
@@ -767,7 +775,7 @@
   steps:
     - angle: [BackFoot]
       space: VirtualLab
-    - multiply: [$prev, Pelvis_Convention]
+    - multiply: [$prev, Back_Foot_wrt_Lab_Convention]
 
 # Pitching humerus ang vel
 - parameter: Pitching_Humerus_Ang_Vel

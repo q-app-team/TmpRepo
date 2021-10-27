@@ -9,10 +9,7 @@
   where: 
     name: Pitching*
   steps:
-    #- subtract: [LForefoot2@Release, RForefoot2@Release]
-    - import: LForefoot2
-    - subtract: [LForefoot2, RForefoot2]
-    - import: $prev@Release
+    - subtract: [LForefoot2@Release, RForefoot2@Release]
     - convert:
       from: mm
       to: m
@@ -65,7 +62,6 @@
   steps:
     - import: Release100msAfter
 
-
 - event: MaxKneeHeight
   where: 
     name: Pitching*
@@ -113,53 +109,52 @@
   where: 
     name: Pitching*
   steps:
-    - import: Pitching_Elbow_Angle.x
-    - peakFinder:
-      width: 100
-      distance: 1000
+    - import: Pitching_Elbow_Angle
     - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.x
+      frames: true
 
 - event: Max_Forearm_PronSup
   where: 
     name: Pitching*
   steps:
-    - import: Pitching_Elbow_Angle.z
-    - peakFinder:
-      distance: 10
+    - import: Pitching_Elbow_Angle
     - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.z
+      frames: true
 
 - event: Max_Elbow_Flex_Ang_Vel
   where: 
     name: Pitching*
   steps:
-    - import: Pitching_Elbow_Ang_Vel.x
+    - import: Pitching_Elbow_Ang_Vel
     - lowpass:
       order: 6
       cutoff: 12
-    - peakFinder:
-      distance: 30
     - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.x
+      frames: true
 
-- event: Max_Forearm_PronSup_Ang_Vel # fix it after we can find max values instead of peak
+- event: Max_Forearm_PronSup_Ang_Vel
   where: 
     name: Pitching*
   steps:
-    - import: Pitching_Elbow_Ang_Vel.z
+    - import: Pitching_Elbow_Ang_Vel
     - lowpass:
       order: 6
       cutoff: 12
-    - peakFinder:
-      distance: 30
     - eventMask: [$prev, Footstrike, Release100msAfter]
+    - max: $prev.z
+      frames: true
 
 - event: Max_Shoulder_Int_Rot
   where: 
     name: Pitching*
   steps:
-    - import: Pitching_Shoulder_Angle.z
-    - peakFinder:
-      distance: 10
+    - import: Pitching_Shoulder_Angle
     - eventMask: [$prev, SETUP, Release]
+    - min: $prev.z
+      frames: true
 
 - event: EOF
   where: 
@@ -171,51 +166,55 @@
   where: 
     name: Pitching*
   steps:
-    - negate: Pitching_Shoulder_Angle.z
-    - peakFinder:
-      distance: 200
+    - negate: Pitching_Shoulder_Angle
     - eventMask: [$prev, Release, EOF]
+    - max: $prev.z
+      frames: true
 
 - event: Max_Shoulder_Rot
   where: 
     name: Pitching*
   steps:
-    - import: Pitching_Shoulder_Angle.z
-    - peakFinder:
-      distance: 1000
+    - import: Pitching_Shoulder_Angle
     - eventMask: [$prev, SETUP, Release]
+    - max: $prev.z
+      frames: true
 
 - event: MaxPelvisVel
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Pelvis_Ang_Vel.z
-      distance: 1000
+    - import: Pelvis_Ang_Vel
     - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
 
 - event: MaxThoraxVel
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Thorax_Ang_Vel.z
-      distance: 1000
+    - import: Thorax_Ang_Vel
     - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
 
 - event: MaxHumerusVel
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Pitching_Humerus_Ang_Vel.z
-      distance: 1000
+    - import: Pitching_Humerus_Ang_Vel
     - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.z
+      frames: true
 
 - event: MaxHandVel
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Pitching_Hand_Ang_Vel.x
-      distance: 1000
+    - import: Pitching_Hand_Ang_Vel
     - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.x
+      frames: true
 
 - event: MaxPelvisLinearVel_ev
   where: 
@@ -243,17 +242,19 @@
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Pitching_Shoulder_Angle.x
-      distance: 1000
+    - import: Pitching_Shoulder_Angle
     - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.x
+      frames: true
 
 - event: MaxShoulder_AngVel_HzShldAbd
   where: 
     name: Pitching*
   steps:
-    - peakFinder: Pitching_Shoulder_AngVel_HzShldAbd.x
-      distance: 1000
+    - import: Pitching_Shoulder_AngVel_HzShldAbd
     - eventMask: [$prev, SETUP, Release100msAfter]
+    - max: $prev.x
+      frames: true
 
 - event: PelvisRot_Stop
   where: 

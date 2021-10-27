@@ -528,6 +528,14 @@
       then: [[1, 1, 1]]
       else: [[1, -1, 1]]
 
+- parameter: Head_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, 1, 1]]
+      else: [[1, -1, -1]]
+
 # Pitching Hand Angle
 - parameter: Pitching_Hand_Angle
   where: 
@@ -876,7 +884,7 @@
   steps:
     - angle: Head
       space: VirtualLab
-    - multiply: [$prev, [1, 1, -1]]
+    - multiply: [$prev, Head_Convention]
  
 - parameter: Head_Ang_Vel
   where: 
@@ -886,7 +894,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, [-1, 1, 1]]
+    - multiply: [$prev, Head_Convention]
 
 - parameter: Lead_KNEE_dyn
   where: 

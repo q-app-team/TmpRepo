@@ -504,6 +504,14 @@
       then: [[1, 1, -1]]
       else: [[1, 1, 1]]
 
+- parameter: Pitching_Humerus_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, 1, -1]]
+
 # Pitching Hand Angle
 - parameter: Pitching_Hand_Angle
   where: 
@@ -786,6 +794,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
+    - multiply: [$prev, Pitching_Humerus_Convention]
 
 # Hip Shoulders Separation
 - parameter: Hip Shoulders Sep

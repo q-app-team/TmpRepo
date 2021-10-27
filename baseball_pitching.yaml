@@ -414,7 +414,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, -1, -1]]
-      else: [[-1, 1, -1]]
+      else: [[-1, 1, 1]]
 
 - parameter: Glove_Shoulder_Convention
   where: 
@@ -447,6 +447,30 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, -1, -1]]
       else: [[1, -1, -1]]
+
+- parameter: Hip_Shoulder_Sep_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Trunk_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+
+- parameter: Pelvis_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
 
 - parameter: Ankle_Convention
   where: 
@@ -686,7 +710,7 @@
     name: Pitching*
   steps:
     - angle: [Hips, Spine2]
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, Trunk_Convention]
 
 # Trunk angle
 - parameter: Trunk_Angle
@@ -695,7 +719,7 @@
   steps:
     - angle: [Spine2]
       space: VirtualLab
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, Trunk_Convention]
 
 # Trunk angular velocity
 - parameter: Thorax_Ang_Vel
@@ -706,7 +730,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, [-1, -1, 1]]
+    - multiply: [$prev, Trunk_Convention]
 
 # Pelvis angle
 - parameter: Pelvis_Angle
@@ -715,7 +739,7 @@
   steps:
     - angle: [Hips]
       space: VirtualLab
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, Pelvis_Convention]
 
 # Pelvis angular velocity
 - parameter: Pelvis_Ang_Vel
@@ -726,7 +750,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, [-1, -1, 1]]
+    - multiply: [$prev, Pelvis_Convention]
 
 # Back Foot wrt lab
 - parameter: Back_Foot_wrt_Lab
@@ -753,7 +777,7 @@
   steps:
     - angle: [Hips, Spine2]
       rotationOrder: ZYX
-    - multiply: [$prev, [-1, -1, -1]]
+    - multiply: [$prev, Hip_Shoulder_Sep_Convention]
 
 - parameter: Trunk_COG_Vel_MPH # we do not have segment COG, so using origin instead
   where: 

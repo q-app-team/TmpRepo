@@ -471,6 +471,14 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[-1, -1, -1]]
       else: [[1, -1, -1]]
+
+- parameter: Trunk_Ang_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[-1, -1, -1]]
   
 - parameter: Trunk_wrt_Pelvis_Convention
   where: 
@@ -511,6 +519,14 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, 1, 1]]
       else: [[1, 1, -1]]
+
+- parameter: COG_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, 1, 1]]
+      else: [[1, -1, 1]]
 
 # Pitching Hand Angle
 - parameter: Pitching_Hand_Angle
@@ -754,7 +770,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Trunk_Convention]
+    - multiply: [$prev, Trunk_Ang_Vel_Convention]
 
 # Pelvis angle
 - parameter: Pelvis_Angle
@@ -823,6 +839,7 @@
     - convert: speed
       from: m/s
       to: mph
+    - multiply: [$prev, COG_Vel_Convention]
 
 - parameter: Pelvis_COG_Vel_MPH # we do not have segment COG, so using origin instead
   where: 
@@ -842,6 +859,7 @@
     - convert: speed
       from: m/s
       to: mph
+    - multiply: [$prev, COG_Vel_Convention]
 
 - parameter: Back_Foot_COG
   where: 

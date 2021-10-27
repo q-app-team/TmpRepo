@@ -462,7 +462,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[-1, -1, -1]]
-      else: [[-1, -1, -1]]
+      else: [[1, -1, -1]]
 
 - parameter: Pelvis_Convention
   where: 
@@ -759,6 +759,7 @@
   steps:
     - angle: [BackFoot]
       space: VirtualLab
+    - multiply: [$prev, Pelvis_Convention]
 
 # Pitching humerus ang vel
 - parameter: Pitching_Humerus_Ang_Vel

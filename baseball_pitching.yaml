@@ -408,13 +408,21 @@
       else: RHeelBack
 
 # Set side conventions
-- parameter: Shoulder_Convention
+- parameter: Pitching_Shoulder_Convention
   where: 
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, -1, -1]]
       else: [[-1, 1, -1]]
+
+- parameter: Glove_Shoulder_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[1, -1, 1]]
+      else: [[-1, 1, 1]]
 
 - parameter: Hand_Convention
   where: 
@@ -499,14 +507,14 @@
   steps:
     - angle: [Spine2, PitchingArm]
       rotationOrder: ZYZ
-    - multiply: [$prev, Shoulder_Convention]
+    - multiply: [$prev, Pitching_Shoulder_Convention]
 
 - parameter: Pitching_Shoulder_Angle_XYZ
   where: 
     name: Pitching*
   steps:
     - angle: [Spine2, PitchingArm]
-    - multiply: [$prev, Shoulder_Convention]
+    - multiply: [$prev, Pitching_Shoulder_Convention]
 
 # Pitching Shoulder angular velocity
 - parameter: Pitching_Shoulder_Ang_Vel
@@ -519,7 +527,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Shoulder_Convention]
+    - multiply: [$prev, Pitching_Shoulder_Convention]
 
 # Pitching Shoulder Ang Vel Horizontal Shoulder Abduction
 - parameter: Pitching_Shoulder_AngVel_HzShldAbd
@@ -535,7 +543,7 @@
   steps:
     - angle: [Spine2, GloveArm]
       rotationOrder: ZYZ
-    - multiply: [$prev, Shoulder_Convention]
+    - multiply: [$prev, Glove_Shoulder_Convention]
 
 - parameter: Glove_Shoulder_Angle_XYZ
   where: 
@@ -543,7 +551,7 @@
   steps:
     - angle: [Spine2, GloveArm]
       rotationOrder: XYZ
-    - multiply: [$prev, Shoulder_Convention]
+    - multiply: [$prev, Glove_Shoulder_Convention]
 
 # Glove Shoulder Ang Vel
 - parameter: Glove_Shoulder_Angle_Vel
@@ -556,7 +564,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Shoulder_Convention]
+    - multiply: [$prev, Glove_Shoulder_Convention]
 
 # Lead Hip Angle
 - parameter: Lead_Hip_Angle

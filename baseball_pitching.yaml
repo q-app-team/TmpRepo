@@ -505,6 +505,14 @@
       then: [[-1, -1, -1]]
       else: [[-1, -1, 1]]
 
+- parameter: Pelvis_Ang_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+  
 - parameter: Ankle_Convention
   where: 
     name: Pitching*
@@ -545,6 +553,14 @@
       then: [[-1, 1, 1]]
       else: [[1, 1, 1]]
 
+- parameter: Head_Ang_Vel_Convention
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: [[-1, -1, -1]]
+      else: [[1, -1, 1]]
+  
 # Pitching Hand Angle
 - parameter: Pitching_Hand_Angle
   where: 
@@ -807,7 +823,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Pelvis_Convention]
+    - multiply: [$prev, Pelvis_Ang_Vel_Convention]
 
 # Back Foot wrt lab
 - parameter: Back_Foot_wrt_Lab
@@ -907,7 +923,7 @@
     - lowpass:
       cutoff: 24
       extrapolate: 5
-    - multiply: [$prev, Head_Convention]
+    - multiply: [$prev, Head_Ang_Vel_Convention]
 
 - parameter: Lead_KNEE_dyn
   where: 

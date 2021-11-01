@@ -423,7 +423,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, -1, 1]]
-      else: [[-1, 1, 1]]
+      else: [[-1, 1, -1]]
 
 - parameter: Hand_Convention
   where: 
@@ -627,7 +627,7 @@
     - multiply: [$prev, Glove_Shoulder_Convention]
 
 # Glove Shoulder Ang Vel
-- parameter: Glove_Shoulder_Angle_Vel
+- parameter: Glove_Shoulder_Ang_Vel
   where: 
     name: Pitching*
   steps:

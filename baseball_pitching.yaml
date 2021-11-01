@@ -527,7 +527,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, 1, 1]]
-      else: [[1, 1, 1]]
+      else: [[1, -1, 1]]
 
 - parameter: Head_Convention
   where: 
@@ -838,6 +838,8 @@
       from: mm
       to: m
       space: VirtualLab
+    - vector: [$prev.x,$prev.y,$prev.z]
+    - multiply: [$prev, COG_Vel_Convention]
       export: Trunk_COG
     - velocity: $prev => speed
       export: Trunk_COG_Vel
@@ -858,6 +860,8 @@
       from: mm
       to: m
       space: VirtualLab
+    - vector: [$prev.x,$prev.y,$prev.z]
+    - multiply: [$prev, COG_Vel_Convention]
       export: Pelvis_COG
     - velocity: $prev => speed
       export: Pelvis_COG_Vel

@@ -929,19 +929,21 @@
   where: 
     name: Pitching*
   steps:
-    - velocity: LeadShank
+    - import: LeadShank
+      space: VirtualLab
     - convert: 
-      from: mm/s
-      to: m/s
+      from: mm
+      to: m
 
 - parameter: Back_Knee_dyn
   where: 
     name: Pitching*
   steps:
-    - velocity: BackShank
+    - import: BackShank
+      space: VirtualLab
     - convert: 
-      from: mm/s
-      to: m/s
+      from: mm
+      to: m
 
 #--------------
 # PAF fields

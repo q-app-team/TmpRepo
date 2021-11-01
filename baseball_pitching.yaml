@@ -486,7 +486,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, -1]]
+      then: [[-1, -1, 1]]
       else: [[-1, -1, -1]]
   
 - parameter: Trunk_wrt_Pelvis_Convention
@@ -510,7 +510,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, -1]]
+      then: [[-1, -1, 1]]
       else: [[-1, 1, -1]]
   
 - parameter: Ankle_Convention
@@ -550,7 +550,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, 1, 1]]
+      then: [[-1, 1, -1]]
       else: [[1, 1, 1]]
 
 - parameter: Head_Ang_Vel_Convention
@@ -558,7 +558,7 @@
     name: Pitching*
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
-      then: [[-1, -1, -1]]
+      then: [[-1, -1, 1]]
       else: [[1, -1, -1]]
   
 # Pitching Hand Angle

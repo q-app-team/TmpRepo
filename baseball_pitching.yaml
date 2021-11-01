@@ -527,7 +527,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[1, 1, 1]]
-      else: [[1, -1, 1]]
+      else: [[1, 1, 1]]
 
 - parameter: Head_Convention
   where: 

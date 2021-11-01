@@ -511,7 +511,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[-1, -1, -1]]
-      else: [[1, -1, 1]]
+      else: [[1, -1, -1]]
   
 - parameter: Ankle_Convention
   where: 
@@ -559,7 +559,7 @@
   steps:
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: [[-1, -1, -1]]
-      else: [[1, -1, 1]]
+      else: [[1, -1, -1]]
   
 # Pitching Hand Angle
 - parameter: Pitching_Hand_Angle

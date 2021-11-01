@@ -9,7 +9,7 @@
   where: 
     name: Pitching*
   steps:
-    - subtract: [LForefoot2@Release, RForefoot2@Release]
+    - subtract: [LeadForefoot2@Release, BackForefoot2@Release]
     - convert:
       from: mm
       to: m
@@ -24,8 +24,8 @@
 
 - parameter: VirtualLabOrigin
   steps:
-    - marker: RForefoot2
-    - multiply: [$prev, 0]
+    #- marker: RForefoot2
+    - multiply: [BackForefoot2, 0]
 
 - segment: VirtualLabSegment
   steps:
@@ -399,6 +399,14 @@
     - if: Right_Hand_Vel_max > Left_Hand_Vel_max
       then: LForefoot2
       else: RForefoot2
+
+- parameter: BackForefoot2
+  where: 
+    name: Pitching*
+  steps:
+    - if: Right_Hand_Vel_max > Left_Hand_Vel_max
+      then: RForefoot2
+      else: LForefoot2
 
 - parameter: LeadHeelBack
   where: 
